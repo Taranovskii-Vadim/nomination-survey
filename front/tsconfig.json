@@ -1,0 +1,8 @@
+{
+  "target": "ES6",
+  "compilerOptions": {
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "back",
+  "version": "1.0.0",
+  "description": "server side for survey app",
+  "license": "ISC",
+  "scripts": {
+    "start": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo \"Error: no test specified\" && exit 1",
+    "build:check": "echo \"Error: no test specified\" && exit 1"
+  }
+}
