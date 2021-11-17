@@ -21,7 +21,6 @@ const getCommonConfig = (mode) => {
 
   return {
     entry: {
-      // TODO can include babel-polyfills
       [MAIN_CHUNK]: ["@babel/polyfill", "./src/index.tsx"],
     },
     output: {

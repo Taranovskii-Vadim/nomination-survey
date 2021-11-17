@@ -21,8 +21,6 @@ routers.forEach(({ prefix, router, isAuth = true }) => {
   }
 });
 
-// TODO also got no idea how to build server
-
 const startApplication = (): void => {
   try {
     server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
