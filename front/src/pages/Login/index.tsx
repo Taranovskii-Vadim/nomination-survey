@@ -2,10 +2,11 @@ import React, { useRef } from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
 
 interface Props {
+  isLoading: boolean;
   getToken: (login: string) => Promise<void>;
 }
 
-const Login = ({ getToken }: Props): JSX.Element => {
+const Login = ({ isLoading, getToken }: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>();
 
   return (
@@ -21,6 +22,7 @@ const Login = ({ getToken }: Props): JSX.Element => {
       <Button
         isFullWidth
         type="submit"
+        isLoading={isLoading}
         onClick={() => getToken(inputRef.current.value)}
       >
         Отправить

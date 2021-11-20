@@ -12,7 +12,7 @@ const ProtectedPages = () => {
       <Container as="main" maxWidth="container.lg">
         <Switch>
           <Route path={getUrlFor("surveys")} component={General} />
-          {/* <Route path={getUrlFor("surveys", "surveyId")} /> */}
+          <Route path={getUrlFor("surveys", "surveyId")} />
         </Switch>
       </Container>
       {/* <footer></footer> */}

@@ -8,7 +8,11 @@ import Login from "./pages/Login";
 
 const App = observer(
   (): JSX.Element =>
-    user.token ? <ProtectedPages /> : <Login getToken={user.getToken} />
+    user.token ? (
+      <ProtectedPages />
+    ) : (
+      <Login isLoading={user.isLoading} getToken={user.getToken} />
+    )
 );
 
 export default App;
