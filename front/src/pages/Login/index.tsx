@@ -1,8 +1,5 @@
 import React, { useRef } from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
-import { inject } from "mobx-react";
-
-import { Stores } from "../../store";
 
 interface Props {
   getToken: (login: string) => Promise<void>;
@@ -32,6 +29,4 @@ const Login = ({ getToken }: Props): JSX.Element => {
   );
 };
 
-export default inject(({ userStore }: Stores) => ({
-  getToken: userStore.getToken,
-}))(Login);
+export default Login;

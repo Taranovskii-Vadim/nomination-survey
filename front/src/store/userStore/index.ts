@@ -1,18 +1,21 @@
-import { makeObservable } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 class User {
+  token: string = "";
+
   constructor() {
-    makeObservable(this, {});
+    makeObservable(this, {
+      token: observable,
+    });
   }
 
-  async getToken(login: string): Promise<void> {
+  getToken = async (login: string): Promise<void> => {
     try {
-      if (!login) throw new Error("Заполните поле");
-      console.log(login);
+      this.token = login;
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 }
 
-export default User;
+export default new User();

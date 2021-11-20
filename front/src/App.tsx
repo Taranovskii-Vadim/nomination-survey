@@ -1,25 +1,14 @@
-import React, { lazy, Suspense } from "react";
-import { Switch, Route } from "react-router-dom";
-import { Container } from "@chakra-ui/react";
+import React from "react";
+import { observer } from "mobx-react-lite";
 
-import { getUrlFor } from "./routes";
+import user from "./store/userStore";
 
-const General = lazy(() => import("./pages/General"));
-const Login = lazy(() => import("./pages/Login"));
+import ProtectedPages from "./pages";
+import Login from "./pages/Login";
 
-const App = (): JSX.Element => {
-  return (
-    <Suspense fallback={<p>loading...</p>}>
-      <Container as="main" maxWidth="container.lg">
-        <Switch>
-          <Route exact path={getUrlFor("loginPage")} component={Login} />
-          <Route path={getUrlFor("surveys")} component={General} />
-          {/* <Route path={getUrlFor("surveys", "surveyId")} /> */}
-        </Switch>
-      </Container>
-      {/* <footer></footer> */}
-    </Suspense>
-  );
-};
+const App = observer(
+  (): JSX.Element =>
+    user.token ? <ProtectedPages /> : <Login getToken={user.getToken} />
+);
 
 export default App;
