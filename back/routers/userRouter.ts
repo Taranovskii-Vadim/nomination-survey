@@ -3,17 +3,19 @@ import { Request, Response, Router } from "express";
 
 const router = Router();
 
-router.get("/", ({ body }: Request, res: Response) => {
+router.get("/:login", ({ params }: Request, res: Response) => {
   try {
-    const { login } = body;
+    const { login } = params;
+    // "admin" | "ordinaryUser" | "generalUser"
+    const id = "qwerty";
 
     if (!login) {
       throw new Error("User login required");
     }
 
-    const token = jwt.sign({ id: "qwerty", login }, process.env.JWT_KEY);
+    const token = jwt.sign({ id, login }, process.env.JWT_KEY);
 
-    res.json({ token });
+    res.json({ id, role: "ordinaryUser", token });
   } catch (e) {
     res.status(500).send(e.message);
   }

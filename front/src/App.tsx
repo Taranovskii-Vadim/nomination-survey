@@ -6,13 +6,11 @@ import user from "./store/userStore";
 import ProtectedPages from "./pages";
 import Login from "./pages/Login";
 
-const App = observer(
-  (): JSX.Element =>
-    user.token ? (
-      <ProtectedPages />
-    ) : (
-      <Login isLoading={user.isLoading} getToken={user.getToken} />
-    )
-);
+const App = (): JSX.Element =>
+  user.data ? (
+    <ProtectedPages />
+  ) : (
+    <Login isLoading={user.isLoading} getToken={user.getToken} />
+  );
 
-export default App;
+export default observer(App);
