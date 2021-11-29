@@ -9,7 +9,8 @@ const General = lazy(() => import("./General"));
 const ProtectedPages = () => {
   return (
     <Suspense fallback={<p>loading...</p>}>
-      <Container as="main" maxWidth="container.lg">
+      {/* TODO move to level below */}
+      <Container as="main" maxWidth="container.md">
         <Switch>
           <Route path={getUrlFor("surveys")} component={General} />
           <Route path={getUrlFor("surveys", "surveyId")} />

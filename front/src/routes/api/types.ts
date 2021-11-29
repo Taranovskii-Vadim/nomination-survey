@@ -4,6 +4,12 @@ export type ResultData = object | string | number;
 
 export type RoleFromServer = "admin" | "ordinaryUser" | "generalUser";
 
+export type SurveyStatusFromServer =
+  | "notReady"
+  | "userVote"
+  | "chiefVote"
+  | "closed";
+
 export interface Query {
   [key: string]: string | number;
 }
