@@ -4,6 +4,8 @@ export type ResultData = object | string | number;
 
 export type RoleFromServer = "admin" | "ordinaryUser" | "generalUser";
 
+export type OptionTypeFromServer = "short" | "long";
+
 export type SurveyStatusFromServer =
   | "notReady"
   | "userVote"

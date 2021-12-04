@@ -5,7 +5,7 @@ import getSurveys from "../../routes/api/getSurveys";
 
 import { SurveyRenderItem } from "./types";
 
-class Surveys {
+class SurveysStore {
   loading = true;
 
   data: SurveyRenderItem[] = [];
@@ -37,4 +37,4 @@ class Surveys {
   };
 }
 
-export default new Surveys();
+export default new SurveysStore();

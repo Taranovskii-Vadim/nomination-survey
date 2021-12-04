@@ -24,7 +24,12 @@ router.get("/:surveyId", ({ params, userId }: AppRequest, res: Response) => {
       throw new Error("Survey id is required");
     }
 
-    res.json({ test: surveyId });
+    res.json({
+      id: surveyId,
+      status: "chiefVote",
+      title: "test" + surveyId,
+      questions: ["34", "56", "76", "89"],
+    });
   } catch (e) {
     res.status(500).send(e.message);
   }

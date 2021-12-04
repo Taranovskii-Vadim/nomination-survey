@@ -1,12 +1,10 @@
 import { NAVIGATION_ITEMS } from "./constants";
 import { TargetPage } from "./types";
 
-const PREFIX = process.env.PREFIX;
-
 export const getUrlFor = (page: TargetPage, id?: string): string => {
   const { path } = NAVIGATION_ITEMS[page];
-  const pathId = id ? `:${id}` : "";
-  return `${PREFIX}${path}${pathId}`;
+  const tail = id ? `:${id}` : "";
+  return `${path}${tail}`;
 };
 
 export const getTitleFor = (page: TargetPage): string => {
@@ -14,13 +12,8 @@ export const getTitleFor = (page: TargetPage): string => {
   return title;
 };
 
-export const setUrlFor = (page: TargetPage, id?: number): string => {
+export const setUrlFor = (page: TargetPage, id?: string): string => {
   const { path } = NAVIGATION_ITEMS[page];
-  let resultPath = path;
-
-  if (id && resultPath.includes(":")) {
-    resultPath = resultPath.replace(/\:.*/, id.toString());
-  }
-
-  return `${PREFIX}${resultPath}`;
+  const tail = id || "";
+  return `${path}${tail}`;
 };

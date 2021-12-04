@@ -4,5 +4,4 @@ export interface Question {
   surveyId: string;
   title: string;
   description: string;
-  images?: string[];
 }
