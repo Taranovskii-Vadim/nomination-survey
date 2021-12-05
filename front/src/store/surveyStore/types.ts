@@ -1,8 +1,8 @@
-import { SurveyFrontStatus } from "../types";
+import { SurveyStatus } from "../types";
 
 export interface CommonSurveyFields {
   readonly id: string;
-  status: SurveyFrontStatus;
+  status: SurveyStatus;
   title: string;
 }
 

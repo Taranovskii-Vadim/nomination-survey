@@ -1,3 +1,5 @@
-import { SURVEYS_FRONT_STATUS } from "./constants";
+import { SURVEY_STATUS, USER_ROLE } from "./constants";
 
-export type SurveyFrontStatus = keyof typeof SURVEYS_FRONT_STATUS;
+export type SurveyStatus = keyof typeof SURVEY_STATUS;
+
+export type UserRole = keyof typeof USER_ROLE;

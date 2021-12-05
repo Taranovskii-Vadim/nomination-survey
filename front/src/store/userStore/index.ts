@@ -4,7 +4,7 @@ import { api } from "../../routes/api";
 import { UserApiResponse } from "./types";
 import getUserToken from "../../routes/api/getUserToken";
 
-class User {
+class UserStore {
   data: UserApiResponse = undefined;
 
   isLoading = false;
@@ -35,4 +35,4 @@ class User {
   };
 }
 
-export default new User();
+export default UserStore;

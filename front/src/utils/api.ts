@@ -4,7 +4,7 @@ import {
   SurveyStatusFromServer,
 } from "../routes/api/types";
 import { OptionType } from "../store/surveyStore/types";
-import { SurveyFrontStatus } from "../store/types";
+import { SurveyStatus } from "../store/types";
 import { UserRole } from "../store/userStore/types";
 
 const comparedRoles: { [key in RoleFromServer]: UserRole } = {
@@ -18,13 +18,12 @@ const comparedOptionTypes: { [key in OptionTypeFromServer]: OptionType } = {
   long: "longAnswer",
 };
 
-const comparedStatuses: { [key in SurveyStatusFromServer]: SurveyFrontStatus } =
-  {
-    notReady: "notStarted",
-    userVote: "userVote",
-    chiefVote: "chiefVote",
-    closed: "finished",
-  };
+const comparedStatuses: { [key in SurveyStatusFromServer]: SurveyStatus } = {
+  notReady: "notStarted",
+  userVote: "userVote",
+  chiefVote: "chiefVote",
+  closed: "finished",
+};
 
 export const mapUserRole = (role: RoleFromServer): UserRole => {
   const userRole = comparedRoles[role];
@@ -33,7 +32,7 @@ export const mapUserRole = (role: RoleFromServer): UserRole => {
 
 export const mapSurveyStatus = (
   status: SurveyStatusFromServer
-): SurveyFrontStatus => {
+): SurveyStatus => {
   const surveyStatus = comparedStatuses[status];
   return surveyStatus;
 };

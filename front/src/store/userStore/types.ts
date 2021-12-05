@@ -1,4 +1,4 @@
-export type UserRole = "user" | "chief" | "admin";
+import { UserRole } from "../types";
 
 export interface UserApiResponse {
   id: string;

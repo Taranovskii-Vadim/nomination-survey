@@ -1,4 +1,5 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
+import { getErrorMessageWithId } from "../../constants";
 
 import { api } from "../../routes/api";
 import getQuestionById from "../../routes/api/getQuestionById";
@@ -27,16 +28,10 @@ class SurveyStore {
 
   fetchSurveyQuestionById = async (id: string): Promise<Question> => {
     try {
-      // TODO request created need to set in store
       const result: Question = await api(getQuestionById, undefined, { id });
-      const question: Question = {
-        id: "123",
-        description: "asd",
-        options: "shortAnswer",
-      };
-      return question;
+      return result;
     } catch (e) {
-      console.log(e);
+      console.error(getErrorMessageWithId("question", id));
     }
   };
 
@@ -50,11 +45,10 @@ class SurveyStore {
       const questions = await Promise.all(
         survey.questions.map((item) => this.fetchSurveyQuestionById(item))
       );
-      // TODO we get questions as array number so we need to request each question with id
 
-      // runInAction(() => {
-      //   this.data = result;
-      // });
+      runInAction(() => {
+        this.data = { ...survey, questions };
+      });
     } catch (e) {
       console.log(e);
     } finally {
@@ -63,4 +57,4 @@ class SurveyStore {
   };
 }
 
-export default new SurveyStore();
+export default SurveyStore;

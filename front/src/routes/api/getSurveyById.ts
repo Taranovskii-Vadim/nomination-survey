@@ -2,17 +2,6 @@ import { Survey } from "../../store/surveyStore/types";
 import { mapSurveyStatus } from "../../utils/api";
 import { Method, Route, SurveyStatusFromServer } from "./types";
 
-// interface OptionDTO {
-//   id: string;
-//   title: string;
-// }
-
-// interface QuestionDTO {
-//   id: string;
-//   description: string;
-//   options: OptionDTO[] | OptionTypeFromServer;
-// }
-
 interface ResponseDTO {
   id: string;
   title: string;
