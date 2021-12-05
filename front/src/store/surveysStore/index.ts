@@ -37,4 +37,4 @@ class SurveysStore {
   };
 }
 
-export default new SurveysStore();
+export default SurveysStore;

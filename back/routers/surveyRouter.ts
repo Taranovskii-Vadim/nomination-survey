@@ -7,9 +7,9 @@ const router = Router();
 router.get("/", ({ userId }: AppRequest, res: Response) => {
   try {
     res.json([
-      { id: "123", status: "chiefVote", title: "test" },
-      { id: "1234", status: "chiefVote", title: "test" },
-      { id: "1235", status: "chiefVote", title: "test" },
+      { id: "123", status: "chiefVote", title: "test1" },
+      { id: "1235", status: "chiefVote", title: "test3" },
+      { id: "1234", status: "chiefVote", title: "test2" },
     ]);
   } catch (e) {
     res.status(500).send(e.message);

@@ -4,6 +4,5 @@ export interface Survey {
   readonly id: string;
   title: string;
   status: SurveyStatus;
-  // TODO lookup fields in mongoDB
   leadersId: number[];
 }

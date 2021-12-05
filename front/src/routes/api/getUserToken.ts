@@ -7,6 +7,7 @@ interface ResponseDTO {
   id: string;
   token: string;
   role: RoleFromServer;
+  surveysId: string[];
 }
 
 class GetUserToken implements Route {
@@ -16,9 +17,9 @@ class GetUserToken implements Route {
     return `/user/${login}`;
   }
 
-  getData({ id, role, token }: ResponseDTO): UserApiResponse {
+  getData({ id, role, token, surveysId }: ResponseDTO): UserApiResponse {
     axiosInstance.defaults.headers["token"] = token;
-    return { id, role: mapUserRole(role) };
+    return { id, surveysId, role: mapUserRole(role) };
   }
 }
 

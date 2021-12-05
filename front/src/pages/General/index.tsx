@@ -7,8 +7,10 @@ import { useFetchData } from "../../utils/hooks";
 import { setUrlFor } from "../../routes";
 
 import { Loader } from "../../components/ui";
-import surveysStore from "../../store/surveysStore";
+import SurveysStore from "../../store/surveysStore";
 import SurveyCard from "../../components/SurveyCard";
+
+const surveysStore = new SurveysStore();
 
 const General = (): JSX.Element => {
   useFetchData(surveysStore.fetchSurveys);
