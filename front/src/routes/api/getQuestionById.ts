@@ -1,6 +1,7 @@
 import { Option, OptionType, Question } from "../../store/surveyStore/types";
+import { QuestionTypeDTO } from "../../types";
 import { mapSurveyOptionType } from "../../utils/api";
-import { Method, OptionTypeFromServer, Route } from "./types";
+import { Route, Method } from "../types";
 
 interface OptionDTO {
   id: string;
@@ -10,7 +11,7 @@ interface OptionDTO {
 interface ResponseDTO {
   id: string;
   description: string;
-  options: OptionDTO[] | OptionTypeFromServer;
+  options: OptionDTO[] | QuestionTypeDTO;
 }
 
 class GetQuestionById implements Route {

@@ -1,38 +1,42 @@
 import { Response, Router } from "express";
 
+import Survey from "../models/Survey";
+import { getSurveysRender } from "../models/Survey/helpers";
+import { SurveyDataBase } from "../models/Survey/types";
+
 import { AppRequest } from "../types";
 
 const router = Router();
 
-router.get("/", ({ userId }: AppRequest, res: Response) => {
+router.get("/", async ({ user }: AppRequest, res: Response) => {
   try {
-    res.json([
-      { id: "123", status: "chiefVote", title: "test1" },
-      { id: "1235", status: "chiefVote", title: "test3" },
-      { id: "1234", status: "chiefVote", title: "test2" },
-    ]);
+    const surveys: SurveyDataBase[] = await Survey.find();
+
+    const result = surveys.map((item) => getSurveysRender(item));
+
+    res.json(result);
   } catch (e) {
     res.status(500).send(e.message);
   }
 });
 
-router.get("/:surveyId", ({ params, userId }: AppRequest, res: Response) => {
-  try {
-    const { surveyId } = params;
+router.get(
+  "/:surveyId",
+  async ({ params, user }: AppRequest, res: Response) => {
+    try {
+      const { surveyId } = params;
 
-    if (!surveyId) {
-      throw new Error("Survey id is required");
+      if (!surveyId) {
+        throw new Error("Survey id is required");
+      }
+
+      const survey: SurveyDataBase = await Survey.findById(surveyId);
+
+      res.json(survey);
+    } catch (e) {
+      res.status(500).send(e.message);
     }
-
-    res.json({
-      id: surveyId,
-      status: "chiefVote",
-      title: "test" + surveyId,
-      questions: ["34", "56", "76", "89"],
-    });
-  } catch (e) {
-    res.status(500).send(e.message);
   }
-});
+);
 
 export default router;

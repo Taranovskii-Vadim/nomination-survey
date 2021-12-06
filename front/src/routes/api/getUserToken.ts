@@ -1,12 +1,13 @@
 import { axiosInstance } from ".";
 import { UserApiResponse } from "../../store/userStore/types";
+import { UserRoleDTO } from "../../types";
 import { mapUserRole } from "../../utils/api";
-import { Method, RoleFromServer, Route } from "./types";
+import { Route, Method } from "../types";
 
 interface ResponseDTO {
   id: string;
   token: string;
-  role: RoleFromServer;
+  role: UserRoleDTO;
   surveysId: string[];
 }
 

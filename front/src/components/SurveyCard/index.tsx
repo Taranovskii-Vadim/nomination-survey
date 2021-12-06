@@ -14,7 +14,7 @@ interface Props {
 
 const SurveyCard = ({ title, isActive }: Props): JSX.Element => (
   <Flex
-    cursor="pointer"
+    cursor={isActive ? "pointer" : "not-allowed"}
     border="1px solid black"
     borderRadius="5px"
     direction="column"
@@ -24,6 +24,7 @@ const SurveyCard = ({ title, isActive }: Props): JSX.Element => (
   >
     <SurveyIconOutline size="large" />
     {title}
+    {isActive ? "active" : "not active"}
   </Flex>
 );
 

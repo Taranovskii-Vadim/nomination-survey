@@ -1,4 +1,4 @@
-import { SurveyStatus } from "../types";
+import { SurveyStatus } from "../../types";
 
 export interface CommonSurveyFields {
   readonly id: string;
@@ -20,6 +20,6 @@ export interface Question {
 }
 
 export interface Survey extends CommonSurveyFields {
-  description: string;
+  description?: string;
   questions: Question[];
 }

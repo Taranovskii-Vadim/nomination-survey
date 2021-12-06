@@ -35,7 +35,10 @@ class SurveyStore {
     }
   };
 
-  fetchSurveyById = async (id: string): Promise<void> => {
+  fetchSurveyById = async (id: string): Promise<void | null> => {
+    // TODO we can hash our results
+    // if (this.data && this.data.id === id) return null;
+
     try {
       this.setLoading(true);
       const survey: GetSurveyByIdDTO = await api(getSurveyById, undefined, {

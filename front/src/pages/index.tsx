@@ -1,6 +1,5 @@
 import React, { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
-import { Container } from "@chakra-ui/react";
 
 import { getUrlFor } from "../routes";
 import UserStore from "../store/userStore";
@@ -17,15 +16,14 @@ interface Props {
 const ProtectedPages = ({ userStore }: Props) => {
   return (
     <Suspense fallback={<Loader />}>
-      {/* TODO move to level below */}
-      <Container as="main" maxWidth="container.md">
-        <Switch>
-          <Route exact path={getUrlFor("surveys")} component={General} />
-          <Route path={getUrlFor("surveys", "surveyId")}>
-            <Survey userStore={userStore} />
-          </Route>
-        </Switch>
-      </Container>
+      <Switch>
+        <Route exact path={getUrlFor("surveys")}>
+          <General userStore={userStore} />
+        </Route>
+        <Route path={getUrlFor("surveys", "surveyId")}>
+          <Survey userStore={userStore} />
+        </Route>
+      </Switch>
       {/* <footer></footer> */}
     </Suspense>
   );

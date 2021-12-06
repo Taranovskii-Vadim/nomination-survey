@@ -1,10 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { Route, ResultData, Query } from "../types";
 
-import { API_ENDPOINT } from "./constants";
-import { Query, ResultData, Route } from "./types";
+const API_ENDPOINT = "/api";
 
 export const axiosInstance = axios.create({
-  baseURL: `${API_ENDPOINT}`,
+  baseURL: API_ENDPOINT,
   headers: {
     "Content-Type": "application/json",
   },

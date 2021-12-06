@@ -1,10 +1,14 @@
 import { Request } from "express";
 
 export interface AppRequest extends Request {
-  userId: string;
+  user: {
+    id: string;
+    surveysId: string[];
+  };
 }
 
 export interface DecodedToken {
   id: string;
   login: string;
+  surveysId: string[];
 }

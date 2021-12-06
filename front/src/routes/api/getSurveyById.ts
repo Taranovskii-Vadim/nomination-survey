@@ -1,12 +1,13 @@
 import { Survey } from "../../store/surveyStore/types";
+import { SurveyStatusDTO } from "../../types";
 import { mapSurveyStatus } from "../../utils/api";
-import { Method, Route, SurveyStatusFromServer } from "./types";
+import { Route, Method } from "../types";
 
 interface ResponseDTO {
   id: string;
   title: string;
-  status: SurveyStatusFromServer;
-  description: string;
+  status: SurveyStatusDTO;
+  description?: string;
   questions: string[];
 }
 

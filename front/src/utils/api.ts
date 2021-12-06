@@ -1,45 +1,30 @@
 import {
-  OptionTypeFromServer,
-  RoleFromServer,
-  SurveyStatusFromServer,
-} from "../routes/api/types";
+  COMPARED_QUESTION_TYPE,
+  COMPARED_SURVEY_STATUS,
+  COMPARED_USER_ROLE,
+} from "../constants";
+import {
+  QuestionTypeDTO,
+  SurveyStatus,
+  SurveyStatusDTO,
+  UserRole,
+  UserRoleDTO,
+} from "../types";
 import { OptionType } from "../store/surveyStore/types";
-import { SurveyStatus } from "../store/types";
-import { UserRole } from "../store/userStore/types";
 
-const comparedRoles: { [key in RoleFromServer]: UserRole } = {
-  admin: "admin",
-  ordinaryUser: "user",
-  generalUser: "chief",
-};
-
-const comparedOptionTypes: { [key in OptionTypeFromServer]: OptionType } = {
-  short: "shortAnswer",
-  long: "longAnswer",
-};
-
-const comparedStatuses: { [key in SurveyStatusFromServer]: SurveyStatus } = {
-  notReady: "notStarted",
-  userVote: "userVote",
-  chiefVote: "chiefVote",
-  closed: "finished",
-};
-
-export const mapUserRole = (role: RoleFromServer): UserRole => {
-  const userRole = comparedRoles[role];
+export const mapUserRole = (role: UserRoleDTO): UserRole => {
+  const userRole = COMPARED_USER_ROLE[role];
   return userRole;
 };
 
-export const mapSurveyStatus = (
-  status: SurveyStatusFromServer
-): SurveyStatus => {
-  const surveyStatus = comparedStatuses[status];
+export const mapSurveyStatus = (status: SurveyStatusDTO): SurveyStatus => {
+  const surveyStatus = COMPARED_SURVEY_STATUS[status];
   return surveyStatus;
 };
 
 export const mapSurveyOptionType = (
-  optionType: OptionTypeFromServer
+  optionType: QuestionTypeDTO
 ): OptionType => {
-  const type = comparedOptionTypes[optionType];
+  const type = COMPARED_QUESTION_TYPE[optionType];
   return type;
 };

@@ -1,11 +1,13 @@
-import { SURVEY_STATUS, USER_ROLE } from "../store/constants";
-import { SurveyStatus, UserRole } from "../store/types";
+import { SurveyStatus, UserRole } from "../types";
 
+// TODO think about one source of true,because if we change role we have 2 places
 export const isHaveAccess = (role: UserRole, status: SurveyStatus): boolean => {
-  if (role === USER_ROLE.admin) return true;
-  if (role === USER_ROLE.chief && status === SURVEY_STATUS.chiefVote)
-    return true;
-  if (role === USER_ROLE.user && status === SURVEY_STATUS.userVote) return true;
+  if (role === "admin") return true;
+  if (role === "chief" && status === "chiefVote") return true;
+  if (role === "user" && status === "userVote") return true;
 
   return false;
 };
+
+export const firstLetterToUpperCase = (value: string): string =>
+  value[0].toUpperCase() + value.slice(1);
