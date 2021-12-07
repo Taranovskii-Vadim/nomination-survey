@@ -2,6 +2,7 @@ import { makeObservable, observable, runInAction } from "mobx";
 
 import { api } from "../../routes/api";
 import { UserApiResponse } from "./types";
+import { getUserFromStorage } from "../../utils";
 import getUserToken from "../../routes/api/getUserToken";
 
 class UserStore {
@@ -10,6 +11,13 @@ class UserStore {
   isLoading = false;
 
   constructor() {
+    const userResult = getUserFromStorage();
+
+    if (userResult) {
+      const { id, surveysId, role } = userResult;
+      this.data = { id, surveysId, role };
+    }
+
     makeObservable(this, {
       isLoading: observable,
       data: observable,

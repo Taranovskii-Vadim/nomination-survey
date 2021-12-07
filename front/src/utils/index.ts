@@ -1,4 +1,30 @@
+import { TOKEN_KEY } from "../constants";
+import { ResponseDTO } from "../routes/api/getUserToken";
+import { UserFromStorage } from "../store/userStore/types";
 import { SurveyStatus, UserRole } from "../types";
+
+export const getUserFromStorage = (): UserFromStorage | null => {
+  const result = localStorage.getItem(TOKEN_KEY);
+
+  if (result) {
+    const userResult = JSON.parse(result) as UserFromStorage;
+    return userResult;
+  }
+
+  return null;
+};
+
+export const setUserToStorage = ({
+  id,
+  role,
+  token,
+  surveysId,
+}: ResponseDTO): void => {
+  localStorage.setItem(
+    TOKEN_KEY,
+    JSON.stringify({ id, role, token, surveysId })
+  );
+};
 
 // TODO think about one source of true,because if we change role we have 2 places
 export const isHaveAccess = (role: UserRole, status: SurveyStatus): boolean => {

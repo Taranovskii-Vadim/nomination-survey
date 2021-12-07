@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { getUserFromStorage } from "../../utils";
 import { Route, ResultData, Query } from "../types";
 
 const API_ENDPOINT = "/api";
@@ -9,6 +10,14 @@ export const axiosInstance = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+(function () {
+  const userResponse = getUserFromStorage();
+
+  if (userResponse) {
+    axiosInstance.defaults.headers["token"] = userResponse.token;
+  }
+})();
 
 export const api = async <R extends Route>(
   route: R,

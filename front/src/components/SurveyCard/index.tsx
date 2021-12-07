@@ -2,8 +2,10 @@ import React from "react";
 import { Flex } from "@chakra-ui/layout";
 
 import { SurveyRenderItem } from "../../store/surveysStore/types";
+import { firstLetterToUpperCase } from "../../utils";
 
 import { SurveyIconOutline } from "../icons";
+import Title from "../ui/Title";
 
 interface Props {
   title: SurveyRenderItem["title"];
@@ -14,17 +16,15 @@ interface Props {
 
 const SurveyCard = ({ title, isActive }: Props): JSX.Element => (
   <Flex
-    cursor={isActive ? "pointer" : "not-allowed"}
-    border="1px solid black"
     borderRadius="5px"
     direction="column"
     justifyContent="center"
     alignItems="center"
     height="80px"
+    textAlign="center"
   >
     <SurveyIconOutline size="large" />
-    {title}
-    {isActive ? "active" : "not active"}
+    <Title size="xl">{firstLetterToUpperCase(title)}</Title>
   </Flex>
 );
 

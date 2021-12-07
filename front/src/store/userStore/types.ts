@@ -5,3 +5,7 @@ export interface UserApiResponse {
   role: UserRole;
   surveysId: string[];
 }
+
+export interface UserFromStorage extends UserApiResponse {
+  token: string;
+}

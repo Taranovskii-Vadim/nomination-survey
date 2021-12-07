@@ -1,7 +1,7 @@
-import jwt, { decode } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { NextFunction, Response } from "express";
 
-import { AppRequest, DecodedToken } from "../types";
+import { AppRequest } from "../types";
 
 export const authMiddleWare = (
   req: AppRequest,
@@ -9,12 +9,9 @@ export const authMiddleWare = (
   next: NextFunction
 ) => {
   const token = req.headers.token as string;
-  const decoded = jwt.verify(token, process.env.JWT_KEY) as DecodedToken;
+  const decoded = jwt.verify(token, process.env.JWT_KEY) as AppRequest["user"];
   if (decoded) {
-    req.user = {
-      id: decoded.id,
-      surveysId: decoded.surveysId,
-    };
+    req.user = { ...decoded };
     next();
   }
 };
