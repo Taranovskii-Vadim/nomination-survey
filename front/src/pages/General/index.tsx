@@ -28,14 +28,19 @@ const General = ({ userStore }: Props): JSX.Element => {
   return (
     <Container as="main" maxWidth="container.md">
       <SimpleGrid columns={2} spacing={10} mt="10">
-        {surveysStore.data.map(({ id, title, status }) => (
-          <NavLink key={id} to={setUrlFor("surveys", id)}>
-            <SurveyCard
-              isActive={isHaveAccess(userStore.data.role, status)}
-              title={title}
-            />
-          </NavLink>
-        ))}
+        {surveysStore.data.map(({ id, title, status }) => {
+          const isActive = isHaveAccess(userStore.data.role, status);
+          // TODO think how to exclude link from dom
+          return (
+            <NavLink key={id} to={setUrlFor("surveys", id)}>
+              <SurveyCard
+                unActiveMessage="Голосование временно недоступно"
+                isActive={isActive}
+                title={title}
+              />
+            </NavLink>
+          );
+        })}
       </SimpleGrid>
     </Container>
   );

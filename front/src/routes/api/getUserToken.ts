@@ -5,7 +5,7 @@ import { setUserToStorage } from "../../utils";
 import { mapUserRole } from "../../utils/api";
 import { Route, Method } from "../types";
 
-export interface ResponseDTO {
+interface ResponseDTO {
   id: string;
   token: string;
   role: UserRoleDTO;
@@ -21,8 +21,9 @@ class GetUserToken implements Route {
 
   getData({ id, role, token, surveysId }: ResponseDTO): UserApiResponse {
     axiosInstance.defaults.headers["token"] = token;
-    setUserToStorage({ id, role, token, surveysId });
-    return { id, surveysId, role: mapUserRole(role) };
+    const mappedRole = mapUserRole(role);
+    setUserToStorage({ id, role: mappedRole, token, surveysId });
+    return { id, surveysId, role: mappedRole };
   }
 }
 

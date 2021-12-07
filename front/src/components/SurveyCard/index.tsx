@@ -1,31 +1,48 @@
 import React from "react";
-import { Flex } from "@chakra-ui/layout";
+import { Flex, Text } from "@chakra-ui/layout";
 
+import { COLORS } from "../../styles/constants";
 import { SurveyRenderItem } from "../../store/surveysStore/types";
 import { firstLetterToUpperCase } from "../../utils";
 
-import { SurveyIconOutline } from "../icons";
-import Title from "../ui/Title";
+import { SurveyIconOutline, SurveyUnActive } from "../icons";
 
 interface Props {
   title: SurveyRenderItem["title"];
   isActive: boolean;
+  unActiveMessage?: string;
 }
 
-// TODO if not active main color is grey overwise is main
+// TODO think about how split childs efficiently
 
-const SurveyCard = ({ title, isActive }: Props): JSX.Element => (
-  <Flex
-    borderRadius="5px"
-    direction="column"
-    justifyContent="center"
-    alignItems="center"
-    height="80px"
-    textAlign="center"
-  >
-    <SurveyIconOutline size="large" />
-    <Title size="xl">{firstLetterToUpperCase(title)}</Title>
-  </Flex>
-);
+const SurveyCard = ({
+  title,
+  isActive,
+  unActiveMessage = "Не активно",
+}: Props): JSX.Element => {
+  const ComponentIcon = isActive ? SurveyIconOutline : SurveyUnActive;
+
+  return (
+    <Flex
+      cursor={isActive ? "pointer" : "not-allowed"}
+      height="100%"
+      p="10px"
+      borderRadius="5px"
+      border={
+        isActive
+          ? `1px solid ${COLORS.primary}`
+          : `1px dashed ${COLORS.secondary}`
+      }
+      direction="column"
+      alignItems="center"
+      textAlign="center"
+    >
+      <ComponentIcon size="large" color={isActive ? "primary" : "secondary"} />
+      <Text fontSize="xl" color="secondary" flexGrow={1}>
+        {isActive ? firstLetterToUpperCase(title) : unActiveMessage}
+      </Text>
+    </Flex>
+  );
+};
 
 export default SurveyCard;

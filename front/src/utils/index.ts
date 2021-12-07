@@ -1,5 +1,4 @@
 import { TOKEN_KEY } from "../constants";
-import { ResponseDTO } from "../routes/api/getUserToken";
 import { UserFromStorage } from "../store/userStore/types";
 import { SurveyStatus, UserRole } from "../types";
 
@@ -19,7 +18,7 @@ export const setUserToStorage = ({
   role,
   token,
   surveysId,
-}: ResponseDTO): void => {
+}: UserFromStorage): void => {
   localStorage.setItem(
     TOKEN_KEY,
     JSON.stringify({ id, role, token, surveysId })
