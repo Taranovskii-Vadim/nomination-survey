@@ -22,6 +22,12 @@ export const mapSurveyStatus = (status: SurveyStatusDTO): SurveyStatus => {
   return surveyStatus;
 };
 
+export const isOptionTypeLong = (type: OptionType): boolean =>
+  type === "longAnswer";
+
+export const isOptionTypeShort = (type: OptionType): boolean =>
+  type === "shortAnswer";
+
 export const mapSurveyOptionType = (
   optionType: QuestionTypeDTO
 ): OptionType => {

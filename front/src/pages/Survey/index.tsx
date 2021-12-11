@@ -1,17 +1,19 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
+import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 
 import { useFetchData } from "../../utils/hooks";
+import { COLORS } from "../../styles/constants";
 import { firstLetterToUpperCase, isHaveAccess } from "../../utils";
 import SurveyStore from "../../store/surveyStore";
 import UserStore from "../../store/userStore";
 
 import { Loader } from "../../components/ui";
-import AccessDenied from "../../components/AccessDenied";
-import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 import { SurveyIconOutline } from "../../components/icons";
+import AccessDenied from "../../components/AccessDenied";
 import Title from "../../components/ui/Title";
+import QuestionsForm from "./components/QuestionsForm";
 
 const surveyStore = new SurveyStore();
 
@@ -22,26 +24,30 @@ interface Props {
 const Survey = ({ userStore }: Props): JSX.Element => {
   const { surveyId }: { surveyId: string } = useParams();
 
+  const { data } = surveyStore;
+
   useFetchData(() => surveyStore.fetchSurveyById(surveyId));
 
-  if (surveyStore.loading || !surveyStore.data) {
+  if (surveyStore.loading || !data) {
     return <Loader />;
   }
 
-  if (!isHaveAccess(userStore.data.role, surveyStore.data.status)) {
+  if (!isHaveAccess(userStore.data.role, data.status)) {
     return <AccessDenied />;
   }
 
   return (
     <Container maxWidth="container.xl" pt="50">
-      <Flex alignItems="center" mb="35">
-        <SurveyIconOutline size="large" />
-        <Box ml="15">
-          <Title>{firstLetterToUpperCase(surveyStore.data.title)}</Title>
-          <Text>test description text</Text>
+      <Flex alignItems="start" mb="35">
+        <SurveyIconOutline size="large" color={COLORS.primary} />
+        <Box ml="15" lineHeight="1" maxW="100%">
+          <Title>{firstLetterToUpperCase(data.title)}</Title>
+          <Text mt="2" lineHeight="21px">
+            {data.description}
+          </Text>
         </Box>
       </Flex>
-      <Box>block with questions</Box>
+      <QuestionsForm data={data.questions} />
     </Container>
   );
 };

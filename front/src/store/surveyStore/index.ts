@@ -7,12 +7,14 @@ import getSurveyById, {
   GetSurveyByIdDTO,
 } from "../../routes/api/getSurveyById";
 
-import { Question, Survey } from "./types";
+import { HashedQuestion, Question, Survey } from "./types";
 
 class SurveyStore {
   loading = false;
 
   data: Survey | undefined = undefined;
+
+  hashedQuestions: HashedQuestion = {};
 
   constructor() {
     makeObservable(this, {
@@ -28,7 +30,12 @@ class SurveyStore {
 
   fetchSurveyQuestionById = async (id: string): Promise<Question> => {
     try {
-      const result: Question = await api(getQuestionById, undefined, { id });
+      let result: Question = this.hashedQuestions[id];
+      if (!result) {
+        result = await api(getQuestionById, undefined, { id });
+        this.hashedQuestions[id] = result;
+      }
+
       return result;
     } catch (e) {
       console.error(getErrorMessageWithId("question", id));

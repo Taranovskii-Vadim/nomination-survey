@@ -1,9 +1,10 @@
 import { Router, Response } from "express";
+import Question from "../models/Question";
 import { AppRequest } from "../types";
 
 const router = Router();
 
-router.get("/:id", ({ params, user }: AppRequest, res: Response) => {
+router.get("/:id", async ({ params, user }: AppRequest, res: Response) => {
   try {
     const { id } = params;
 
@@ -11,7 +12,9 @@ router.get("/:id", ({ params, user }: AppRequest, res: Response) => {
       throw new Error("Question id is required");
     }
 
-    res.json({ id, description: "question", options: "long" });
+    const question = await Question.findById(id);
+
+    res.json(question);
   } catch (e) {
     console.log(e);
   }

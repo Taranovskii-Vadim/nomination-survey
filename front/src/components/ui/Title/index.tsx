@@ -6,10 +6,13 @@ interface Props {
   color?: string;
 }
 
-const Title: React.FC<Props> = ({ children, color, size = "3xl" }) => {
-  const textColor = color || "secondary";
+const Title: React.FC<Props> = ({
+  children,
+  color = "black",
+  size = "3xl",
+}) => {
   return (
-    <Text fontSize={size} color={textColor}>
+    <Text fontSize={size} color={color}>
       {children}
     </Text>
   );

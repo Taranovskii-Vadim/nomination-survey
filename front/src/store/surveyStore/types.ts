@@ -19,6 +19,10 @@ export interface Question {
   options: Option[] | OptionType;
 }
 
+export interface HashedQuestion {
+  [key: string]: Question;
+}
+
 export interface Survey extends CommonSurveyFields {
   description?: string;
   questions: Question[];

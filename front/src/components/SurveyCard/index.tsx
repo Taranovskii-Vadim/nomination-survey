@@ -37,7 +37,10 @@ const SurveyCard = ({
       alignItems="center"
       textAlign="center"
     >
-      <ComponentIcon size="large" color={isActive ? "primary" : "secondary"} />
+      <ComponentIcon
+        size="large"
+        color={isActive ? COLORS.primary : COLORS.secondary}
+      />
       <Text fontSize="xl" color="secondary" flexGrow={1}>
         {isActive ? firstLetterToUpperCase(title) : unActiveMessage}
       </Text>
