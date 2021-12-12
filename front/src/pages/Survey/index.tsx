@@ -46,7 +46,13 @@ const Survey = ({ userStore }: Props): JSX.Element => {
           </Text>
         </Box>
       </Flex>
-      <QuestionsForm data={data.questions} />
+      <QuestionsForm
+        data={data.questions}
+        isSubmiting={surveyStore.formLoading}
+        sendSurveyResults={(data) => {
+          surveyStore.sendUserAnswer(data);
+        }}
+      />
     </Container>
   );
 };

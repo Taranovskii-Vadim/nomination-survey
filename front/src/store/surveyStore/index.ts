@@ -6,11 +6,14 @@ import getQuestionById from "../../routes/api/getQuestionById";
 import getSurveyById, {
   GetSurveyByIdDTO,
 } from "../../routes/api/getSurveyById";
+import postSurveyResults from "../../routes/api/postSurveyResults";
 
-import { HashedQuestion, Question, Survey } from "./types";
+import { HashedQuestion, Question, Survey, SurveyResult } from "./types";
 
 class SurveyStore {
   loading = false;
+
+  formLoading = false;
 
   data: Survey | undefined = undefined;
 
@@ -19,13 +22,19 @@ class SurveyStore {
   constructor() {
     makeObservable(this, {
       loading: observable,
+      formLoading: observable,
 
       setLoading: action,
+      setFormLoading: action,
     });
   }
 
   setLoading = (value: boolean): void => {
     this.loading = value;
+  };
+
+  setFormLoading = (value: boolean): void => {
+    this.formLoading = value;
   };
 
   fetchSurveyQuestionById = async (id: string): Promise<Question> => {
@@ -63,6 +72,18 @@ class SurveyStore {
       console.log(e);
     } finally {
       this.setLoading(false);
+    }
+  };
+
+  sendUserAnswer = async (data: SurveyResult) => {
+    try {
+      this.setFormLoading(true);
+      const id = this.data.id;
+      await api(postSurveyResults, data, { id });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.setFormLoading(false);
     }
   };
 }

@@ -6,7 +6,15 @@ interface Props extends ButtonProps {
 }
 
 export const areEqual = (prev: Props, next: Props): boolean => {
-  return prev.label === next.label || prev.isLoading === next.isLoading;
+  if (prev.label === next.label) {
+    return false;
+  }
+
+  if (prev.isLoading === next.isLoading) {
+    return false;
+  }
+
+  return true;
 };
 
 const Button = ({ label, ...props }: Props): JSX.Element => {

@@ -39,4 +39,17 @@ router.get(
   }
 );
 
+router.post(
+  "/:surveyId",
+  async ({ params, body, user }: AppRequest, res: Response) => {
+    try {
+      const { surveyId } = params;
+      // console.log(body);
+      res.json({});
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
+  }
+);
+
 export default router;

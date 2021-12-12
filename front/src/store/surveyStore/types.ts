@@ -9,8 +9,12 @@ export interface CommonSurveyFields {
 export type OptionType = "shortAnswer" | "longAnswer";
 
 export interface Option {
-  readonly id: string;
-  title: string;
+  value: number;
+  label: string;
+}
+
+export interface SurveyResult {
+  [key: string]: string | number;
 }
 
 export interface Question {

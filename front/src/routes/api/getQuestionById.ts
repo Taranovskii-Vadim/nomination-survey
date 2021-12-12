@@ -4,8 +4,8 @@ import { mapSurveyOptionType } from "../../utils/api";
 import { Route, Method } from "../types";
 
 interface OptionDTO {
-  id: string;
-  title: string;
+  value: number;
+  label: string;
 }
 
 interface ResponseDTO {
