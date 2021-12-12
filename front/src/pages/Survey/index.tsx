@@ -36,10 +36,18 @@ const Survey = ({ userStore }: Props): JSX.Element => {
   }
 
   return (
-    <Container maxWidth="container.xl" pt="50">
+    <Container
+      maxWidth={{
+        xl: "container.xl",
+        lg: "container.lg",
+        sm: "container.sm",
+      }}
+      pt="50"
+      pb="50"
+    >
       <Flex alignItems="start" mb="35">
         <SurveyIconOutline size="large" color={COLORS.primary} />
-        <Box ml="15" lineHeight="1" maxW="100%">
+        <Box ml="15" lineHeight="1" maxW="95%">
           <Title label={firstLetterToUpperCase(data.title)} />
           <Text mt="2" lineHeight="21px">
             {data.description}
@@ -49,6 +57,8 @@ const Survey = ({ userStore }: Props): JSX.Element => {
       <QuestionsForm
         data={data.questions}
         isSubmiting={surveyStore.formLoading}
+        surveyStatus={surveyStore.data.status}
+        userRole={userStore.data.role}
         sendSurveyResults={(data) => {
           surveyStore.sendUserAnswer(data);
         }}

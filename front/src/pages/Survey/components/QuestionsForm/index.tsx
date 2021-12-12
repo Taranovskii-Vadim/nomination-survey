@@ -2,78 +2,79 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import { useFormik } from "formik";
 
-import { Question, SurveyResult } from "../../../../store/surveyStore/types";
-
-import { Button, Dropdown, Input, Textarea } from "../../../../components/ui";
-import FormItemTitle from "../FormItemTitle";
-
+import {
+  FormLoading,
+  Question,
+  SurveyResult,
+} from "../../../../store/surveyStore/types";
+import { SurveyStatus, UserRole } from "../../../../types";
 import { isOptionTypeShort } from "../../../../utils/api";
+
+import { Dropdown, Input, Textarea } from "../../../../components/ui";
+import FormItemTitle from "../FormItemTitle";
+import FormFooter from "../FormFooter";
 
 interface Props {
   data: Question[];
-  isSubmiting: boolean;
+  userRole: UserRole;
+  isSubmiting: FormLoading;
+  surveyStatus: SurveyStatus;
   sendSurveyResults: (data: SurveyResult) => void;
 }
 
 const QuestionsForm = ({
   data,
   isSubmiting,
+  userRole,
+  surveyStatus,
   sendSurveyResults,
 }: Props): JSX.Element => {
   const { values, handleChange, handleSubmit } = useFormik<SurveyResult>({
     initialValues: {},
     onSubmit: (data) => {
-      console.log(data);
       sendSurveyResults(data);
     },
   });
 
+  const isAdmin = userRole === "admin";
+
   return (
     <form onSubmit={handleSubmit}>
-      {data.map(({ id, description, options }) => {
-        const isArray = Array.isArray(options);
-        // TODO think about this code
-        if (isArray) {
-          return (
-            <Box mb={2}>
-              <FormItemTitle name={id} label={description} />
-              <Dropdown
-                name={id}
-                options={options}
-                value={values[id]}
-                onChange={handleChange}
-              />
-            </Box>
-          );
-        }
-
-        return (
-          <Box mb={2}>
-            <FormItemTitle name={id} label={description} />
-            {isOptionTypeShort(options) ? (
-              <Input
-                type="text"
-                id={id}
-                name={id}
-                value={values[id]}
-                onChange={handleChange}
-              />
-            ) : (
-              <Textarea
-                id={id}
-                name={id}
-                value={values[id]}
-                onChange={handleChange}
-              />
-            )}
-          </Box>
-        );
-      })}
-      <Button
-        label="Завершить"
-        type="submit"
-        isLoading={isSubmiting}
-        mr="auto"
+      {data.map(({ id, description, options }) => (
+        <Box mb={5} _last={{ mb: 0 }}>
+          <FormItemTitle name={id} label={description} />
+          {Array.isArray(options) ? (
+            <Dropdown
+              name={id}
+              options={options}
+              value={values[id]}
+              isDisabled={isAdmin}
+              onChange={handleChange}
+            />
+          ) : isOptionTypeShort(options) ? (
+            <Input
+              type="text"
+              id={id}
+              name={id}
+              value={values[id]}
+              isDisabled={isAdmin}
+              onChange={handleChange}
+            />
+          ) : (
+            <Textarea
+              id={id}
+              name={id}
+              value={values[id]}
+              isDisabled={isAdmin}
+              onChange={handleChange}
+            />
+          )}
+        </Box>
+      ))}
+      <FormFooter
+        isSubmiting={isSubmiting}
+        isAdmin={isAdmin}
+        surveyStatus={surveyStatus}
       />
     </form>
   );

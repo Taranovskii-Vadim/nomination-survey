@@ -17,6 +17,13 @@ export interface SurveyResult {
   [key: string]: string | number;
 }
 
+export type FormLoading = "" | "finish" | "download" | "nextStatus";
+
+export interface ButtonRender {
+  label: string;
+  to: SurveyStatus;
+}
+
 export interface Question {
   readonly id: string;
   description: string;

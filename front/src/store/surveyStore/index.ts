@@ -8,12 +8,18 @@ import getSurveyById, {
 } from "../../routes/api/getSurveyById";
 import postSurveyResults from "../../routes/api/postSurveyResults";
 
-import { HashedQuestion, Question, Survey, SurveyResult } from "./types";
+import {
+  FormLoading,
+  HashedQuestion,
+  Question,
+  Survey,
+  SurveyResult,
+} from "./types";
 
 class SurveyStore {
   loading = false;
 
-  formLoading = false;
+  formLoading: FormLoading = "";
 
   data: Survey | undefined = undefined;
 
@@ -33,7 +39,7 @@ class SurveyStore {
     this.loading = value;
   };
 
-  setFormLoading = (value: boolean): void => {
+  setFormLoading = (value: FormLoading): void => {
     this.formLoading = value;
   };
 
@@ -77,13 +83,13 @@ class SurveyStore {
 
   sendUserAnswer = async (data: SurveyResult) => {
     try {
-      this.setFormLoading(true);
+      this.setFormLoading("finish");
       const id = this.data.id;
       await api(postSurveyResults, data, { id });
     } catch (e) {
       console.log(e);
     } finally {
-      this.setFormLoading(false);
+      this.setFormLoading("");
     }
   };
 }
