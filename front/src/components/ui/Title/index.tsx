@@ -1,19 +1,20 @@
-import React from "react";
-import { Text } from "@chakra-ui/layout";
+import React, { ReactNode } from "react";
 
-interface Props {
-  size?: string | number;
-  color?: string;
+import { Text, TextProps } from "@chakra-ui/layout";
+
+interface Props extends TextProps {
+  label: string | ReactNode;
 }
 
-const Title: React.FC<Props> = ({
-  children,
+const Title = ({
+  label,
   color = "black",
   size = "3xl",
-}) => {
+  ...props
+}: Props): JSX.Element => {
   return (
-    <Text fontSize={size} color={color}>
-      {children}
+    <Text fontSize={size} color={color} {...props}>
+      {label}
     </Text>
   );
 };

@@ -9,10 +9,9 @@ import { firstLetterToUpperCase, isHaveAccess } from "../../utils";
 import SurveyStore from "../../store/surveyStore";
 import UserStore from "../../store/userStore";
 
-import { Loader } from "../../components/ui";
+import { Loader, Title } from "../../components/ui";
 import { SurveyIconOutline } from "../../components/icons";
 import AccessDenied from "../../components/AccessDenied";
-import Title from "../../components/ui/Title";
 import QuestionsForm from "./components/QuestionsForm";
 
 const surveyStore = new SurveyStore();
@@ -41,7 +40,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
       <Flex alignItems="start" mb="35">
         <SurveyIconOutline size="large" color={COLORS.primary} />
         <Box ml="15" lineHeight="1" maxW="100%">
-          <Title>{firstLetterToUpperCase(data.title)}</Title>
+          <Title label={firstLetterToUpperCase(data.title)} />
           <Text mt="2" lineHeight="21px">
             {data.description}
           </Text>

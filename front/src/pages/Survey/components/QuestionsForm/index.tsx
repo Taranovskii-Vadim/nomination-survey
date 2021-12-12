@@ -1,16 +1,12 @@
-import {
-  Button,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Input,
-  Textarea,
-} from "@chakra-ui/react";
-import { Field, Form, Formik } from "formik";
 import React from "react";
+import { useFormik } from "formik";
 
 import { Question } from "../../../../store/surveyStore/types";
-import { firstLetterToUpperCase } from "../../../../utils";
+
+import { Button, Input, Textarea } from "../../../../components/ui";
+import FormItemTitle from "../FormItemTitle";
+
+import { FormProps } from "./types";
 import { isOptionTypeShort } from "../../../../utils/api";
 
 interface Props {
@@ -18,44 +14,47 @@ interface Props {
 }
 
 const QuestionsForm = ({ data }: Props): JSX.Element => {
-  const onFormSubmit = (data: any): void => {
-    console.log(data);
-  };
+  const { values, isSubmitting, handleChange, handleSubmit } =
+    useFormik<FormProps>({
+      initialValues: {},
+      onSubmit: (data) => {
+        console.log(data);
+      },
+    });
 
   return (
-    <Formik initialValues={{}} onSubmit={onFormSubmit}>
-      {(props) => (
-        <Form>
-          {data.map(({ id, description, options }) => {
-            return (
-              <Field key={id} name={id}>
-                {({ field, form }) => (
-                  <FormControl
-                    isInvalid={form.errors.name && form.touched.name}
-                  >
-                    <FormLabel htmlFor={id}>
-                      {firstLetterToUpperCase(description)}
-                    </FormLabel>
-                    {/* TODO improve this code */}
-                    {Array.isArray(options) ? (
-                      <Input {...field} id={id} />
-                    ) : isOptionTypeShort(options) ? (
-                      <Input {...field} id={id} />
-                    ) : (
-                      <Textarea {...field} id={id} />
-                    )}
-                    <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
-            );
-          })}
-          <Button mt={4} isLoading={props.isSubmitting} type="submit">
-            Submit
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <form onSubmit={handleSubmit}>
+      {data.map(({ id, description, options }) => {
+        const isArray = Array.isArray(options);
+
+        if (isArray) {
+          return <>radio</>;
+        }
+
+        return (
+          <>
+            <FormItemTitle name={id} label={description} />
+            {isOptionTypeShort(options) ? (
+              <Input
+                type="text"
+                id={id}
+                name={id}
+                value={values[id]}
+                onChange={handleChange}
+              />
+            ) : (
+              <Textarea
+                id={id}
+                name={id}
+                value={values[id]}
+                onChange={handleChange}
+              />
+            )}
+          </>
+        );
+      })}
+      <Button label="Завершить" type="submit" isLoading={isSubmitting} />
+    </form>
   );
 };
 
