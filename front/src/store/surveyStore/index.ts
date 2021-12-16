@@ -7,6 +7,10 @@ import getSurveyById, {
   GetSurveyByIdDTO,
 } from "../../routes/api/getSurveyById";
 import postSurveyResults from "../../routes/api/postSurveyResults";
+import putNextSurveyStatus from "../../routes/api/putNextSurveyStatus";
+
+import { SurveyStatus } from "../../types";
+import { mapSurveyStatusForBack } from "../../utils/api";
 
 import {
   FormLoading,
@@ -15,7 +19,6 @@ import {
   Survey,
   SurveyResult,
 } from "./types";
-
 class SurveyStore {
   loading = false;
 
@@ -57,14 +60,14 @@ class SurveyStore {
     }
   };
 
-  fetchSurveyById = async (id: string): Promise<void | null> => {
+  fetchSurveyById = async (surveyId: string): Promise<void | null> => {
     // TODO we can hash our results
     // if (this.data && this.data.id === id) return null;
 
     try {
       this.setLoading(true);
       const survey: GetSurveyByIdDTO = await api(getSurveyById, undefined, {
-        id,
+        surveyId,
       });
 
       const questions = await Promise.all(
@@ -84,8 +87,24 @@ class SurveyStore {
   sendUserAnswer = async (data: SurveyResult) => {
     try {
       this.setFormLoading("finish");
-      const id = this.data.id;
-      await api(postSurveyResults, data, { id });
+      const surveyId = this.data.id;
+      await api(postSurveyResults, data, { surveyId });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.setFormLoading("");
+    }
+  };
+
+  setNextSurveyStatus = async (status: SurveyStatus) => {
+    try {
+      this.setFormLoading("nextStatus");
+      const surveyId = this.data.id;
+      const nextStatus = mapSurveyStatusForBack(status);
+      await api(putNextSurveyStatus, { nextStatus }, { surveyId });
+      runInAction(() => {
+        this.data.status = status;
+      });
     } catch (e) {
       console.log(e);
     } finally {

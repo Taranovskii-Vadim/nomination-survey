@@ -62,6 +62,9 @@ const Survey = ({ userStore }: Props): JSX.Element => {
         sendSurveyResults={(data) => {
           surveyStore.sendUserAnswer(data);
         }}
+        setNextStatus={(data) => {
+          surveyStore.setNextSurveyStatus(data);
+        }}
       />
     </Container>
   );

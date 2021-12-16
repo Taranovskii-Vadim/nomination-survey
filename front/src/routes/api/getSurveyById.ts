@@ -1,7 +1,7 @@
 import { Survey } from "../../store/surveyStore/types";
 import { SurveyStatusDTO } from "../../types";
 import { mapSurveyStatus } from "../../utils/api";
-import { Route, Method } from "../types";
+import { Route, Method, SurveyIdQuery } from "../types";
 
 interface ResponseDTO {
   id: string;
@@ -18,8 +18,8 @@ export type GetSurveyByIdDTO = Omit<Survey, "questions"> & {
 class GetSurveyById implements Route {
   method: Method = "GET";
 
-  getUrl({ id }: { id: string }): string {
-    return `/survey/${id}`;
+  getUrl({ surveyId }: SurveyIdQuery): string {
+    return `/survey/${surveyId}`;
   }
 
   getData(data: ResponseDTO): GetSurveyByIdDTO {

@@ -2,7 +2,13 @@ import { NAVIGATION_ITEMS } from "./constants";
 
 export type TargetPage = keyof typeof NAVIGATION_ITEMS;
 
-export type Method = "GET" | "POST";
+export interface SurveyIdQuery {
+  surveyId: string;
+}
+
+export interface EmptyResponseDTO {}
+
+export type Method = "GET" | "POST" | "PUT";
 
 export type ResultData = object | string | number;
 

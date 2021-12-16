@@ -11,12 +11,14 @@ interface Props {
   isSubmiting: FormLoading;
   isAdmin: boolean;
   surveyStatus: SurveyStatus;
+  setNextStatus: (nextStatus: SurveyStatus) => void;
 }
 
 const FormFooter = ({
   isAdmin,
   isSubmiting,
   surveyStatus,
+  setNextStatus,
 }: Props): JSX.Element => {
   const button = getButtons(surveyStatus);
 
@@ -33,6 +35,7 @@ const FormFooter = ({
             <Button
               label={button.label}
               isLoading={isSubmiting === "nextStatus"}
+              onClick={() => setNextStatus(button.to)}
             />
           ) : null}
         </>

@@ -1,13 +1,13 @@
-import { Method, Route } from "../types";
+import { EmptyResponseDTO, Method, Route, SurveyIdQuery } from "../types";
 
 class PostSurveyResults implements Route {
   method: Method = "POST";
 
-  getUrl({ id }: { id: string }): string {
-    return `/survey/${id}`;
+  getUrl({ surveyId }: SurveyIdQuery): string {
+    return `/survey/${surveyId}`;
   }
 
-  getData(): null {
+  getData(data: EmptyResponseDTO): null {
     return null;
   }
 }

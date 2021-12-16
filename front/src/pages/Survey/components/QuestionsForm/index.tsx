@@ -20,6 +20,7 @@ interface Props {
   isSubmiting: FormLoading;
   surveyStatus: SurveyStatus;
   sendSurveyResults: (data: SurveyResult) => void;
+  setNextStatus: (nextStatus: SurveyStatus) => void;
 }
 
 const QuestionsForm = ({
@@ -28,6 +29,7 @@ const QuestionsForm = ({
   userRole,
   surveyStatus,
   sendSurveyResults,
+  setNextStatus,
 }: Props): JSX.Element => {
   const { values, handleChange, handleSubmit } = useFormik<SurveyResult>({
     initialValues: {},
@@ -41,7 +43,7 @@ const QuestionsForm = ({
   return (
     <form onSubmit={handleSubmit}>
       {data.map(({ id, description, options }) => (
-        <Box mb={5} _last={{ mb: 0 }}>
+        <Box key={id} mb={5} _last={{ mb: 0 }}>
           <FormItemTitle name={id} label={description} />
           {Array.isArray(options) ? (
             <Dropdown
@@ -75,6 +77,7 @@ const QuestionsForm = ({
         isSubmiting={isSubmiting}
         isAdmin={isAdmin}
         surveyStatus={surveyStatus}
+        setNextStatus={setNextStatus}
       />
     </form>
   );
