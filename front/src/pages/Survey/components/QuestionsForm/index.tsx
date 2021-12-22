@@ -21,6 +21,7 @@ interface Props {
   surveyStatus: SurveyStatus;
   sendSurveyResults: (data: SurveyResult) => void;
   setNextStatus: (nextStatus: SurveyStatus) => void;
+  downloadResults: () => void;
 }
 
 const QuestionsForm = ({
@@ -30,6 +31,7 @@ const QuestionsForm = ({
   surveyStatus,
   sendSurveyResults,
   setNextStatus,
+  downloadResults,
 }: Props): JSX.Element => {
   const { values, handleChange, handleSubmit } = useFormik<SurveyResult>({
     initialValues: {},
@@ -78,6 +80,7 @@ const QuestionsForm = ({
         isAdmin={isAdmin}
         surveyStatus={surveyStatus}
         setNextStatus={setNextStatus}
+        downloadResults={downloadResults}
       />
     </form>
   );

@@ -9,12 +9,7 @@ import { getSurveysRender } from "../models/Survey/helpers";
 import { SurveyDataBase } from "../models/Survey/types";
 
 import { AppRequest } from "../types";
-// TODO move to another folder maybe
-const filePath = path.resolve(__dirname, "..", "results.txt");
-
-const writeFile = (path: string, data: object): void => {
-  fs.writeFile(path, JSON.stringify(data), (err) => {});
-};
+import FileReader from "../models/FileReader";
 
 const router = Router();
 
@@ -30,15 +25,27 @@ router.get("/", async ({ user }: AppRequest, res: Response) => {
   }
 });
 
+router.get("/download/:surveyId", ({ params }: AppRequest, res: Response) => {
+  try {
+    const { surveyId } = params;
+    // TODO think how to download file from server
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 router
   .route("/:surveyId")
   .get(async ({ params, user }: AppRequest, res: Response) => {
     try {
       const { surveyId } = params;
+      const { id } = user;
 
       if (!surveyId) {
         throw new Error("Survey id is required");
       }
+
+      // const filePath =
 
       const survey: SurveyDataBase = await Survey.findById(surveyId);
 
@@ -50,7 +57,7 @@ router
   .post(async ({ params, body, user }: AppRequest, res: Response) => {
     try {
       const { surveyId } = params;
-      const { login } = user;
+      const { login, id } = user;
       const survey = (await Survey.findById(surveyId)) as SurveyDataBase;
 
       const questionPromiseResult = await Promise.all<Question>(
@@ -61,7 +68,8 @@ router
         ({ id, description }) => ({ description, answer: body[id] })
       );
 
-      writeFile(filePath, {
+      await FileReader.writeFileToRoot("results", `${surveyId}.json`, {
+        id,
         login,
         title: survey.title,
         answers: questionFilePayload,

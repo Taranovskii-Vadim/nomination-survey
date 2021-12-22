@@ -5,4 +5,8 @@ export const NAVIGATION_ITEMS = {
     title: "Все опросы",
     path: PREFIX,
   },
+  completed: {
+    title: "Опрос пройден",
+    path: `${PREFIX}completed`,
+  },
 };

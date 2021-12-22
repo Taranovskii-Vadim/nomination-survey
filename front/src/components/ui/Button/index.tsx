@@ -10,6 +10,10 @@ export const areEqual = (prev: Props, next: Props): boolean => {
     return false;
   }
 
+  if (prev.disabled !== next.disabled) {
+    return false;
+  }
+
   if (prev.label !== next.label) {
     return false;
   }

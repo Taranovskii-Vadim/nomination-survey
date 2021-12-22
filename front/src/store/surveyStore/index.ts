@@ -6,6 +6,7 @@ import getQuestionById from "../../routes/api/getQuestionById";
 import getSurveyById, {
   GetSurveyByIdDTO,
 } from "../../routes/api/getSurveyById";
+import getSurveyResults from "../../routes/api/getSurveyResults";
 import postSurveyResults from "../../routes/api/postSurveyResults";
 import putNextSurveyStatus from "../../routes/api/putNextSurveyStatus";
 
@@ -84,11 +85,12 @@ class SurveyStore {
     }
   };
 
-  sendUserAnswer = async (data: SurveyResult) => {
+  sendUserAnswer = async (data: SurveyResult, callback: () => void) => {
     try {
       this.setFormLoading("finish");
       const surveyId = this.data.id;
       await api(postSurveyResults, data, { surveyId });
+      callback();
     } catch (e) {
       console.log(e);
     } finally {
@@ -105,6 +107,18 @@ class SurveyStore {
       runInAction(() => {
         this.data.status = status;
       });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.setFormLoading("");
+    }
+  };
+
+  downloadSurveyResults = async () => {
+    try {
+      this.setFormLoading("download");
+      const surveyId = this.data.id;
+      await api(getSurveyResults, undefined, { surveyId });
     } catch (e) {
       console.log(e);
     } finally {
