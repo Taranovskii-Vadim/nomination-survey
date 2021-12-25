@@ -3,7 +3,7 @@ import { SurveyStatusDTO } from "../../types";
 import { mapSurveyStatus } from "../../utils/api";
 import { Route, Method, SurveyIdQuery } from "../types";
 
-interface ResponseDTO {
+interface SurveyResponseDTO {
   id: string;
   title: string;
   status: SurveyStatusDTO;
@@ -11,9 +11,19 @@ interface ResponseDTO {
   questions: string[];
 }
 
-export type GetSurveyByIdDTO = Omit<Survey, "questions"> & {
+interface ResponseDTO {
+  isUserVoted: boolean;
+  survey: SurveyResponseDTO;
+}
+
+type GetSurveyByIdData = Omit<Survey, "questions"> & {
   questions: string[];
 };
+
+export interface GetSurveyByIdDTO {
+  isUserVoted: boolean;
+  data: GetSurveyByIdData;
+}
 
 class GetSurveyById implements Route {
   method: Method = "GET";
@@ -22,10 +32,13 @@ class GetSurveyById implements Route {
     return `/survey/${surveyId}`;
   }
 
-  getData(data: ResponseDTO): GetSurveyByIdDTO {
+  getData({ isUserVoted, survey }: ResponseDTO): GetSurveyByIdDTO {
     return {
-      ...data,
-      status: mapSurveyStatus(data.status),
+      isUserVoted,
+      data: {
+        ...survey,
+        status: mapSurveyStatus(survey.status),
+      },
     };
   }
 }

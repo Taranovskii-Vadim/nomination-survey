@@ -1,12 +1,11 @@
 import React from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 
 import { useFetchData } from "../../utils/hooks";
 import { COLORS } from "../../styles/constants";
 import { firstLetterToUpperCase, isHaveAccess } from "../../utils";
-import { getUrlFor, setUrlFor } from "../../routes";
 import SurveyStore from "../../store/surveyStore";
 import UserStore from "../../store/userStore";
 
@@ -61,10 +60,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
         surveyStatus={surveyStore.data.status}
         userRole={userStore.data.role}
         sendSurveyResults={(data) => {
-          surveyStore.sendUserAnswer(data, () => {
-            // @ts-ignore
-            window.location = getUrlFor("completed");
-          });
+          surveyStore.sendUserAnswer(data);
         }}
         setNextStatus={(data) => {
           surveyStore.setNextSurveyStatus(data);

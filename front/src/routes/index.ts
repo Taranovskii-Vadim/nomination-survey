@@ -17,3 +17,8 @@ export const setUrlFor = (page: TargetPage, id?: string): string => {
   const tail = id || "";
   return `${path}${tail}`;
 };
+
+export const redirectToCompletedPage = (): void => {
+  // @ts-ignore
+  window.location = getUrlFor("completed");
+};

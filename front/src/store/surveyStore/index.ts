@@ -1,5 +1,7 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
+
 import { getErrorMessageWithId } from "../../constants";
+import { redirectToCompletedPage } from "../../routes";
 
 import { api } from "../../routes/api";
 import getQuestionById from "../../routes/api/getQuestionById";
@@ -67,16 +69,25 @@ class SurveyStore {
 
     try {
       this.setLoading(true);
-      const survey: GetSurveyByIdDTO = await api(getSurveyById, undefined, {
-        surveyId,
-      });
+      const { isUserVoted, data }: GetSurveyByIdDTO = await api(
+        getSurveyById,
+        undefined,
+        {
+          surveyId,
+        }
+      );
+
+      if (isUserVoted) {
+        redirectToCompletedPage();
+        return;
+      }
 
       const questions = await Promise.all(
-        survey.questions.map((item) => this.fetchSurveyQuestionById(item))
+        data.questions.map((item) => this.fetchSurveyQuestionById(item))
       );
 
       runInAction(() => {
-        this.data = { ...survey, questions };
+        this.data = { ...data, questions };
       });
     } catch (e) {
       console.log(e);
@@ -85,12 +96,12 @@ class SurveyStore {
     }
   };
 
-  sendUserAnswer = async (data: SurveyResult, callback: () => void) => {
+  sendUserAnswer = async (data: SurveyResult) => {
     try {
       this.setFormLoading("finish");
       const surveyId = this.data.id;
       await api(postSurveyResults, data, { surveyId });
-      callback();
+      redirectToCompletedPage();
     } catch (e) {
       console.log(e);
     } finally {

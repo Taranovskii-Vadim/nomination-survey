@@ -1,15 +1,17 @@
 import { Response, Router } from "express";
-import path from "path";
-import fs from "fs";
 
 import Survey from "../models/Survey";
 import QuestionModel from "../models/Question";
+import FileReader from "../models/FileReader";
 import { Question } from "../models/Question/types";
 import { getSurveysRender } from "../models/Survey/helpers";
-import { SurveyDataBase } from "../models/Survey/types";
+import { FileData, SurveyDataBase } from "../models/Survey/types";
 
 import { AppRequest } from "../types";
-import FileReader from "../models/FileReader";
+
+const CATALOG = "results";
+
+const getFileName = (id: string): string => `${id}.json`;
 
 const router = Router();
 
@@ -41,15 +43,29 @@ router
       const { surveyId } = params;
       const { id } = user;
 
+      let isUserVoted = false;
+
       if (!surveyId) {
         throw new Error("Survey id is required");
       }
 
-      // const filePath =
+      const isFileExists = await FileReader.checkFileInRoot(
+        CATALOG,
+        getFileName(surveyId)
+      );
 
       const survey: SurveyDataBase = await Survey.findById(surveyId);
 
-      res.json(survey);
+      if (isFileExists) {
+        const { users } = await FileReader.readFileFromRoot<FileData>(
+          CATALOG,
+          getFileName(surveyId)
+        );
+
+        isUserVoted = !!users.find((item) => item.id === id) || false;
+      }
+
+      res.json({ survey, isUserVoted });
     } catch (e) {
       res.status(500).send(e.message);
     }
@@ -58,6 +74,7 @@ router
     try {
       const { surveyId } = params;
       const { login, id } = user;
+      let users: FileData["users"] = [];
       const survey = (await Survey.findById(surveyId)) as SurveyDataBase;
 
       const questionPromiseResult = await Promise.all<Question>(
@@ -68,11 +85,22 @@ router
         ({ id, description }) => ({ description, answer: body[id] })
       );
 
-      await FileReader.writeFileToRoot("results", `${surveyId}.json`, {
-        id,
-        login,
+      const isFileExists = await FileReader.checkFileInRoot(
+        CATALOG,
+        getFileName(surveyId)
+      );
+
+      if (isFileExists) {
+        const fileData = await FileReader.readFileFromRoot<FileData>(
+          CATALOG,
+          getFileName(surveyId)
+        );
+        users = [...fileData.users];
+      }
+
+      await FileReader.writeFileToRoot(CATALOG, getFileName(surveyId), {
         title: survey.title,
-        answers: questionFilePayload,
+        users: [...users, { id, login, answers: questionFilePayload }],
       });
 
       res.json({});
