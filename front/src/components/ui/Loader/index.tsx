@@ -1,15 +1,16 @@
 import React from "react";
-import { Spinner, SpinnerProps } from "@chakra-ui/react";
+import { Spinner, SpinnerProps, Text } from "@chakra-ui/react";
 
 import { ColorType } from "../../../styles/types";
 
 import FullPageContainer from "../../FullPageContainer";
 
 interface Props extends SpinnerProps {
+  text?: string;
   color?: ColorType;
 }
 
-const Loader = ({ color = "primary", ...props }: Props): JSX.Element => (
+const Loader = ({ color = "primary", text, ...props }: Props): JSX.Element => (
   <FullPageContainer>
     <Spinner
       speed="1s"
@@ -18,6 +19,7 @@ const Loader = ({ color = "primary", ...props }: Props): JSX.Element => (
       color={color}
       {...props}
     />
+    {Text ? <Text>{text}</Text> : null}
   </FullPageContainer>
 );
 

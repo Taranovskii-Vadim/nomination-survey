@@ -6,7 +6,7 @@ interface Props {
 }
 
 const FullPageContainer: React.FC<Props> = ({
-  direction = "row",
+  direction = "column",
   children,
 }) => (
   <Flex

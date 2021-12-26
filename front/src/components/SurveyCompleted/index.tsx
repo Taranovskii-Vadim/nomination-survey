@@ -1,18 +1,18 @@
 import React from "react";
-import { Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+import { Text } from "@chakra-ui/react";
 
 import { setUrlFor } from "../../routes";
 
-import { LockIcon } from "../icons";
+import { TickIcon } from "../icons";
 import { Button } from "../ui";
 import FullPageContainer from "../FullPageContainer";
 
-const AccessDenied = (): JSX.Element => (
+const SurveyCompleted = (): JSX.Element => (
   <FullPageContainer>
-    <LockIcon size="large" color="primary" />
+    <TickIcon size="large" color="primary" />
     <Text mt="4" mb="4">
-      К сожалению на данный момент вы не можете принять участие в опросе
+      Спасибо за прохождение опроса
     </Text>
     <NavLink to={setUrlFor("surveys")}>
       <Button label="На главную" />
@@ -20,4 +20,4 @@ const AccessDenied = (): JSX.Element => (
   </FullPageContainer>
 );
 
-export default AccessDenied;
+export default SurveyCompleted;

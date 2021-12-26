@@ -5,7 +5,7 @@ import { COLORS } from "../../styles/constants";
 import { SurveyRenderItem } from "../../store/surveysStore/types";
 import { firstLetterToUpperCase } from "../../utils";
 
-import { SurveyIconOutline, SurveyUnActive } from "../icons";
+import { SurveyIcon, DisabledIcon } from "../icons";
 
 interface Props {
   title: SurveyRenderItem["title"];
@@ -20,7 +20,7 @@ const SurveyCard = ({
   isActive,
   unActiveMessage = "Не активно",
 }: Props): JSX.Element => {
-  const ComponentIcon = isActive ? SurveyIconOutline : SurveyUnActive;
+  const ComponentIcon = isActive ? SurveyIcon : DisabledIcon;
 
   return (
     <Flex

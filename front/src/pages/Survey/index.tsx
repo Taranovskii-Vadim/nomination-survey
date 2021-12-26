@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { observer } from "mobx-react-lite";
 import { Box, Container, Flex, Text } from "@chakra-ui/layout";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 import { useFetchData } from "../../utils/hooks";
 import { firstLetterToUpperCase, isHaveAccess } from "../../utils";
@@ -9,9 +10,11 @@ import SurveyStore from "../../store/surveyStore";
 import UserStore from "../../store/userStore";
 
 import { Loader, Title } from "../../components/ui";
-import { SurveyIconOutline } from "../../components/icons";
+import { SurveyIcon } from "../../components/icons";
 import AccessDenied from "../../components/AccessDenied";
 import QuestionsForm from "./components/QuestionsForm";
+import SurveyCompleted from "../../components/SurveyCompleted";
+import BarGraph from "../../components/BarGraph";
 
 const surveyStore = new SurveyStore();
 
@@ -26,13 +29,35 @@ const Survey = ({ userStore }: Props): JSX.Element => {
 
   useFetchData(() => surveyStore.fetchSurveyById(surveyId));
 
-  if (surveyStore.loading || !data) {
+  if (surveyStore.loading) {
     return <Loader />;
   }
 
   if (!isHaveAccess(userStore.data.role, data.status)) {
     return <AccessDenied />;
   }
+
+  if (surveyStore.surveyCompleted) {
+    return <SurveyCompleted />;
+  }
+
+  const Form = (
+    <QuestionsForm
+      data={data.questions}
+      isSubmiting={surveyStore.formLoading}
+      surveyStatus={surveyStore.data.status}
+      userRole={userStore.data.role}
+      sendSurveyResults={(data) => {
+        surveyStore.sendUserAnswer(data);
+      }}
+      setNextStatus={(data) => {
+        surveyStore.setNextSurveyStatus(data);
+      }}
+      downloadResults={() => {
+        surveyStore.downloadSurveyResults();
+      }}
+    />
+  );
 
   return (
     <Container
@@ -45,7 +70,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
       pb="50"
     >
       <Flex alignItems="start" mb="35">
-        <SurveyIconOutline size="large" color="primary" />
+        <SurveyIcon size="large" color="primary" />
         <Box ml="15" lineHeight="1" maxW="95%">
           <Title>{firstLetterToUpperCase(data.title)}</Title>
           <Text mt="2" lineHeight="21px">
@@ -53,21 +78,22 @@ const Survey = ({ userStore }: Props): JSX.Element => {
           </Text>
         </Box>
       </Flex>
-      <QuestionsForm
-        data={data.questions}
-        isSubmiting={surveyStore.formLoading}
-        surveyStatus={surveyStore.data.status}
-        userRole={userStore.data.role}
-        sendSurveyResults={(data) => {
-          surveyStore.sendUserAnswer(data);
-        }}
-        setNextStatus={(data) => {
-          surveyStore.setNextSurveyStatus(data);
-        }}
-        downloadResults={() => {
-          surveyStore.downloadSurveyResults();
-        }}
-      />
+      {userStore.data.role === "admin" || userStore.data.role === "chief" ? (
+        <Tabs>
+          <TabList>
+            <Tab>Результаты пользователей</Tab>
+            <Tab>Опрос</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <BarGraph />
+            </TabPanel>
+            <TabPanel>{Form}</TabPanel>
+          </TabPanels>
+        </Tabs>
+      ) : (
+        Form
+      )}
     </Container>
   );
 };

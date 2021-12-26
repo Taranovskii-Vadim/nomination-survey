@@ -15,13 +15,10 @@ interface Props {
 
 const ProtectedPages = ({ userStore }: Props) => {
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader text="Идет загрузка приложения..." />}>
       <Switch>
         <Route exact path={getUrlFor("surveys")}>
           <General userStore={userStore} />
-        </Route>
-        <Route path={getUrlFor("completed")}>
-          <div>survey completed</div>
         </Route>
         <Route path={getUrlFor("surveys", "surveyId")}>
           <Survey userStore={userStore} />

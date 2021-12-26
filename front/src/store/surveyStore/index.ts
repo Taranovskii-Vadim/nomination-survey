@@ -1,7 +1,6 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
 
 import { getErrorMessageWithId } from "../../constants";
-import { redirectToCompletedPage } from "../../routes";
 
 import { api } from "../../routes/api";
 import getQuestionById from "../../routes/api/getQuestionById";
@@ -23,7 +22,9 @@ import {
   SurveyResult,
 } from "./types";
 class SurveyStore {
-  loading = false;
+  loading = true;
+
+  surveyCompleted = false;
 
   formLoading: FormLoading = "";
 
@@ -41,12 +42,14 @@ class SurveyStore {
     });
   }
 
-  setLoading = (value: boolean): void => {
-    this.loading = value;
-  };
-
   setFormLoading = (value: FormLoading): void => {
     this.formLoading = value;
+  };
+
+  setLoading = (value: boolean): void => {
+    if (this.loading !== value) {
+      this.loading = value;
+    }
   };
 
   fetchSurveyQuestionById = async (id: string): Promise<Question> => {
@@ -64,9 +67,6 @@ class SurveyStore {
   };
 
   fetchSurveyById = async (surveyId: string): Promise<void | null> => {
-    // TODO we can hash our results
-    // if (this.data && this.data.id === id) return null;
-
     try {
       this.setLoading(true);
       const { isUserVoted, data }: GetSurveyByIdDTO = await api(
@@ -77,17 +77,13 @@ class SurveyStore {
         }
       );
 
-      if (isUserVoted) {
-        redirectToCompletedPage();
-        return;
-      }
-
       const questions = await Promise.all(
         data.questions.map((item) => this.fetchSurveyQuestionById(item))
       );
 
       runInAction(() => {
         this.data = { ...data, questions };
+        this.surveyCompleted = isUserVoted;
       });
     } catch (e) {
       console.log(e);
@@ -101,7 +97,9 @@ class SurveyStore {
       this.setFormLoading("finish");
       const surveyId = this.data.id;
       await api(postSurveyResults, data, { surveyId });
-      redirectToCompletedPage();
+      runInAction(() => {
+        this.surveyCompleted = true;
+      });
     } catch (e) {
       console.log(e);
     } finally {
