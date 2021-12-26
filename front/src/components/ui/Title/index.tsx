@@ -1,22 +1,16 @@
-import React, { ReactNode } from "react";
+import React from "react";
 
 import { Text, TextProps } from "@chakra-ui/layout";
+import { ColorType } from "../../../styles/types";
 
 interface Props extends TextProps {
-  label: string | ReactNode;
+  color?: ColorType;
 }
 
-const Title = ({
-  label,
-  color = "black",
-  size = "3xl",
-  ...props
-}: Props): JSX.Element => {
-  return (
-    <Text fontSize={size} color={color} {...props}>
-      {label}
-    </Text>
-  );
-};
+const Title = ({ color = "black", children, ...props }: Props): JSX.Element => (
+  <Text size="3xl" color={color} {...props}>
+    {children}
+  </Text>
+);
 
 export default Title;

@@ -42,6 +42,8 @@ const QuestionsForm = ({
 
   const isAdmin = userRole === "admin";
 
+  const isFormFieldsDisabled = isAdmin || isSubmiting === "finish";
+
   return (
     <form onSubmit={handleSubmit}>
       {data.map(({ id, description, options }) => (
@@ -52,7 +54,7 @@ const QuestionsForm = ({
               name={id}
               options={options}
               value={values[id]}
-              isDisabled={isAdmin}
+              isDisabled={isFormFieldsDisabled}
               onChange={handleChange}
             />
           ) : isOptionTypeShort(options) ? (
@@ -61,7 +63,7 @@ const QuestionsForm = ({
               id={id}
               name={id}
               value={values[id]}
-              isDisabled={isAdmin}
+              isDisabled={isFormFieldsDisabled}
               onChange={handleChange}
             />
           ) : (
@@ -69,7 +71,7 @@ const QuestionsForm = ({
               id={id}
               name={id}
               value={values[id]}
-              isDisabled={isAdmin}
+              isDisabled={isFormFieldsDisabled}
               onChange={handleChange}
             />
           )}

@@ -4,7 +4,6 @@ import { observer } from "mobx-react-lite";
 import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 
 import { useFetchData } from "../../utils/hooks";
-import { COLORS } from "../../styles/constants";
 import { firstLetterToUpperCase, isHaveAccess } from "../../utils";
 import SurveyStore from "../../store/surveyStore";
 import UserStore from "../../store/userStore";
@@ -46,9 +45,9 @@ const Survey = ({ userStore }: Props): JSX.Element => {
       pb="50"
     >
       <Flex alignItems="start" mb="35">
-        <SurveyIconOutline size="large" color={COLORS.primary} />
+        <SurveyIconOutline size="large" color="primary" />
         <Box ml="15" lineHeight="1" maxW="95%">
-          <Title label={firstLetterToUpperCase(data.title)} />
+          <Title>{firstLetterToUpperCase(data.title)}</Title>
           <Text mt="2" lineHeight="21px">
             {data.description}
           </Text>

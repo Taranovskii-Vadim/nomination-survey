@@ -49,7 +49,7 @@ router
         throw new Error("Survey id is required");
       }
 
-      const isFileExists = await FileReader.checkFileInRoot(
+      const isFileExists = await FileReader.checkFileInCatalog(
         CATALOG,
         getFileName(surveyId)
       );
@@ -57,7 +57,7 @@ router
       const survey: SurveyDataBase = await Survey.findById(surveyId);
 
       if (isFileExists) {
-        const { users } = await FileReader.readFileFromRoot<FileData>(
+        const { users } = await FileReader.readFileFromCatalog<FileData>(
           CATALOG,
           getFileName(surveyId)
         );
@@ -85,20 +85,20 @@ router
         ({ id, description }) => ({ description, answer: body[id] })
       );
 
-      const isFileExists = await FileReader.checkFileInRoot(
+      const isFileExists = await FileReader.checkFileInCatalog(
         CATALOG,
         getFileName(surveyId)
       );
 
       if (isFileExists) {
-        const fileData = await FileReader.readFileFromRoot<FileData>(
+        const fileData = await FileReader.readFileFromCatalog<FileData>(
           CATALOG,
           getFileName(surveyId)
         );
         users = [...fileData.users];
       }
 
-      await FileReader.writeFileToRoot(CATALOG, getFileName(surveyId), {
+      await FileReader.writeFileToCatalog(CATALOG, getFileName(surveyId), {
         title: survey.title,
         users: [...users, { id, login, answers: questionFilePayload }],
       });

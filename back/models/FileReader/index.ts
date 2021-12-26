@@ -2,11 +2,11 @@ import fs from "fs";
 import path from "path";
 
 class FileReader {
-  static async writeFileToRoot(
+  static async writeFileToCatalog<T extends object>(
     catalog: string,
     file: string,
-    data: any
-  ): Promise<void> {
+    data: T
+  ): Promise<T> {
     return new Promise((resolve, reject) => {
       fs.writeFile(
         path.join(__dirname, "..", "..", catalog, file),
@@ -15,14 +15,14 @@ class FileReader {
           if (err) {
             reject(err);
           } else {
-            resolve();
+            resolve(data);
           }
         }
       );
     });
   }
 
-  static async readFileFromRoot<T extends object>(
+  static async readFileFromCatalog<T extends object>(
     catalog: string,
     file: string
   ): Promise<T> {
@@ -40,11 +40,11 @@ class FileReader {
     });
   }
 
-  static async checkFileInRoot(
+  static async checkFileInCatalog(
     catalog: string,
     file: string
   ): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       fs.access(
         path.join(__dirname, "..", "..", catalog, file),
         fs.constants.F_OK,

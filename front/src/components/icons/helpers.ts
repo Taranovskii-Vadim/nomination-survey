@@ -1,4 +1,4 @@
-import { Size } from "../types";
+import { Size } from "./types";
 
 export const getBoxSize = (size: Size): number => {
   if (size === "small") return 1;
