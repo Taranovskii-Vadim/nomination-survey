@@ -14,9 +14,13 @@ router.get("/:id", async ({ params, user }: AppRequest, res: Response) => {
 
     const question = await Question.findById(id);
 
+    if (!question) {
+      res.status(404).json({ message: "Question not found" });
+    }
+
     res.json(question);
   } catch (e) {
-    console.log(e);
+    res.status(500).json("Server error");
   }
 });
 

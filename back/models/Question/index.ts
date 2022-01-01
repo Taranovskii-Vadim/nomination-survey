@@ -7,10 +7,6 @@ const questionSchema = new Schema(
       type: String,
       required: true,
     },
-    options: {
-      type: Schema.Types.Mixed,
-      required: true,
-    },
   },
   SCHEMA_OPTIONS
 );

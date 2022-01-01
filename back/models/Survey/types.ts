@@ -6,6 +6,7 @@ export interface SurveyDataBase {
 }
 
 export interface FileAnswer {
+  id: string;
   description: string;
   answer: string;
 }
@@ -13,7 +14,7 @@ export interface FileAnswer {
 export interface FileUser {
   id: string;
   login: string;
-  answers: FileAnswer[];
+  questions: FileAnswer[];
 }
 
 export type SurveysRender = Pick<SurveyDataBase, "id" | "title" | "status">;

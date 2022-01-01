@@ -6,13 +6,6 @@ export interface CommonSurveyFields {
   title: string;
 }
 
-export type OptionType = "shortAnswer" | "longAnswer";
-
-export interface Option {
-  value: number;
-  label: string;
-}
-
 export interface SurveyResult {
   [key: string]: string | number;
 }
@@ -27,7 +20,6 @@ export interface ButtonRender {
 export interface Question {
   readonly id: string;
   description: string;
-  options: Option[] | OptionType;
 }
 
 export interface HashedQuestion {

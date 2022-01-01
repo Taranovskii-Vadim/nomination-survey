@@ -8,9 +8,8 @@ import {
   SurveyResult,
 } from "../../../../store/surveyStore/types";
 import { SurveyStatus, UserRole } from "../../../../types";
-import { isOptionTypeShort } from "../../../../utils/api";
 
-import { Dropdown, Input, Textarea } from "../../../../components/ui";
+import Range from "../../../../components/ui/Range";
 import FormItemTitle from "../FormItemTitle";
 import FormFooter from "../FormFooter";
 
@@ -33,7 +32,7 @@ const QuestionsForm = ({
   setNextStatus,
   downloadResults,
 }: Props): JSX.Element => {
-  const { values, handleChange, handleSubmit } = useFormik<SurveyResult>({
+  const { setFieldValue, handleSubmit } = useFormik<SurveyResult>({
     initialValues: {},
     onSubmit: (data) => {
       sendSurveyResults(data);
@@ -46,35 +45,13 @@ const QuestionsForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {data.map(({ id, description, options }) => (
+      {data.map(({ id, description }) => (
         <Box key={id} mb={5} _last={{ mb: 0 }}>
           <FormItemTitle name={id} label={description} />
-          {Array.isArray(options) ? (
-            <Dropdown
-              name={id}
-              options={options}
-              value={values[id]}
-              isDisabled={isFormFieldsDisabled}
-              onChange={handleChange}
-            />
-          ) : isOptionTypeShort(options) ? (
-            <Input
-              type="text"
-              id={id}
-              name={id}
-              value={values[id]}
-              isDisabled={isFormFieldsDisabled}
-              onChange={handleChange}
-            />
-          ) : (
-            <Textarea
-              id={id}
-              name={id}
-              value={values[id]}
-              isDisabled={isFormFieldsDisabled}
-              onChange={handleChange}
-            />
-          )}
+          <Range
+            isDisabled={isFormFieldsDisabled}
+            onChange={(val) => setFieldValue(id, val)}
+          />
         </Box>
       ))}
       <FormFooter

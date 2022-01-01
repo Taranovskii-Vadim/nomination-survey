@@ -5,11 +5,6 @@ export const getErrorMessageWithId = (
 
 export const TOKEN_KEY = "token";
 
-export const COMPARED_QUESTION_TYPE = {
-  short: "shortAnswer",
-  long: "longAnswer",
-} as const;
-
 export const COMPARED_SURVEY_STATUS = {
   notStarted: "notStarted",
   userVoting: "userVote",

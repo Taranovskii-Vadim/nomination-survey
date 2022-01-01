@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 
 import { useFetchData } from "../../utils/hooks";
 import { setUrlFor } from "../../routes";
-import { isHaveAccess } from "../../utils";
+import { getLoadingMessage, isHaveAccess } from "../../utils";
 import SurveysStore from "../../store/surveysStore";
 import UserStore from "../../store/userStore";
 
@@ -22,7 +22,7 @@ const General = ({ userStore }: Props): JSX.Element => {
   useFetchData(surveysStore.fetchSurveys);
 
   if (surveysStore.loading) {
-    return <Loader />;
+    return <Loader text={getLoadingMessage("опросов")} />;
   }
 
   return (

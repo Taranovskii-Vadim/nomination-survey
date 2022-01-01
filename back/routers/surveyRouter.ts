@@ -36,6 +36,23 @@ router.get("/download/:surveyId", ({ params }: AppRequest, res: Response) => {
   }
 });
 
+router.get(
+  "/results/:surveyId",
+  async ({ params }: AppRequest, res: Response) => {
+    try {
+      const { surveyId } = params;
+      const { users } = await FileReader.readFileFromCatalog<FileData>(
+        "results",
+        `${surveyId}.json`
+      );
+
+      // TODO finish endpoint and continue front part
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
 router
   .route("/:surveyId")
   .get(async ({ params, user }: AppRequest, res: Response) => {
@@ -82,7 +99,7 @@ router
       );
 
       const questionFilePayload = questionPromiseResult.map(
-        ({ id, description }) => ({ description, answer: body[id] })
+        ({ id, description }) => ({ id, description, answer: body[id] })
       );
 
       const isFileExists = await FileReader.checkFileInCatalog(
@@ -100,7 +117,7 @@ router
 
       await FileReader.writeFileToCatalog(CATALOG, getFileName(surveyId), {
         title: survey.title,
-        users: [...users, { id, login, answers: questionFilePayload }],
+        users: [...users, { id, login, questions: questionFilePayload }],
       });
 
       res.json({});

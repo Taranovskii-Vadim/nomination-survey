@@ -4,3 +4,4 @@ export { default as Input } from "./Input";
 export { default as Title } from "./Title";
 export { default as Textarea } from "./Textarea";
 export { default as Dropdown } from "./Dropdown";
+export { default as Range } from "./Range";

@@ -5,7 +5,11 @@ import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 import { useFetchData } from "../../utils/hooks";
-import { firstLetterToUpperCase, isHaveAccess } from "../../utils";
+import {
+  firstLetterToUpperCase,
+  getLoadingMessage,
+  isHaveAccess,
+} from "../../utils";
 import SurveyStore from "../../store/surveyStore";
 import UserStore from "../../store/userStore";
 
@@ -14,7 +18,7 @@ import { SurveyIcon } from "../../components/icons";
 import AccessDenied from "../../components/AccessDenied";
 import QuestionsForm from "./components/QuestionsForm";
 import SurveyCompleted from "../../components/SurveyCompleted";
-import BarGraph from "../../components/BarGraph";
+import BarChart from "../../components/BarChart";
 
 const surveyStore = new SurveyStore();
 
@@ -30,7 +34,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
   useFetchData(() => surveyStore.fetchSurveyById(surveyId));
 
   if (surveyStore.loading) {
-    return <Loader />;
+    return <Loader text={getLoadingMessage("опроса")} />;
   }
 
   if (!isHaveAccess(userStore.data.role, data.status)) {
@@ -86,7 +90,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
           </TabList>
           <TabPanels>
             <TabPanel>
-              <BarGraph />
+              <BarChart />
             </TabPanel>
             <TabPanel>{Form}</TabPanel>
           </TabPanels>

@@ -13,6 +13,9 @@ export const getUserFromStorage = (): UserFromStorage | null => {
   return null;
 };
 
+export const getLoadingMessage = (subject: string): string =>
+  `Загрузка ${subject}...`;
+
 export const setUserToStorage = ({
   id,
   role,

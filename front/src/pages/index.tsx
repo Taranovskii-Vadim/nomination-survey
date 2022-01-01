@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import { getUrlFor } from "../routes";
+import { getLoadingMessage } from "../utils";
 import UserStore from "../store/userStore";
 
 import { Loader } from "../components/ui";
@@ -15,7 +16,7 @@ interface Props {
 
 const ProtectedPages = ({ userStore }: Props) => {
   return (
-    <Suspense fallback={<Loader text="Идет загрузка приложения..." />}>
+    <Suspense fallback={<Loader text={getLoadingMessage("страницы")} />}>
       <Switch>
         <Route exact path={getUrlFor("surveys")}>
           <General userStore={userStore} />

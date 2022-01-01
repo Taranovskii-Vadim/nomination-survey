@@ -1,16 +1,5 @@
-import {
-  COMPARED_QUESTION_TYPE,
-  COMPARED_SURVEY_STATUS,
-  COMPARED_USER_ROLE,
-} from "../constants";
-import {
-  QuestionTypeDTO,
-  SurveyStatus,
-  SurveyStatusDTO,
-  UserRole,
-  UserRoleDTO,
-} from "../types";
-import { OptionType } from "../store/surveyStore/types";
+import { COMPARED_SURVEY_STATUS, COMPARED_USER_ROLE } from "../constants";
+import { SurveyStatus, SurveyStatusDTO, UserRole, UserRoleDTO } from "../types";
 
 export const switchKeysWithValues = (data: object): object => {
   const keys = Object.keys(data);
@@ -36,17 +25,4 @@ export const mapSurveyStatusForBack = (
 export const mapSurveyStatus = (status: SurveyStatusDTO): SurveyStatus => {
   const surveyStatus = COMPARED_SURVEY_STATUS[status];
   return surveyStatus;
-};
-
-export const isOptionTypeLong = (type: OptionType): boolean =>
-  type === "longAnswer";
-
-export const isOptionTypeShort = (type: OptionType): boolean =>
-  type === "shortAnswer";
-
-export const mapSurveyOptionType = (
-  optionType: QuestionTypeDTO
-): OptionType => {
-  const type = COMPARED_QUESTION_TYPE[optionType];
-  return type;
 };

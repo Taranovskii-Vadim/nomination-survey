@@ -30,6 +30,6 @@ const data = {
   ],
 };
 
-const BarGraph = (): JSX.Element => <Bar data={data} />;
+const BarChart = (): JSX.Element => <Bar data={data} />;
 
-export default BarGraph;
+export default BarChart;
