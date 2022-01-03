@@ -1,5 +1,7 @@
 import { SurveyStatus } from "../../types";
 
+type EmptyLoading = "";
+
 export interface CommonSurveyFields {
   readonly id: string;
   status: SurveyStatus;
@@ -10,7 +12,13 @@ export interface SurveyResult {
   [key: string]: string | number;
 }
 
-export type FormLoading = "" | "finish" | "download" | "nextStatus";
+export interface ChartData {
+  [key: string]: number;
+}
+
+export type FormLoading = EmptyLoading | "finish" | "download" | "nextStatus";
+
+export type Loading = EmptyLoading | "chart" | "survey";
 
 export interface ButtonRender {
   label: string;

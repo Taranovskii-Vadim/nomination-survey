@@ -8,6 +8,9 @@ import Login from "./pages/Login";
 
 const userStore = new User();
 
+// TODO perfomance barChart
+// TODO bug with chart begins with min not from zero
+
 const App = (): JSX.Element =>
   userStore.data ? (
     <ProtectedPages userStore={userStore} />

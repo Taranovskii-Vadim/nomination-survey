@@ -31,9 +31,12 @@ const Survey = ({ userStore }: Props): JSX.Element => {
 
   const { data } = surveyStore;
 
+  const isHaveAccessToTabs =
+    userStore.data.role === "admin" || userStore.data.role === "chief";
+
   useFetchData(() => surveyStore.fetchSurveyById(surveyId));
 
-  if (surveyStore.loading) {
+  if (surveyStore.loading === "survey") {
     return <Loader text={getLoadingMessage("опроса")} />;
   }
 
@@ -82,17 +85,30 @@ const Survey = ({ userStore }: Props): JSX.Element => {
           </Text>
         </Box>
       </Flex>
-      {userStore.data.role === "admin" || userStore.data.role === "chief" ? (
-        <Tabs>
+      {isHaveAccessToTabs ? (
+        <Tabs
+          onChange={(index) => {
+            if (index === 1) {
+              surveyStore.fetchChartResults(surveyId);
+            }
+          }}
+        >
           <TabList>
-            <Tab>Результаты пользователей</Tab>
             <Tab>Опрос</Tab>
+            <Tab>Результаты пользователей</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel>
-              <BarChart />
-            </TabPanel>
             <TabPanel>{Form}</TabPanel>
+            <TabPanel>
+              {surveyStore.loading === "chart" ? (
+                <Loader
+                  containerHeight="50vh"
+                  text={getLoadingMessage("данных")}
+                />
+              ) : (
+                <BarChart chart={surveyStore.chartData} />
+              )}
+            </TabPanel>
           </TabPanels>
         </Tabs>
       ) : (

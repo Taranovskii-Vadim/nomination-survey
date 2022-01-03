@@ -8,10 +8,16 @@ import FullPageContainer from "../../FullPageContainer";
 interface Props extends SpinnerProps {
   text?: string;
   color?: ColorType;
+  containerHeight?: string;
 }
 
-const Loader = ({ color = "primary", text, ...props }: Props): JSX.Element => (
-  <FullPageContainer>
+const Loader = ({
+  color = "primary",
+  containerHeight,
+  text,
+  ...props
+}: Props): JSX.Element => (
+  <FullPageContainer height={containerHeight}>
     <Spinner
       speed="1s"
       emptyColor="gray.200"
@@ -19,7 +25,7 @@ const Loader = ({ color = "primary", text, ...props }: Props): JSX.Element => (
       color={color}
       {...props}
     />
-    {Text ? <Text>{text}</Text> : null}
+    {text ? <Text>{text}</Text> : null}
   </FullPageContainer>
 );
 

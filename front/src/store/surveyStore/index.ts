@@ -7,6 +7,7 @@ import getQuestionById from "../../routes/api/getQuestionById";
 import getSurveyById, {
   GetSurveyByIdDTO,
 } from "../../routes/api/getSurveyById";
+import getSurveyChartResults from "../../routes/api/getSurveyChartResults";
 import getSurveyResults from "../../routes/api/getSurveyResults";
 import postSurveyResults from "../../routes/api/postSurveyResults";
 import putNextSurveyStatus from "../../routes/api/putNextSurveyStatus";
@@ -15,20 +16,24 @@ import { SurveyStatus } from "../../types";
 import { mapSurveyStatusForBack } from "../../utils/api";
 
 import {
+  ChartData,
   FormLoading,
   HashedQuestion,
+  Loading,
   Question,
   Survey,
   SurveyResult,
 } from "./types";
 class SurveyStore {
-  loading = true;
+  loading: Loading = "survey";
 
   surveyCompleted = false;
 
   formLoading: FormLoading = "";
 
   data: Survey | undefined = undefined;
+
+  chartData: ChartData = {};
 
   hashedQuestions: HashedQuestion = {};
 
@@ -46,7 +51,7 @@ class SurveyStore {
     this.formLoading = value;
   };
 
-  setLoading = (value: boolean): void => {
+  setLoading = (value: Loading): void => {
     if (this.loading !== value) {
       this.loading = value;
     }
@@ -68,7 +73,7 @@ class SurveyStore {
 
   fetchSurveyById = async (surveyId: string): Promise<void | null> => {
     try {
-      this.setLoading(true);
+      this.setLoading("survey");
       const { isUserVoted, data }: GetSurveyByIdDTO = await api(
         getSurveyById,
         undefined,
@@ -88,7 +93,7 @@ class SurveyStore {
     } catch (e) {
       console.log(e);
     } finally {
-      this.setLoading(false);
+      this.setLoading("");
     }
   };
 
@@ -132,6 +137,22 @@ class SurveyStore {
       console.log(e);
     } finally {
       this.setFormLoading("");
+    }
+  };
+
+  fetchChartResults = async (surveyId: string): Promise<void> => {
+    try {
+      this.setLoading("chart");
+      const chartResult = await api(getSurveyChartResults, undefined, {
+        surveyId,
+      });
+      runInAction(() => {
+        this.chartData = chartResult;
+      });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      this.setLoading("");
     }
   };
 }

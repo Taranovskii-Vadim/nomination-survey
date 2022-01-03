@@ -40,13 +40,20 @@ router.get(
   "/results/:surveyId",
   async ({ params }: AppRequest, res: Response) => {
     try {
+      const apiResult = {};
       const { surveyId } = params;
       const { users } = await FileReader.readFileFromCatalog<FileData>(
         "results",
         `${surveyId}.json`
       );
 
-      // TODO finish endpoint and continue front part
+      for (let { questions } of users) {
+        for (let { id, answer } of questions) {
+          apiResult[id] = (apiResult[id] || 0) + answer;
+        }
+      }
+
+      res.json(apiResult);
     } catch (e) {
       console.log(e);
     }
