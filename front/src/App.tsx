@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 
 const userStore = new User();
 
-// TODO add second chart for chiefs
+// TODO refactor back types
 // TODO perfomance barChart and whole application
 // TODO bug with chart begins with min not from zero
 // TODO define colors for columns in chart

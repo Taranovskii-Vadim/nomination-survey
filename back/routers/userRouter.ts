@@ -18,7 +18,7 @@ router.get("/:login", async ({ params }: Request, res: Response) => {
 
     const { id, role, surveysId } = result;
 
-    const token = jwt.sign({ id, login, surveysId }, process.env.JWT_KEY);
+    const token = jwt.sign({ id, login, role, surveysId }, process.env.JWT_KEY);
 
     res.json({ id, role, token });
   } catch (e) {

@@ -14,6 +14,7 @@ export interface FileAnswer {
 export interface FileUser {
   id: string;
   login: string;
+  role: string;
   questions: FileAnswer[];
 }
 

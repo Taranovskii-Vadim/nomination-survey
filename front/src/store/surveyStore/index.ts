@@ -12,7 +12,7 @@ import getSurveyResults from "../../routes/api/getSurveyResults";
 import postSurveyResults from "../../routes/api/postSurveyResults";
 import putNextSurveyStatus from "../../routes/api/putNextSurveyStatus";
 
-import { SurveyStatus } from "../../types";
+import { SurveyStatus, UserRole } from "../../types";
 import { mapSurveyStatusForBack } from "../../utils/api";
 
 import {
@@ -140,11 +140,13 @@ class SurveyStore {
     }
   };
 
-  fetchChartResults = async (surveyId: string): Promise<void> => {
+  fetchChartResults = async (role: UserRole): Promise<void> => {
     try {
       this.setLoading("chart");
+      const surveyId = this.data.id;
       const chartResult = await api(getSurveyChartResults, undefined, {
         surveyId,
+        role,
       });
       runInAction(() => {
         this.chartData = chartResult;

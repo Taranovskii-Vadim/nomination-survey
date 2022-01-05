@@ -89,16 +89,29 @@ const Survey = ({ userStore }: Props): JSX.Element => {
         <Tabs
           onChange={(index) => {
             if (index === 1) {
-              surveyStore.fetchChartResults(surveyId);
+              surveyStore.fetchChartResults("user");
+            } else if (index === 2) {
+              surveyStore.fetchChartResults("chief");
             }
           }}
         >
           <TabList>
             <Tab>Опрос</Tab>
             <Tab>Результаты пользователей</Tab>
+            <Tab>Результаты руководителей</Tab>
           </TabList>
           <TabPanels>
             <TabPanel>{Form}</TabPanel>
+            <TabPanel>
+              {surveyStore.loading === "chart" ? (
+                <Loader
+                  containerHeight="50vh"
+                  text={getLoadingMessage("данных")}
+                />
+              ) : (
+                <BarChart chart={surveyStore.chartData} />
+              )}
+            </TabPanel>
             <TabPanel>
               {surveyStore.loading === "chart" ? (
                 <Loader

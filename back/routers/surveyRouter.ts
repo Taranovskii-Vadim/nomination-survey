@@ -8,6 +8,8 @@ import { getSurveysRender } from "../models/Survey/helpers";
 import { FileData, SurveyDataBase } from "../models/Survey/types";
 
 import { AppRequest } from "../types";
+import { mapUserRole } from "./helpers";
+import { UserRole } from "../models/User/types";
 
 const CATALOG = "results";
 
@@ -37,19 +39,21 @@ router.get("/download/:surveyId", ({ params }: AppRequest, res: Response) => {
 });
 
 router.get(
-  "/results/:surveyId",
+  "/results/:role/:surveyId",
   async ({ params }: AppRequest, res: Response) => {
     try {
       const apiResult = {};
-      const { surveyId } = params;
+      const { surveyId, role } = params;
       const { users } = await FileReader.readFileFromCatalog<FileData>(
         "results",
         `${surveyId}.json`
       );
 
-      for (let { questions } of users) {
-        for (let { id, answer } of questions) {
-          apiResult[id] = (apiResult[id] || 0) + answer;
+      for (let user of users) {
+        if (mapUserRole(role as UserRole) === user.role) {
+          for (let { id, answer } of user.questions) {
+            apiResult[id] = (apiResult[id] || 0) + answer;
+          }
         }
       }
 
@@ -97,7 +101,7 @@ router
   .post(async ({ params, body, user }: AppRequest, res: Response) => {
     try {
       const { surveyId } = params;
-      const { login, id } = user;
+      const { login, id, role } = user;
       let users: FileData["users"] = [];
       const survey = (await Survey.findById(surveyId)) as SurveyDataBase;
 
@@ -124,7 +128,7 @@ router
 
       await FileReader.writeFileToCatalog(CATALOG, getFileName(surveyId), {
         title: survey.title,
-        users: [...users, { id, login, questions: questionFilePayload }],
+        users: [...users, { id, login, role, questions: questionFilePayload }],
       });
 
       res.json({});
