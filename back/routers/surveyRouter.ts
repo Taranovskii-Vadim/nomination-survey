@@ -44,15 +44,23 @@ router.get(
     try {
       const apiResult = {};
       const { surveyId, role } = params;
-      const { users } = await FileReader.readFileFromCatalog<FileData>(
-        "results",
-        `${surveyId}.json`
+
+      const isFileExists = await FileReader.checkFileInCatalog(
+        CATALOG,
+        getFileName(surveyId)
       );
 
-      for (let user of users) {
-        if (mapUserRole(role as UserRole) === user.role) {
-          for (let { id, answer } of user.questions) {
-            apiResult[id] = (apiResult[id] || 0) + answer;
+      if (isFileExists) {
+        const { users } = await FileReader.readFileFromCatalog<FileData>(
+          CATALOG,
+          getFileName(surveyId)
+        );
+
+        for (let user of users) {
+          if (mapUserRole(role as UserRole) === user.role) {
+            for (let { id, answer } of user.questions) {
+              apiResult[id] = (apiResult[id] || 0) + answer;
+            }
           }
         }
       }
