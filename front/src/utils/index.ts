@@ -20,12 +20,8 @@ export const setUserToStorage = ({
   id,
   role,
   token,
-  surveysId,
 }: UserFromStorage): void => {
-  localStorage.setItem(
-    TOKEN_KEY,
-    JSON.stringify({ id, role, token, surveysId })
-  );
+  localStorage.setItem(TOKEN_KEY, JSON.stringify({ id, role, token }));
 };
 
 export const isHaveAccess = (role: UserRole, status: SurveyStatus): boolean => {

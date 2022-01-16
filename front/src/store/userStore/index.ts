@@ -14,8 +14,8 @@ class UserStore {
     const userResult = getUserFromStorage();
 
     if (userResult) {
-      const { id, surveysId, role } = userResult;
-      this.data = { id, surveysId, role };
+      const { id, role } = userResult;
+      this.data = { id, role };
     }
 
     makeObservable(this, {

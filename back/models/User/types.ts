@@ -6,5 +6,4 @@ export interface User {
   readonly id: string;
   login: string;
   role: UserRoleDB;
-  surveysId: number[];
 }

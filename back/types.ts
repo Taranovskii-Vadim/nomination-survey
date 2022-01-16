@@ -5,6 +5,5 @@ export interface AppRequest extends Request {
     id: string;
     login: string;
     role: string;
-    surveysId: string[];
   };
 }

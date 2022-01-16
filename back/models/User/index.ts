@@ -6,7 +6,6 @@ const userSchema = new Schema(
   {
     login: { type: String, required: true },
     role: { type: String, required: true },
-    surveysId: { type: [String], required: true },
   },
   SCHEMA_OPTIONS
 );
