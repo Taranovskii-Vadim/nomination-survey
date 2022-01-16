@@ -60,9 +60,6 @@ const Survey = ({ userStore }: Props): JSX.Element => {
       setNextStatus={(data) => {
         surveyStore.setNextSurveyStatus(data);
       }}
-      downloadResults={() => {
-        surveyStore.downloadSurveyResults();
-      }}
     />
   );
 

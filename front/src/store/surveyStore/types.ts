@@ -16,7 +16,7 @@ export interface ChartData {
   [key: string]: number;
 }
 
-export type FormLoading = EmptyLoading | "finish" | "download" | "nextStatus";
+export type FormLoading = EmptyLoading | "finish" | "nextStatus";
 
 export type Loading = EmptyLoading | "chart" | "survey";
 

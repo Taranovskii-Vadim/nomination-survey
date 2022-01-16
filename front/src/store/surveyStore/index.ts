@@ -8,7 +8,6 @@ import getSurveyById, {
   GetSurveyByIdDTO,
 } from "../../routes/api/getSurveyById";
 import getSurveyChartResults from "../../routes/api/getSurveyChartResults";
-import getSurveyResults from "../../routes/api/getSurveyResults";
 import postSurveyResults from "../../routes/api/postSurveyResults";
 import putNextSurveyStatus from "../../routes/api/putNextSurveyStatus";
 
@@ -121,18 +120,6 @@ class SurveyStore {
       runInAction(() => {
         this.data.status = status;
       });
-    } catch (e) {
-      console.log(e);
-    } finally {
-      this.setFormLoading("");
-    }
-  };
-
-  downloadSurveyResults = async () => {
-    try {
-      this.setFormLoading("download");
-      const surveyId = this.data.id;
-      await api(getSurveyResults, undefined, { surveyId });
     } catch (e) {
       console.log(e);
     } finally {

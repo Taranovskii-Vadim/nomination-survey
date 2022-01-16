@@ -29,15 +29,6 @@ router.get("/", async ({ user }: AppRequest, res: Response) => {
   }
 });
 
-router.get("/download/:surveyId", ({ params }: AppRequest, res: Response) => {
-  try {
-    const { surveyId } = params;
-    // TODO think how to download file from server
-  } catch (e) {
-    console.log(e);
-  }
-});
-
 router.get(
   "/results/:role/:surveyId",
   async ({ params }: AppRequest, res: Response) => {
