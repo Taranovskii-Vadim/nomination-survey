@@ -12,6 +12,7 @@ import {
 } from "../../utils";
 import SurveyStore from "../../store/surveyStore";
 import UserStore from "../../store/userStore";
+import { COLORS } from "../../styles/theme";
 
 import { Loader, Title } from "../../components/ui";
 import { SurveyIcon } from "../../components/icons";
@@ -74,7 +75,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
       pb="50"
     >
       <Flex alignItems="start" mb="35">
-        <SurveyIcon size="large" color="primary" />
+        <SurveyIcon size="large" color={COLORS["primary"]} />
         <Box ml="15" lineHeight="1" maxW="95%">
           <Title>{firstLetterToUpperCase(data.title)}</Title>
           <Text mt="2" lineHeight="21px">

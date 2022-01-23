@@ -33,19 +33,14 @@ const General = ({ userStore }: Props): JSX.Element => {
           const isActive = isHaveAccess(userStore.data.role, status);
           // TODO think how to exclude link from dom
           return (
-            <SurveyCard
-              id={id}
-              title={title}
-              isActive={isActive}
-              unActiveMessage="Голосование временно недоступно"
-            />
-            // <NavLink key={id} to={setUrlFor("surveys", id)}>
-            //   <SurveyCard
-            //     unActiveMessage="Голосование временно недоступно"
-            //     isActive={isActive}
-            //     title={title}
-            //   />
-            // </NavLink>
+            <NavLink key={id} to={setUrlFor("surveys", id)}>
+              <SurveyCard
+                id={id}
+                title={title}
+                isActive={isActive}
+                unActiveMessage="Голосование временно недоступно"
+              />
+            </NavLink>
           );
         })}
       </SimpleGrid>

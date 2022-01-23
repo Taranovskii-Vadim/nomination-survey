@@ -10,7 +10,7 @@ import FullPageContainer from "../FullPageContainer";
 
 const AccessDenied = (): JSX.Element => (
   <FullPageContainer>
-    <LockIcon size="large" color="primary" />
+    <LockIcon size="large" />
     <Text mt="4" mb="4">
       К сожалению на данный момент вы не можете принять участие в опросе
     </Text>

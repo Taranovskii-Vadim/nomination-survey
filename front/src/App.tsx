@@ -8,13 +8,13 @@ import Login from "./pages/Login";
 
 const userStore = new User();
 
-// TODO drag and drop for main window
+// TODO dark theme and customize chakra theme (easy)
 
-// TODO dark theme and customize chakra theme
+// TODO drop for main window (hard)
 
-// TODO mobile version
+// TODO mobile version (medium)
 
-// TODO perfomance barChart and whole application
+// TODO perfomance barChart and whole application (hard)
 
 const App = (): JSX.Element =>
   userStore.data ? (

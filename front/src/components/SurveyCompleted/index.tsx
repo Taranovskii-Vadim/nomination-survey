@@ -10,7 +10,7 @@ import FullPageContainer from "../FullPageContainer";
 
 const SurveyCompleted = (): JSX.Element => (
   <FullPageContainer>
-    <TickIcon size="large" color="primary" />
+    <TickIcon size="large" />
     <Text mt="4" mb="4">
       Спасибо за прохождение опроса
     </Text>

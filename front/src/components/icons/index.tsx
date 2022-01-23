@@ -6,13 +6,12 @@ import { AiOutlineLock } from "react-icons/ai";
 import { MdOutlineDone } from "react-icons/md";
 import { ImFire } from "react-icons/im";
 
-import { ColorType } from "../../styles/types";
 import { getBoxSize } from "./helpers";
 import { Size } from "./types";
 
 interface Props {
   size?: Size;
-  color?: ColorType;
+  color?: string;
 }
 
 export const SurveyIcon = ({ size, color = "black" }: Props): JSX.Element => {

@@ -16,7 +16,7 @@ const BarChart = ({ chart }: Props): JSX.Element => {
   if (!keys.length) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
-        <FireIcon size="large" color="primary" />
+        <FireIcon size="large" />
         <Text mt="5" fontSize="2xl">
           Голосование в самом разгаре, результаты скоро будут доступны...
         </Text>

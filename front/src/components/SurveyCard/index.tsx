@@ -1,12 +1,12 @@
 import React from "react";
 import { Flex, Text } from "@chakra-ui/layout";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag } from "react-dnd";
 
-import { COLORS } from "../../styles/constants";
 import { SurveyRenderItem } from "../../store/surveysStore/types";
 import { firstLetterToUpperCase } from "../../utils";
 
 import { SurveyIcon, DisabledIcon } from "../icons";
+import { COLORS } from "../../styles/theme";
 
 interface Props {
   id: string;
@@ -30,6 +30,7 @@ const SurveyCard = ({
     }),
   }));
   const ComponentIcon = isActive ? SurveyIcon : DisabledIcon;
+  const iconColor = COLORS[isActive ? "primary" : "gray"];
 
   return (
     <Flex
@@ -38,17 +39,15 @@ const SurveyCard = ({
       height="100%"
       p="10px"
       borderRadius="5px"
-      border={
-        isActive
-          ? `1px solid ${COLORS.primary}`
-          : `1px dashed ${COLORS.secondary}`
-      }
+      border="1px"
+      borderStyle={isActive ? "solid" : "dashed"}
+      borderColor={iconColor}
       direction="column"
       alignItems="center"
       textAlign="center"
     >
-      <ComponentIcon size="large" color={isActive ? "primary" : "secondary"} />
-      <Text fontSize="xl" color="secondary" flexGrow={1}>
+      <ComponentIcon size="large" color={iconColor} />
+      <Text fontSize="xl" flexGrow={1}>
         {isActive ? firstLetterToUpperCase(title) : unActiveMessage}
       </Text>
     </Flex>
