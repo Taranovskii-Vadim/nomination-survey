@@ -11,7 +11,6 @@ import UserStore from "../../store/userStore";
 
 import { Loader } from "../../components/ui";
 import SurveyCard from "../../components/SurveyCard";
-import { useDrop } from "react-dnd";
 
 const surveysStore = new SurveysStore();
 

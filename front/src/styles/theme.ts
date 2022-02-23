@@ -28,6 +28,13 @@ export const theme = extendTheme({
       },
     },
   },
+  styles: {
+    global: {
+      body: {
+        position: "static",
+      },
+    },
+  },
   fonts: {
     heading: "Open Sans",
     body: "Open Sans",
