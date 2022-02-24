@@ -8,7 +8,6 @@ import { getLoadingMessage } from "../utils";
 import UserStore from "../store/userStore";
 
 import { Loader } from "../components/ui";
-import ThemeSwitcher from "../components/ThemeSwitcher";
 
 const General = lazy(() => import("./General"));
 const Survey = lazy(() => import("./Survey"));
@@ -20,7 +19,6 @@ interface Props {
 const ProtectedPages = ({ userStore }: Props) => {
   return (
     <Suspense fallback={<Loader text={getLoadingMessage("страницы")} />}>
-      <ThemeSwitcher />
       <Switch>
         <Route exact path={getUrlFor("surveys")}>
           <DndProvider backend={HTML5Backend}>

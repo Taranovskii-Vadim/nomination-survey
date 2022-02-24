@@ -6,6 +6,7 @@ import {
   SliderThumb,
   SliderProps,
 } from "@chakra-ui/react";
+import { COLORS } from "../../../styles/theme";
 
 export const areEqual = (prev: SliderProps, next: SliderProps): boolean => {
   if (prev.isDisabled !== next.isDisabled) {
@@ -35,7 +36,7 @@ const Range = ({
       onChange={(val) => setValue(val)}
     >
       <SliderTrack>
-        <SliderFilledTrack />
+        <SliderFilledTrack bg={COLORS["primary"]} />
       </SliderTrack>
       <SliderThumb />
     </Slider>

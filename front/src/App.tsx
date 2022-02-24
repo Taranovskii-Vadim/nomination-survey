@@ -5,10 +5,9 @@ import User from "./store/userStore";
 
 import ProtectedPages from "./pages";
 import Login from "./pages/Login";
+import ThemeSwitcher from "./components/ThemeSwitcher";
 
 const userStore = new User();
-
-// TODO dark theme and customize chakra theme (easy)
 
 // TODO drop for main window (hard)
 
@@ -16,11 +15,15 @@ const userStore = new User();
 
 // TODO perfomance barChart and whole application (hard)
 
-const App = (): JSX.Element =>
-  userStore.data ? (
-    <ProtectedPages userStore={userStore} />
-  ) : (
-    <Login isLoading={userStore.isLoading} getToken={userStore.getToken} />
-  );
+const App = (): JSX.Element => (
+  <>
+    <ThemeSwitcher />
+    {userStore.data ? (
+      <ProtectedPages userStore={userStore} />
+    ) : (
+      <Login isLoading={userStore.isLoading} getToken={userStore.getToken} />
+    )}
+  </>
+);
 
 export default observer(App);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "@chakra-ui/react";
+import { Icon, IconProps } from "@chakra-ui/react";
 import { GoBook } from "react-icons/go";
 import { GiSightDisabled } from "react-icons/gi";
 import { AiOutlineLock } from "react-icons/ai";
@@ -10,42 +10,41 @@ import { ImFire } from "react-icons/im";
 import { getBoxSize } from "./helpers";
 import { Size } from "./types";
 
-interface Props {
+interface Props extends IconProps {
   size?: Size | number;
-  color?: string;
 }
 
-export const SurveyIcon = ({ size, color = "black" }: Props): JSX.Element => {
+export const SurveyIcon = ({ size, ...props }: Props): JSX.Element => {
   const boxSize = typeof size === "number" ? size : getBoxSize(size);
-  return <Icon boxSize={boxSize} color={color} as={GoBook} />;
+  return <Icon boxSize={boxSize} as={GoBook} {...props} />;
 };
 
-export const SunIcon = ({ size, color = "black" }: Props): JSX.Element => {
+export const SunIcon = ({ size, ...props }: Props): JSX.Element => {
   const boxSize = typeof size === "number" ? size : getBoxSize(size);
-  return <Icon boxSize={boxSize} color={color} as={FiSun} />;
+  return <Icon boxSize={boxSize} as={FiSun} {...props} />;
 };
 
-export const MoonIcon = ({ size, color = "black" }: Props): JSX.Element => {
+export const MoonIcon = ({ size, ...props }: Props): JSX.Element => {
   const boxSize = typeof size === "number" ? size : getBoxSize(size);
-  return <Icon boxSize={boxSize} color={color} as={FiMoon} />;
+  return <Icon boxSize={boxSize} as={FiMoon} {...props} />;
 };
 
-export const DisabledIcon = ({ size, color = "black" }: Props): JSX.Element => {
+export const DisabledIcon = ({ size, ...props }: Props): JSX.Element => {
   const boxSize = typeof size === "number" ? size : getBoxSize(size);
-  return <Icon boxSize={boxSize} color={color} as={GiSightDisabled} />;
+  return <Icon boxSize={boxSize} as={GiSightDisabled} {...props} />;
 };
 
-export const LockIcon = ({ size, color = "black" }: Props): JSX.Element => {
+export const LockIcon = ({ size, ...props }: Props): JSX.Element => {
   const boxSize = typeof size === "number" ? size : getBoxSize(size);
-  return <Icon boxSize={boxSize} color={color} as={AiOutlineLock} />;
+  return <Icon boxSize={boxSize} as={AiOutlineLock} {...props} />;
 };
 
-export const TickIcon = ({ size, color = "black" }: Props): JSX.Element => {
+export const TickIcon = ({ size, ...props }: Props): JSX.Element => {
   const boxSize = typeof size === "number" ? size : getBoxSize(size);
-  return <Icon boxSize={boxSize} color={color} as={MdOutlineDone} />;
+  return <Icon boxSize={boxSize} as={MdOutlineDone} {...props} />;
 };
 
-export const FireIcon = ({ size, color = "black" }: Props): JSX.Element => {
+export const FireIcon = ({ size, ...props }: Props): JSX.Element => {
   const boxSize = typeof size === "number" ? size : getBoxSize(size);
-  return <Icon boxSize={boxSize} color={color} as={ImFire} />;
+  return <Icon boxSize={boxSize} as={ImFire} {...props} />;
 };
