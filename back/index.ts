@@ -1,6 +1,6 @@
 import express, { json } from "express";
 import { config } from "dotenv";
-import { connect } from "mongoose";
+// import { connect } from "mongoose";
 
 import { routers } from "./routers";
 import { authMiddleWare } from "./middlewares";
@@ -23,15 +23,16 @@ routers.forEach(({ prefix, router, isAuth = true }) => {
 });
 
 const startApplication = (): void => {
-  try {
-    const password = process.env.PASSWORD;
-    connect(
-      `mongodb+srv://vadim:${password}@cluster0.6xvvs.mongodb.net/Surveys?retryWrites=true&w=majority`
-    );
-    server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-  } catch (e) {
-    console.error("error");
-  }
+  server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+  // TODO not working because MongoDB
+  // try {
+  //   const password = process.env.PASSWORD;
+  //   connect(
+  //     `mongodb+srv://vadim:${password}@cluster0.6xvvs.mongodb.net/Surveys?retryWrites=true&w=majority`
+  //   );
+  // } catch (e) {
+  //   console.error("error");
+  // }
 };
 
 startApplication();

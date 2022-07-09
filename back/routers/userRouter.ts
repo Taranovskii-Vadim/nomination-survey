@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, Router } from "express";
 
-import { User as UserType } from "../models/User/types";
-import User from "../models/User";
+import { USERS } from "../models/User/constants";
+import { User } from "../models/User/types";
 
 const router = Router();
 
@@ -10,7 +10,7 @@ router.get("/:login", async ({ params }: Request, res: Response) => {
   try {
     const { login } = params;
 
-    const result: UserType | null = await User.findOne({ login });
+    const result: User = USERS.find((item) => item.login === login);
 
     if (!login || !result) {
       return res.status(404).send("User not found");

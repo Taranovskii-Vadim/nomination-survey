@@ -8,7 +8,6 @@ import { getSurveysRender } from "../models/Survey/helpers";
 import { FileData, SurveyDataBase } from "../models/Survey/types";
 
 import { AppRequest } from "../types";
-import { mapUserRole } from "./helpers";
 import { UserRole } from "../models/User/types";
 
 const CATALOG = "results";
@@ -48,7 +47,7 @@ router.get(
         );
 
         for (let user of users) {
-          if (mapUserRole(role as UserRole) === user.role) {
+          if (role === user.role) {
             for (let { id, answer } of user.questions) {
               apiResult[id] = (apiResult[id] || 0) + answer;
             }
