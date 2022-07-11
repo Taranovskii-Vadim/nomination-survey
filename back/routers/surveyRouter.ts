@@ -5,6 +5,8 @@ import { FileData, SurveyDataBase } from "../models/Survey/types";
 import { MOCK } from "../models/Survey/constants";
 
 import { AppRequest } from "../types";
+import { Question } from "../models/Question/types";
+import { QUESTIONS } from "../models/Question/constants";
 
 const CATALOG = "results";
 
@@ -87,60 +89,62 @@ router
     } catch (e) {
       res.status(500).send(e.message);
     }
+  })
+  .post(async ({ params, body, user }: AppRequest, res: Response) => {
+    try {
+      const { surveyId } = params;
+      const { login, id, role } = user;
+      let users: FileData["users"] = [];
+      const survey = MOCK.find((item) => item.id === surveyId);
+
+      const questionPromiseResult = await Promise.all<Question>(
+        Object.keys(body).map((item) =>
+          QUESTIONS.find((question) => question.id === item)
+        )
+      );
+
+      const questionFilePayload = questionPromiseResult.map(
+        ({ id, description }) => ({ id, description, answer: body[id] })
+      );
+
+      const isFileExists = await FileReader.checkFileInCatalog(
+        CATALOG,
+        getFileName(surveyId)
+      );
+
+      if (isFileExists) {
+        const fileData = await FileReader.readFileFromCatalog<FileData>(
+          CATALOG,
+          getFileName(surveyId)
+        );
+        users = [...fileData.users];
+      }
+
+      await FileReader.writeFileToCatalog(CATALOG, getFileName(surveyId), {
+        title: survey.title,
+        users: [...users, { id, login, role, questions: questionFilePayload }],
+      });
+
+      res.json({});
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
+  })
+  .put(async ({ params, body, user }: AppRequest, res: Response) => {
+    try {
+      const { surveyId } = params;
+      const { nextStatus } = body;
+
+      const survey = MOCK.find((item) => item.id === surveyId);
+
+      survey.status = nextStatus;
+
+      // await survey.save();
+
+      res.json({});
+    } catch (e) {
+      res.status(500).send(e.message);
+    }
   });
-// .post(async ({ params, body, user }: AppRequest, res: Response) => {
-//   try {
-//     const { surveyId } = params;
-//     const { login, id, role } = user;
-//     let users: FileData["users"] = [];
-//     const survey = (await Survey.findById(surveyId)) as SurveyDataBase;
-
-//     const questionPromiseResult = await Promise.all<Question>(
-//       Object.keys(body).map((item) => QuestionModel.findById(item))
-//     );
-
-//     const questionFilePayload = questionPromiseResult.map(
-//       ({ id, description }) => ({ id, description, answer: body[id] })
-//     );
-
-//     const isFileExists = await FileReader.checkFileInCatalog(
-//       CATALOG,
-//       getFileName(surveyId)
-//     );
-
-//     if (isFileExists) {
-//       const fileData = await FileReader.readFileFromCatalog<FileData>(
-//         CATALOG,
-//         getFileName(surveyId)
-//       );
-//       users = [...fileData.users];
-//     }
-
-//     await FileReader.writeFileToCatalog(CATALOG, getFileName(surveyId), {
-//       title: survey.title,
-//       users: [...users, { id, login, role, questions: questionFilePayload }],
-//     });
-
-//     res.json({});
-//   } catch (e) {
-//     res.status(500).send(e.message);
-//   }
-// })
-// .put(async ({ params, body, user }: AppRequest, res: Response) => {
-//   try {
-//     const { surveyId } = params;
-//     const { nextStatus } = body;
-
-//     const survey = await Survey.findById(surveyId);
-
-//     survey.status = nextStatus;
-
-//     await survey.save();
-
-//     res.json({});
-//   } catch (e) {
-//     res.status(500).send(e.message);
-//   }
-// });
 
 export default router;

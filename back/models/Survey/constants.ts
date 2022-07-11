@@ -5,6 +5,6 @@ export const MOCK: SurveyDataBase[] = [
     id: "1",
     title: "Fuck mongoDB",
     status: "notStarted",
-    questions: [],
+    questions: ["1", "2"],
   },
 ];
