@@ -1,9 +1,8 @@
 import { Response, Router } from "express";
 
-import QuestionModel from "../models/Question";
 import FileReader from "../models/FileReader";
-import { Question } from "../models/Question/types";
 import { FileData, SurveyDataBase } from "../models/Survey/types";
+import { MOCK } from "../models/Survey/constants";
 
 import { AppRequest } from "../types";
 
@@ -12,15 +11,6 @@ const CATALOG = "results";
 const getFileName = (id: string): string => `${id}.json`;
 
 const router = Router();
-
-const MOCK: SurveyDataBase[] = [
-  {
-    id: "1",
-    title: "Fuck mongoDB",
-    status: "notStarted",
-    questions: [],
-  },
-];
 
 router.get("/", async ({ user }: AppRequest, res: Response) => {
   try {
