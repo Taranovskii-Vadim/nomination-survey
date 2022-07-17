@@ -1,4 +1,8 @@
 [
-  { "id": "1", "description": "asdasd" },
-  { "id": "2", "description": "asdasd" }
+  { "id": "1", "description": "Оцените работу дизайнера" },
+  { "id": "2", "description": "Оцените работу менджера" },
+  { "id": "3", "description": "Оцените работу владельца продукта" },
+  { "id": "4", "description": "Оцените работу аналитика" },
+  { "id": "5", "description": "Оцените работу frontend разработчиков" },
+  { "id": "6", "description": "Оцените работу backend разработчиков" }
 ]
