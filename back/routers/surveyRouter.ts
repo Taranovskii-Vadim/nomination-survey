@@ -1,8 +1,8 @@
 import { Response, Router } from "express";
 
 import FileReader from "../models/FileReader";
+import Survey from "../models/Survey";
 import { FileData, SurveyDataBase } from "../models/Survey/types";
-import { MOCK } from "../models/Survey/constants";
 
 import { AppRequest } from "../types";
 import { Question } from "../models/Question/types";
@@ -16,7 +16,8 @@ const router = Router();
 
 router.get("/", async ({ user }: AppRequest, res: Response) => {
   try {
-    res.json(MOCK.map(({ id, title, status }) => ({ id, title, status })));
+    const result = await Survey.getData();
+    res.json(result.map(({ id, title, status }) => ({ id, title, status })));
   } catch (e) {
     res.status(500).send(e.message);
   }
@@ -74,7 +75,10 @@ router
         getFileName(surveyId)
       );
 
-      const survey: SurveyDataBase = MOCK.find((item) => item.id === surveyId);
+      const surveys = await Survey.getData();
+      const survey: SurveyDataBase = surveys.find(
+        (item) => item.id === surveyId
+      );
 
       if (isFileExists) {
         const { users } = await FileReader.readFileFromCatalog<FileData>(
@@ -95,7 +99,9 @@ router
       const { surveyId } = params;
       const { login, id, role } = user;
       let users: FileData["users"] = [];
-      const survey = MOCK.find((item) => item.id === surveyId);
+      const surveys = await Survey.getData();
+
+      const survey = surveys.find((item) => item.id === surveyId);
 
       const questionPromiseResult = await Promise.all<Question>(
         Object.keys(body).map((item) =>
@@ -135,11 +141,15 @@ router
       const { surveyId } = params;
       const { nextStatus } = body;
 
-      const survey = MOCK.find((item) => item.id === surveyId);
+      const surveys = await Survey.getData();
+      const updated = surveys.map((item) => {
+        if (item.id === surveyId) {
+          item.status = nextStatus;
+        }
+        return item;
+      });
 
-      survey.status = nextStatus;
-
-      // await survey.save();
+      await Survey.writeData(updated);
 
       res.json({});
     } catch (e) {
