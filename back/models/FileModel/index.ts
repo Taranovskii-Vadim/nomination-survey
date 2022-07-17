@@ -1,9 +1,11 @@
 import fs from "fs";
 import path from "path";
 
-class FileReader {
-  static async writeFileToCatalog<T extends object>(
-    catalog: string,
+type Catalog = "database" | "results";
+
+class FileModel {
+  static async writeData<T extends object>(
+    catalog: Catalog,
     file: string,
     data: T
   ): Promise<T> {
@@ -22,8 +24,8 @@ class FileReader {
     });
   }
 
-  static async readFileFromCatalog<T extends object>(
-    catalog: string,
+  static async getData<T extends object>(
+    catalog: Catalog,
     file: string
   ): Promise<T> {
     return new Promise((resolve, reject) => {
@@ -40,10 +42,7 @@ class FileReader {
     });
   }
 
-  static async checkFileInCatalog(
-    catalog: string,
-    file: string
-  ): Promise<boolean> {
+  static async checkData(catalog: Catalog, file: string): Promise<boolean> {
     return new Promise((resolve) => {
       fs.access(
         path.join(__dirname, "..", "..", catalog, file),
@@ -56,4 +55,4 @@ class FileReader {
   }
 }
 
-export default FileReader;
+export default FileModel;

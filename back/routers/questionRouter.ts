@@ -1,7 +1,7 @@
 import { Router, Response } from "express";
-import { QUESTIONS } from "../models/Question/constants";
+import FileModel from "../models/FileModel";
 
-import { Question as QuestionType } from "../models/Question/types";
+import { Question, Question as QuestionType } from "../models/Question/types";
 import { AppRequest } from "../types";
 
 const router = Router();
@@ -9,12 +9,16 @@ const router = Router();
 router.get("/:id", async ({ params, user }: AppRequest, res: Response) => {
   try {
     const { id } = params;
+    const questions = await FileModel.getData<Question[]>(
+      "database",
+      "questions.json"
+    );
 
     if (!id) {
       throw new Error("Question id is required");
     }
 
-    const question: QuestionType | null = QUESTIONS.find(
+    const question: QuestionType | null = questions.find(
       (item) => item.id === id
     );
 
