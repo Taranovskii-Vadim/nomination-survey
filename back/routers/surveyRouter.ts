@@ -5,6 +5,9 @@ import { FileData, SurveyDataBase } from "../models/Survey/types";
 
 import { AppRequest } from "../types";
 import { Question } from "../models/Question/types";
+import { UserRole } from "../models/User/types";
+
+import { mapUserRole } from "./helpers";
 
 const CATALOG = "results";
 
@@ -25,39 +28,39 @@ router.get("/", async ({ user }: AppRequest, res: Response) => {
   }
 });
 
-// router.get(
-//   "/results/:role/:surveyId",
-//   async ({ params }: AppRequest, res: Response) => {
-//     try {
-//       const apiResult = {};
-//       const { surveyId, role } = params;
+router.get(
+  "/results/:role/:surveyId",
+  async ({ params }: AppRequest, res: Response) => {
+    try {
+      const apiResult = {};
+      const { surveyId, role } = params;
 
-//       const isFileExists = await FileModel.checkData(
-//         CATALOG,
-//         getFileName(surveyId)
-//       );
+      const isFileExists = await FileModel.checkData(
+        CATALOG,
+        getFileName(surveyId)
+      );
 
-//       if (isFileExists) {
-//         const { users } = await FileModel.getData<FileData>(
-//           CATALOG,
-//           getFileName(surveyId)
-//         );
+      if (isFileExists) {
+        const { users } = await FileModel.getData<FileData>(
+          CATALOG,
+          getFileName(surveyId)
+        );
 
-//         for (let user of users) {
-//           if (role === user.role) {
-//             for (let { id, answer } of user.questions) {
-//               apiResult[id] = (apiResult[id] || 0) + answer;
-//             }
-//           }
-//         }
-//       }
+        for (let user of users) {
+          if (mapUserRole(role as UserRole) === user.role) {
+            for (let { id, answer } of user.questions) {
+              apiResult[id] = (apiResult[id] || 0) + answer;
+            }
+          }
+        }
+      }
 
-//       res.json(apiResult);
-//     } catch (e) {
-//       console.log(e);
-//     }
-//   }
-// );
+      res.json(apiResult);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
 
 router
   .route("/:surveyId")
