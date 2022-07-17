@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-type Catalog = "database" | "results";
+import { Catalog } from "../../types";
 
 class FileModel {
   static async writeData<T extends object>(

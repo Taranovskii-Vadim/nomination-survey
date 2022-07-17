@@ -7,3 +7,5 @@ export interface AppRequest extends Request {
     role: string;
   };
 }
+
+export type Catalog = "database" | "results";
