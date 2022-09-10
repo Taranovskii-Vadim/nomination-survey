@@ -2,8 +2,8 @@ import React from "react";
 import { createPortal } from "react-dom";
 import { Box, useColorMode } from "@chakra-ui/react";
 
+import { COLORS } from "src/styles/theme";
 import { MoonIcon, SunIcon } from "../icons";
-import { COLORS } from "../../styles/theme";
 
 const ThemeSwitcher = () => {
   const { colorMode, toggleColorMode } = useColorMode();

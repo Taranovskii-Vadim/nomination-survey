@@ -4,10 +4,10 @@ import { observer } from "mobx-react-lite";
 import User from "./store/user";
 
 import ProtectedPages from "./pages";
-import Login from "./pages/Login";
+import Login from "./components/Login";
 import ThemeSwitcher from "./components/ThemeSwitcher";
 
-const userStore = new User();
+const store = new User();
 
 // TODO drop for main window (hard)
 
@@ -18,10 +18,10 @@ const userStore = new User();
 const App = (): JSX.Element => (
   <>
     <ThemeSwitcher />
-    {userStore.data ? (
-      <ProtectedPages userStore={userStore} />
+    {store.data ? (
+      <ProtectedPages userStore={store} />
     ) : (
-      <Login isLoading={userStore.isLoading} getToken={userStore.getToken} />
+      <Login isLoading={store.isLoading} getToken={store.getToken} />
     )}
   </>
 );

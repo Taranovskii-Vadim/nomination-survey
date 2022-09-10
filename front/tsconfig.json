@@ -1,8 +1,9 @@
 {
-  "target": "ES6",
   "compilerOptions": {
     "jsx": "react",
-    "allowSyntheticDefaultImports": true,
+    "baseUrl": "./",
+    "target": "ES5",
+    "module": "commonjs",
     "esModuleInterop": true
   }
 }

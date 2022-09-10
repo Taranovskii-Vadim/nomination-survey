@@ -1,7 +1,7 @@
-const { merge } = require("webpack-merge");
-const { config } = require("dotenv");
-const { DefinePlugin } = require("webpack");
 const path = require("path");
+const { config } = require("dotenv");
+const { merge } = require("webpack-merge");
+const { DefinePlugin } = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
@@ -31,6 +31,9 @@ const getCommonConfig = (mode) => {
     },
     resolve: {
       extensions: [".tsx", ".ts", ".js", ".json"],
+      alias: {
+        src: path.resolve(ROOT, "src"),
+      },
     },
     optimization: {
       splitChunks: {
