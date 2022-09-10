@@ -1,9 +1,9 @@
 import { makeObservable, observable, runInAction } from "mobx";
 
-import { api } from "../../routes/api";
+import { api } from "../../api";
 import { UserApiResponse } from "./types";
 import { getUserFromStorage } from "../../utils";
-import getUserToken from "../../routes/api/getUserToken";
+import getUserToken from "../../api/getUserToken";
 
 class UserStore {
   data: UserApiResponse = undefined;

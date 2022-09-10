@@ -11,7 +11,7 @@ import {
   isHaveAccess,
 } from "../../utils";
 import SurveyStore from "../../store/surveyStore";
-import UserStore from "../../store/userStore";
+import UserStore from "../../store/user";
 import { COLORS } from "../../styles/theme";
 
 import { Loader, Title } from "../../components/ui";

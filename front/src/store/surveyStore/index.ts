@@ -2,14 +2,12 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 
 import { getErrorMessageWithId } from "../../constants";
 
-import { api } from "../../routes/api";
-import getQuestionById from "../../routes/api/getQuestionById";
-import getSurveyById, {
-  GetSurveyByIdDTO,
-} from "../../routes/api/getSurveyById";
-import getSurveyChartResults from "../../routes/api/getSurveyChartResults";
-import postSurveyResults from "../../routes/api/postSurveyResults";
-import putNextSurveyStatus from "../../routes/api/putNextSurveyStatus";
+import { api } from "../../api";
+import getQuestionById from "../../api/getQuestionById";
+import getSurveyById, { GetSurveyByIdDTO } from "../../api/getSurveyById";
+import getSurveyChartResults from "../../api/getSurveyChartResults";
+import postSurveyResults from "../../api/postSurveyResults";
+import putNextSurveyStatus from "../../api/putNextSurveyStatus";
 
 import { SurveyStatus, UserRole } from "../../types";
 import { mapSurveyStatusForBack } from "../../utils/api";

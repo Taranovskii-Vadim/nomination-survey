@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 
 import { getUrlFor } from "../routes";
 import { getLoadingMessage } from "../utils";
-import UserStore from "../store/userStore";
+import UserStore from "../store/user";
 
 import { Loader } from "../components/ui";
 

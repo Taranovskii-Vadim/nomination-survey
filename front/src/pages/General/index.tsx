@@ -7,7 +7,7 @@ import { useFetchData } from "../../utils/hooks";
 import { setUrlFor } from "../../routes";
 import { getLoadingMessage, isHaveAccess } from "../../utils";
 import SurveysStore from "../../store/surveysStore";
-import UserStore from "../../store/userStore";
+import UserStore from "../../store/user";
 
 import { Loader } from "../../components/ui";
 import SurveyCard from "../../components/SurveyCard";

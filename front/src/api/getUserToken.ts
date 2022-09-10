@@ -1,9 +1,9 @@
 import { axiosInstance } from ".";
-import { UserApiResponse } from "../../store/userStore/types";
-import { UserRoleDTO } from "../../types";
-import { setUserToStorage } from "../../utils";
-import { mapUserRole } from "../../utils/api";
-import { Route, Method } from "../types";
+import { UserApiResponse } from "../store/user/types";
+import { UserRoleDTO } from "../types";
+import { setUserToStorage } from "../utils";
+import { mapUserRole } from "../utils/api";
+import { Route, Method } from "../routes/types";
 
 interface ResponseDTO {
   id: string;

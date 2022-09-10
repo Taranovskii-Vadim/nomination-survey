@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 
-import User from "./store/userStore";
+import User from "./store/user";
 
 import ProtectedPages from "./pages";
 import Login from "./pages/Login";

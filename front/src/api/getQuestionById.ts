@@ -1,5 +1,5 @@
-import { Question } from "../../store/surveyStore/types";
-import { Route, Method } from "../types";
+import { Question } from "../store/surveyStore/types";
+import { Route, Method } from "../routes/types";
 
 interface ResponseDTO {
   id: string;

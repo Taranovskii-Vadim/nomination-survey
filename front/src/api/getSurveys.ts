@@ -1,7 +1,7 @@
-import { SurveyRenderItem } from "../../store/surveysStore/types";
-import { SurveyStatusDTO } from "../../types";
-import { mapSurveyStatus } from "../../utils/api";
-import { Route, Method } from "../types";
+import { SurveyRenderItem } from "../store/surveysStore/types";
+import { SurveyStatusDTO } from "../types";
+import { mapSurveyStatus } from "../utils/api";
+import { Route, Method } from "../routes/types";
 
 interface ResponseDTO {
   id: string;

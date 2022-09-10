@@ -1,7 +1,7 @@
 import { action, makeObservable, observable, runInAction } from "mobx";
 
-import { api } from "../../routes/api";
-import getSurveys from "../../routes/api/getSurveys";
+import { api } from "../../api";
+import getSurveys from "../../api/getSurveys";
 
 import { SurveyRenderItem } from "./types";
 

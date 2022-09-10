@@ -1,5 +1,5 @@
 import { TOKEN_KEY } from "../constants";
-import { UserFromStorage } from "../store/userStore/types";
+import { UserFromStorage } from "../store/user/types";
 import { SurveyStatus, UserRole } from "../types";
 
 export const getUserFromStorage = (): UserFromStorage | null => {
