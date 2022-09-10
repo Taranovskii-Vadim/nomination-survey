@@ -1,16 +1,17 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import { Text } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
+import { MdOutlineDone } from "react-icons/md";
 
 import { setUrlFor } from "../../routes";
 
-import { TickIcon } from "../icons";
 import { Button } from "../ui";
 import FullPageContainer from "../FullPageContainer";
+import Icon from "../Icon";
 
 const SurveyCompleted = (): JSX.Element => (
   <FullPageContainer>
-    <TickIcon size="large" />
+    <Icon as={MdOutlineDone} size="large" />
     <Text mt="4" mb="4">
       Спасибо за прохождение опроса
     </Text>

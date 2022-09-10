@@ -1,13 +1,15 @@
 import React from "react";
 import { createPortal } from "react-dom";
+import { FiSun, FiMoon } from "react-icons/fi";
 import { Box, useColorMode } from "@chakra-ui/react";
 
 import { COLORS } from "src/styles/theme";
-import { MoonIcon, SunIcon } from "../icons";
+
+import Icon from "../Icon";
 
 const ThemeSwitcher = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const SwitcherIcon = colorMode === "dark" ? MoonIcon : SunIcon;
+  const SwitcherIcon = colorMode === "dark" ? FiMoon : FiSun;
 
   const Component = (
     <Box
@@ -24,7 +26,7 @@ const ThemeSwitcher = () => {
       backgroundColor={COLORS["primary"]}
       onClick={() => toggleColorMode()}
     >
-      <SwitcherIcon size={8} color={COLORS["white"]} />
+      <Icon size={8} as={SwitcherIcon} color={COLORS["white"]} />
     </Box>
   );
 

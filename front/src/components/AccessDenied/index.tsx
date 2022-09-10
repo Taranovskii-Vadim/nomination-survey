@@ -1,16 +1,17 @@
 import React from "react";
 import { Text } from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
+import { AiOutlineLock } from "react-icons/ai";
 
 import { setUrlFor } from "../../routes";
 
-import { LockIcon } from "../icons";
 import { Button } from "../ui";
 import FullPageContainer from "../FullPageContainer";
+import Icon from "../Icon";
 
 const AccessDenied = (): JSX.Element => (
   <FullPageContainer>
-    <LockIcon size="large" />
+    <Icon as={AiOutlineLock} size="large" />
     <Text mt="4" mb="4">
       К сожалению на данный момент вы не можете принять участие в опросе
     </Text>

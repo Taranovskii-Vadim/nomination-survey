@@ -1,12 +1,14 @@
 import React from "react";
-import { Flex, Text } from "@chakra-ui/layout";
 import { useDrag } from "react-dnd";
+import { Flex, Text } from "@chakra-ui/layout";
+import { AiOutlineLock } from "react-icons/ai";
+import { GiSightDisabled } from "react-icons/gi";
 
 import { SurveyRenderItem } from "../../store/surveysStore/types";
 import { firstLetterToUpperCase } from "../../utils";
 
-import { SurveyIcon, DisabledIcon } from "../icons";
 import { COLORS } from "../../styles/theme";
+import Icon from "../Icon";
 
 interface Props {
   id: string;
@@ -29,7 +31,7 @@ const SurveyCard = ({
       isDragging: !!monitor.isDragging(),
     }),
   }));
-  const ComponentIcon = isActive ? SurveyIcon : DisabledIcon;
+  const ComponentIcon = isActive ? AiOutlineLock : GiSightDisabled;
   const iconColor = COLORS[isActive ? "primary" : "gray"];
 
   return (
@@ -46,7 +48,7 @@ const SurveyCard = ({
       alignItems="center"
       textAlign="center"
     >
-      <ComponentIcon size="large" color={iconColor} />
+      <Icon as={ComponentIcon} size="large" color={iconColor} />
       <Text fontSize="xl" flexGrow={1}>
         {isActive ? firstLetterToUpperCase(title) : unActiveMessage}
       </Text>

@@ -1,6 +1,7 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { GoBook } from "react-icons/go";
 import { observer } from "mobx-react-lite";
+import { useParams } from "react-router-dom";
 import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
@@ -15,11 +16,11 @@ import UserStore from "../../store/user";
 import { COLORS } from "../../styles/theme";
 
 import { Loader, Title } from "../../components/ui";
-import { SurveyIcon } from "../../components/icons";
 import AccessDenied from "../../components/AccessDenied";
 import QuestionsForm from "./components/QuestionsForm";
 import SurveyCompleted from "../../components/SurveyCompleted";
 import BarChart from "../../components/BarChart";
+import Icon from "src/components/Icon";
 
 const surveyStore = new SurveyStore();
 
@@ -75,7 +76,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
       pb="50"
     >
       <Flex alignItems="start" mb="35">
-        <SurveyIcon size="large" color={COLORS["primary"]} />
+        <Icon size="large" as={GoBook} color={COLORS["primary"]} />
         <Box ml="15" lineHeight="1" maxW="95%">
           <Title>{firstLetterToUpperCase(data.title)}</Title>
           <Text mt="2" lineHeight="21px">

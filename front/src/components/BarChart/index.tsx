@@ -1,9 +1,11 @@
 import React from "react";
 import { Bar } from "react-chartjs-2";
+import { ImFire } from "react-icons/im";
 import { Flex, Text } from "@chakra-ui/react";
 
 import { ChartData } from "../../store/surveyStore/types";
-import { FireIcon } from "../icons";
+
+import Icon from "../Icon";
 
 interface Props {
   chart: ChartData;
@@ -15,7 +17,7 @@ const BarChart = ({ chart }: Props): JSX.Element => {
   if (!keys.length) {
     return (
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
-        <FireIcon size="large" />
+        <Icon as={ImFire} size="large" />
         <Text mt="5" fontSize="2xl">
           Голосование в самом разгаре, результаты скоро будут доступны...
         </Text>
