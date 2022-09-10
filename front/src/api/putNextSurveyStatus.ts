@@ -1,9 +1,4 @@
-import {
-  EmptyResponseDTO,
-  Method,
-  Route,
-  SurveyIdQuery,
-} from "../routes/types";
+import { EmptyResponseDTO, Method, Route, SurveyIdQuery } from "./types";
 
 class PutNextSurveyStatus implements Route {
   method: Method = "PUT";

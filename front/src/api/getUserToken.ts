@@ -3,7 +3,7 @@ import { UserApiResponse } from "../store/user/types";
 import { UserRoleDTO } from "../types";
 import { setUserToStorage } from "../utils";
 import { mapUserRole } from "../utils/api";
-import { Route, Method } from "../routes/types";
+import { Route, Method } from "./types";
 
 interface ResponseDTO {
   id: string;

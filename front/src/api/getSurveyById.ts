@@ -1,7 +1,7 @@
 import { Survey } from "../store/surveyStore/types";
 import { SurveyStatusDTO } from "../types";
 import { mapSurveyStatus } from "../utils/api";
-import { Route, Method, SurveyIdQuery } from "../routes/types";
+import { Route, Method, SurveyIdQuery } from "./types";
 
 interface SurveyResponseDTO {
   id: string;

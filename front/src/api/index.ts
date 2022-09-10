@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { getUserFromStorage } from "../utils";
-import { Route, ResultData, Query } from "../routes/types";
+import { Route, ResultData, Query } from "./types";
 
 const API_ENDPOINT = "/api";
 

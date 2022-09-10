@@ -1,5 +1,5 @@
 import { ChartData } from "../store/surveyStore/types";
-import { Method, Route, SurveyIdQuery } from "../routes/types";
+import { Method, Route, SurveyIdQuery } from "./types";
 import { UserRole } from "../types";
 
 interface ResponseDTO {
