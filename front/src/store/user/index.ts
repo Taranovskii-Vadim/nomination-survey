@@ -1,12 +1,13 @@
 import { makeObservable, observable, runInAction } from "mobx";
 
-import { api } from "../../api";
-import { UserApiResponse } from "./types";
+import { api } from "src/api";
+import getToken from "src/api/getToken";
+
+import { User } from "./types";
 import { getUserFromStorage } from "../../utils";
-import getUserToken from "../../api/getUserToken";
 
 class UserStore {
-  data: UserApiResponse = undefined;
+  data: User = undefined;
 
   isLoading = false;
 
@@ -24,16 +25,16 @@ class UserStore {
     });
   }
 
-  getToken = async (login: string): Promise<void> => {
+  getToken = async (payload: string): Promise<void> => {
     try {
+      const login = payload.trim();
       if (!login) throw new Error("Необходимо указать логин");
+
       this.isLoading = true;
-      const apiResult: UserApiResponse = await api(getUserToken, undefined, {
-        login,
-      });
+      const result: User = await api(getToken, undefined, login);
 
       runInAction(() => {
-        this.data = apiResult;
+        this.data = result;
       });
     } catch (e) {
       console.error(e);

@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+
 import { getUserFromStorage } from "../utils";
 import { Route, ResultData, Query } from "./types";
 
