@@ -1,9 +1,8 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, Router } from "express";
 
-import FileModel from "../../models/FileModel";
-
 import { User } from "../../types";
+import FileModel from "../../models/FileModel";
 
 const router = Router();
 
@@ -11,7 +10,7 @@ router.get("/:login", async ({ params }: Request, res: Response) => {
   try {
     const { login } = params;
 
-    const users = await FileModel.getData<User[]>("database", "users.json");
+    const users = await FileModel.getData<User[]>("users.json");
 
     const result = users.find((item) => item.login === login);
 

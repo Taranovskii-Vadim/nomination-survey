@@ -9,10 +9,7 @@ const router = Router();
 
 router.get("/:id", async ({ params }: Request, res: Response) => {
   const questionId = parseInt(params.id);
-  const questions = await FileModel.getData<Question[]>(
-    "database",
-    "questions.json"
-  );
+  const questions = await FileModel.getData<Question[]>("questions.json");
 
   if (!questionId) {
     res.status(400).json({ message: "Incorrect id" });

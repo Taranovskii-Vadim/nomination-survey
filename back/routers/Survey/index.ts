@@ -4,7 +4,6 @@ import FileModel from "../../models/FileModel";
 import { FileData, SurveyCommonData } from "./types";
 
 import { Request } from "../../types";
-import { CATALOG } from "./constants";
 import { Question } from "../question/types";
 
 const getFileName = (id: number): string => `${id}.json`;
@@ -13,10 +12,7 @@ const router = Router();
 
 router.get("/", async ({ user }: Request, res: Response) => {
   try {
-    const result = await FileModel.getData<SurveyCommonData[]>(
-      "database",
-      "surveys.json"
-    );
+    const result = await FileModel.getData<SurveyCommonData[]>("surveys.json");
 
     res.json(result.map(({ id, title, status }) => ({ id, title, status })));
   } catch (e) {
@@ -30,13 +26,10 @@ router.get("/results/:role/:id", async ({ params }: Request, res: Response) => {
     const id = parseInt(params.id);
     const { role } = params;
 
-    const isFile = await FileModel.checkData(CATALOG, getFileName(id));
+    const isFile = await FileModel.checkData(getFileName(id));
 
     if (isFile) {
-      const { users } = await FileModel.getData<FileData>(
-        CATALOG,
-        getFileName(id)
-      );
+      const { users } = await FileModel.getData<FileData>(getFileName(id));
 
       for (let user of users) {
         if (role === user.role) {
@@ -66,10 +59,9 @@ router
         res.status(400).json({ message: "Inncorrect id type" });
       }
 
-      const isFile = await FileModel.checkData(CATALOG, getFileName(surveyId));
+      const isFile = await FileModel.checkData(getFileName(surveyId));
 
       const surveys = await FileModel.getData<SurveyCommonData[]>(
-        "database",
         "surveys.json"
       );
 
@@ -77,7 +69,6 @@ router
 
       if (isFile) {
         const { users } = await FileModel.getData<FileData>(
-          CATALOG,
           getFileName(surveyId)
         );
 
@@ -96,14 +87,10 @@ router
       const { login, id, role } = user;
       let users: FileData["users"] = [];
       const surveys = await FileModel.getData<SurveyCommonData[]>(
-        "database",
         "surveys.json"
       );
 
-      const questions = await FileModel.getData<Question[]>(
-        "database",
-        "questions.json"
-      );
+      const questions = await FileModel.getData<Question[]>("questions.json");
 
       const survey = surveys.find((item) => item.id === surveyId);
 
@@ -119,20 +106,16 @@ router
         answer: body[id],
       }));
 
-      const isFileExists = await FileModel.checkData(
-        CATALOG,
-        getFileName(surveyId)
-      );
+      const isFileExists = await FileModel.checkData(getFileName(surveyId));
 
       if (isFileExists) {
         const fileData = await FileModel.getData<FileData>(
-          CATALOG,
           getFileName(surveyId)
         );
         users = [...fileData.users];
       }
 
-      await FileModel.writeData(CATALOG, getFileName(surveyId), {
+      await FileModel.writeData(getFileName(surveyId), {
         title: survey.title,
         users: [...users, { id, login, role, questions: questionFilePayload }],
       });
@@ -148,7 +131,6 @@ router
       const { status } = body;
 
       const surveys = await FileModel.getData<SurveyCommonData[]>(
-        "database",
         "surveys.json"
       );
 
@@ -159,7 +141,7 @@ router
         return item;
       });
 
-      await FileModel.writeData("database", "surveys.json", updated);
+      await FileModel.writeData("surveys.json", updated);
 
       res.json({});
     } catch (e) {
