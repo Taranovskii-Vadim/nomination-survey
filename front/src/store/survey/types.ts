@@ -20,8 +20,8 @@ export interface ButtonRender {
 }
 
 export interface Question {
-  readonly id: string;
-  description: string;
+  id: number;
+  text: string;
 }
 
 export interface HashedQuestion {
@@ -29,6 +29,6 @@ export interface HashedQuestion {
 }
 
 export interface Survey extends CommonSurveyFields {
-  description?: string;
+  description: string;
   questions: Question[];
 }

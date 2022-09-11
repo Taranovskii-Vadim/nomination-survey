@@ -7,11 +7,12 @@ import {
   Question,
   SurveyResult,
 } from "../../../../store/survey/types";
-import { SurveyStatus, UserRole } from "../../../../types";
 
 import Range from "../../../../components/ui/Range";
 import FormItemTitle from "../FormItemTitle";
 import FormFooter from "../FormFooter";
+import { UserRole } from "src/store/user/types";
+import { SurveyStatus } from "src/store/types";
 
 interface Props {
   data: Question[];
@@ -43,12 +44,12 @@ const QuestionsForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      {data.map(({ id, description }) => (
+      {data.map(({ id, text }) => (
         <Box key={id} mb={5} _last={{ mb: 0 }}>
-          <FormItemTitle name={id} label={description} />
+          <FormItemTitle id={id} label={text} />
           <Range
             isDisabled={isFormFieldsDisabled}
-            onChange={(val) => setFieldValue(id, val)}
+            onChange={(val) => setFieldValue(id.toString(), val)}
           />
         </Box>
       ))}

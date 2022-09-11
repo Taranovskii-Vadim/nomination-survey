@@ -3,7 +3,7 @@ import { EmptyResponseDTO, Method, Route } from "./types";
 class PostSurveyResults implements Route {
   method: Method = "POST";
 
-  getUrl(id: string): string {
+  getUrl(id: number): string {
     return `/survey/${id}`;
   }
 

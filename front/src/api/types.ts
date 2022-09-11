@@ -4,7 +4,7 @@ export type Method = "GET" | "POST" | "PUT";
 
 export type ResultData = object | string | number;
 
-export type Query = string;
+export type Query = string | number;
 
 export interface Route {
   method: Method;

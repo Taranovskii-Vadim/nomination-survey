@@ -1,27 +1,16 @@
 import { SurveyStatus } from "src/store/types";
-import { Survey } from "../store/survey/types";
-import { Route, Method } from "./types";
 
-interface SurveyResponseDTO {
-  id: string;
-  title: string;
-  status: SurveyStatus;
-  description?: string;
-  questions: string[];
-}
+import { Route, Method } from "./types";
 
 interface ResponseDTO {
   isUserVoted: boolean;
-  survey: SurveyResponseDTO;
-}
-
-type GetSurveyByIdData = Omit<Survey, "questions"> & {
-  questions: string[];
-};
-
-export interface GetSurveyByIdDTO {
-  isUserVoted: boolean;
-  data: GetSurveyByIdData;
+  survey: {
+    id: number;
+    title: string;
+    questions: number[];
+    description: string;
+    status: SurveyStatus;
+  };
 }
 
 class GetSurveyById implements Route {
@@ -30,8 +19,8 @@ class GetSurveyById implements Route {
   getUrl(id: string): string {
     return `/surveys/${id}`;
   }
-
-  getData({ isUserVoted, survey }: ResponseDTO): GetSurveyByIdDTO {
+  // TODO fix any
+  getData({ isUserVoted, survey }: ResponseDTO): any {
     return {
       isUserVoted,
       data: survey,

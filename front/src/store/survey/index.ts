@@ -4,7 +4,7 @@ import { getErrorMessageWithId } from "../../constants";
 
 import { api } from "../../api";
 import getQuestionById from "../../api/getQuestionById";
-import getSurveyById, { GetSurveyByIdDTO } from "../../api/getSurveyById";
+import getSurveyById from "../../api/getSurveyById";
 import getSurveyChartResults from "../../api/getSurveyChartResults";
 import postSurveyResults from "../../api/postSurveyResults";
 import putNextSurveyStatus from "../../api/putNextSurveyStatus";
@@ -71,11 +71,7 @@ class SurveyStore {
   fetchSurveyById = async (id: string): Promise<void | null> => {
     try {
       this.setLoading("survey");
-      const { isUserVoted, data }: GetSurveyByIdDTO = await api(
-        getSurveyById,
-        undefined,
-        id
-      );
+      const { isUserVoted, data } = await api(getSurveyById, undefined, id);
 
       const questions = await Promise.all(
         data.questions.map((item) => this.fetchSurveyQuestionById(item))
