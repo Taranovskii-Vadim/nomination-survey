@@ -1,31 +1,27 @@
 import { User } from "../../types";
 
-export interface SurveyDataBase {
-  id: string;
+export type SurveyStatus = "ready" | "userVote" | "chiefVote" | "finished";
+
+export interface Survey {
+  id: number;
   title: string;
   status: SurveyStatus;
-  questions: string[];
+  questions: number[];
 }
 
-export interface FileAnswer {
-  id: string;
-  description: string;
-  answer: string;
-}
+export type SurveyCommonData = Omit<Survey, "questions">;
 
-export interface FileUser extends User {
-  questions: FileAnswer[];
-}
+// export interface FileAnswer {
+//   id: string;
+//   description: string;
+//   answer: string;
+// }
 
-export type SurveysRender = Pick<SurveyDataBase, "id" | "title" | "status">;
+// export interface FileUser extends User {
+//   questions: FileAnswer[];
+// }
 
-export interface FileData {
-  title: string;
-  users: FileUser[];
-}
-
-export type SurveyStatus =
-  | "notStarted"
-  | "userVoting"
-  | "chiefVoting"
-  | "finished";
+// export interface FileData {
+//   title: string;
+//   users: FileUser[];
+// }
