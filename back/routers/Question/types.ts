@@ -1,4 +1,4 @@
 export interface Question {
-  readonly id: string;
-  description: string;
+  id: number;
+  text: string;
 }
