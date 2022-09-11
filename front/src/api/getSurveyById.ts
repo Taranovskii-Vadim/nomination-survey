@@ -1,12 +1,11 @@
-import { Survey } from "../store/surveyStore/types";
-import { SurveyStatusDTO } from "../types";
-import { mapSurveyStatus } from "../utils/api";
-import { Route, Method, SurveyIdQuery } from "./types";
+import { SurveyStatus } from "src/store/types";
+import { Survey } from "../store/survey/types";
+import { Route, Method } from "./types";
 
 interface SurveyResponseDTO {
   id: string;
   title: string;
-  status: SurveyStatusDTO;
+  status: SurveyStatus;
   description?: string;
   questions: string[];
 }
@@ -28,17 +27,14 @@ export interface GetSurveyByIdDTO {
 class GetSurveyById implements Route {
   method: Method = "GET";
 
-  getUrl({ surveyId }: SurveyIdQuery): string {
-    return `/survey/${surveyId}`;
+  getUrl(id: string): string {
+    return `/survey/${id}`;
   }
 
   getData({ isUserVoted, survey }: ResponseDTO): GetSurveyByIdDTO {
     return {
       isUserVoted,
-      data: {
-        ...survey,
-        status: mapSurveyStatus(survey.status),
-      },
+      data: survey,
     };
   }
 }

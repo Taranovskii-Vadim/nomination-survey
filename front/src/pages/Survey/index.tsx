@@ -6,12 +6,8 @@ import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
 import { useFetchData } from "../../utils/hooks";
-import {
-  firstLetterToUpperCase,
-  getLoadingMessage,
-  isHaveAccess,
-} from "../../utils";
-import SurveyStore from "../../store/surveyStore";
+import { firstLetterToUpperCase, getLoadingMessage } from "../../utils";
+import SurveyStore from "../../store/survey";
 import UserStore from "../../store/user";
 import { COLORS } from "../../styles/theme";
 
@@ -21,6 +17,7 @@ import QuestionsForm from "./components/QuestionsForm";
 import SurveyCompleted from "../../components/SurveyCompleted";
 import BarChart from "../../components/BarChart";
 import Icon from "src/components/Icon";
+import { isHaveAccess } from "../helpers";
 
 const surveyStore = new SurveyStore();
 

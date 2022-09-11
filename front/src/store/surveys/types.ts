@@ -1,4 +1,4 @@
-import { CommonSurveyFields } from "../surveyStore/types";
+import { CommonSurveyFields } from "../types";
 
 export type SurveyRenderItem = Pick<
   CommonSurveyFields,

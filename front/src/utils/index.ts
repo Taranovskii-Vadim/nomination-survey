@@ -1,6 +1,5 @@
 import { TOKEN_KEY } from "../constants";
 import { UserFromStorage } from "../store/user/types";
-import { SurveyStatus, UserRole } from "../types";
 
 export const getUserFromStorage = (): UserFromStorage | null => {
   const result = localStorage.getItem(TOKEN_KEY);
@@ -22,14 +21,6 @@ export const setUserToStorage = ({
   token,
 }: UserFromStorage): void => {
   localStorage.setItem(TOKEN_KEY, JSON.stringify({ id, role, token }));
-};
-
-export const isHaveAccess = (role: UserRole, status: SurveyStatus): boolean => {
-  if (role === "admin") return true;
-  if (role === "chief" && status === "chiefVote") return true;
-  if (role === "user" && status === "userVote") return true;
-
-  return false;
 };
 
 export const firstLetterToUpperCase = (value: string): string =>

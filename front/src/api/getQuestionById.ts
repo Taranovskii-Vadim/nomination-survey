@@ -1,4 +1,4 @@
-import { Question } from "../store/surveyStore/types";
+import { Question } from "../store/survey/types";
 import { Route, Method } from "./types";
 
 interface ResponseDTO {
@@ -9,7 +9,7 @@ interface ResponseDTO {
 class GetQuestionById implements Route {
   method: Method = "GET";
 
-  getUrl({ id }: { id: string }): string {
+  getUrl(id: string): string {
     return `/question/${id}`;
   }
 

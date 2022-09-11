@@ -1,4 +1,4 @@
-import { ButtonRender } from "../../../../store/surveyStore/types";
+import { ButtonRender } from "../../../../store/survey/types";
 import { SurveyStatus } from "../../../../types";
 
 const BUTTONS: { [key: string]: ButtonRender } = {

@@ -9,9 +9,6 @@ import getSurveyChartResults from "../../api/getSurveyChartResults";
 import postSurveyResults from "../../api/postSurveyResults";
 import putNextSurveyStatus from "../../api/putNextSurveyStatus";
 
-import { SurveyStatus, UserRole } from "../../types";
-import { mapSurveyStatusForBack } from "../../utils/api";
-
 import {
   ChartData,
   FormLoading,
@@ -21,6 +18,9 @@ import {
   Survey,
   SurveyResult,
 } from "./types";
+import { SurveyStatus } from "../types";
+import { UserRole } from "../user/types";
+
 class SurveyStore {
   loading: Loading = "survey";
 
@@ -58,7 +58,7 @@ class SurveyStore {
     try {
       let result: Question = this.hashedQuestions[id];
       if (!result) {
-        result = await api(getQuestionById, undefined, { id });
+        result = await api(getQuestionById, undefined, id);
         this.hashedQuestions[id] = result;
       }
 
@@ -68,15 +68,13 @@ class SurveyStore {
     }
   };
 
-  fetchSurveyById = async (surveyId: string): Promise<void | null> => {
+  fetchSurveyById = async (id: string): Promise<void | null> => {
     try {
       this.setLoading("survey");
       const { isUserVoted, data }: GetSurveyByIdDTO = await api(
         getSurveyById,
         undefined,
-        {
-          surveyId,
-        }
+        id
       );
 
       const questions = await Promise.all(
@@ -97,8 +95,8 @@ class SurveyStore {
   sendUserAnswer = async (data: SurveyResult) => {
     try {
       this.setFormLoading("finish");
-      const surveyId = this.data.id;
-      await api(postSurveyResults, data, { surveyId });
+      await api(postSurveyResults, data, this.data.id);
+
       runInAction(() => {
         this.surveyCompleted = true;
       });
@@ -112,9 +110,8 @@ class SurveyStore {
   setNextSurveyStatus = async (status: SurveyStatus) => {
     try {
       this.setFormLoading("nextStatus");
-      const surveyId = this.data.id;
-      const nextStatus = mapSurveyStatusForBack(status);
-      await api(putNextSurveyStatus, { nextStatus }, { surveyId });
+
+      await api(putNextSurveyStatus, { status }, this.data.id);
       runInAction(() => {
         this.data.status = status;
       });
@@ -128,11 +125,13 @@ class SurveyStore {
   fetchChartResults = async (role: UserRole): Promise<void> => {
     try {
       this.setLoading("chart");
-      const surveyId = this.data.id;
-      const chartResult = await api(getSurveyChartResults, undefined, {
-        surveyId,
-        role,
-      });
+
+      const chartResult = await api(
+        getSurveyChartResults,
+        undefined,
+        `${role}/${this.data.id}`
+      );
+
       runInAction(() => {
         this.chartData = chartResult;
       });

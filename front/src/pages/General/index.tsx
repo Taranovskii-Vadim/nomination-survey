@@ -5,12 +5,14 @@ import { NavLink } from "react-router-dom";
 
 import { useFetchData } from "../../utils/hooks";
 import { setUrlFor } from "../../routes";
-import { getLoadingMessage, isHaveAccess } from "../../utils";
-import SurveysStore from "../../store/surveysStore";
+import { getLoadingMessage } from "../../utils";
+import SurveysStore from "../../store/surveys";
 import UserStore from "../../store/user";
 
 import { Loader } from "../../components/ui";
 import SurveyCard from "../../components/SurveyCard";
+
+import { isHaveAccess } from "../helpers";
 
 const surveysStore = new SurveysStore();
 

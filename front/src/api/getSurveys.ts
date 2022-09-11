@@ -1,12 +1,11 @@
-import { SurveyRenderItem } from "../store/surveysStore/types";
-import { SurveyStatusDTO } from "../types";
-import { mapSurveyStatus } from "../utils/api";
+import { SurveyStatus } from "src/store/types";
+import { SurveyRenderItem } from "../store/surveys/types";
 import { Route, Method } from "./types";
 
 interface ResponseDTO {
   id: string;
   title: string;
-  status: SurveyStatusDTO;
+  status: SurveyStatus;
 }
 
 class GetSurveys implements Route {
@@ -17,10 +16,7 @@ class GetSurveys implements Route {
   }
 
   getData(data: Array<ResponseDTO>): SurveyRenderItem[] {
-    return data.map((item) => ({
-      ...item,
-      status: mapSurveyStatus(item.status),
-    }));
+    return data;
   }
 }
 

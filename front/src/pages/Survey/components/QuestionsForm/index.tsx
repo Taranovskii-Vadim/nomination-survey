@@ -6,7 +6,7 @@ import {
   FormLoading,
   Question,
   SurveyResult,
-} from "../../../../store/surveyStore/types";
+} from "../../../../store/survey/types";
 import { SurveyStatus, UserRole } from "../../../../types";
 
 import Range from "../../../../components/ui/Range";

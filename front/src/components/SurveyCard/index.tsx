@@ -4,7 +4,7 @@ import { Flex, Text } from "@chakra-ui/layout";
 import { AiOutlineLock } from "react-icons/ai";
 import { GiSightDisabled } from "react-icons/gi";
 
-import { SurveyRenderItem } from "../../store/surveysStore/types";
+import { SurveyRenderItem } from "../../store/surveys/types";
 import { firstLetterToUpperCase } from "../../utils";
 
 import { COLORS } from "../../styles/theme";

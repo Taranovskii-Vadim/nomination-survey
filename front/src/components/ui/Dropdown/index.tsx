@@ -1,7 +1,7 @@
 import React from "react";
 import { SelectProps, Select as ChakraSelect } from "@chakra-ui/react";
 
-import { Option } from "../../../store/surveyStore/types";
+import { Option } from "../../../store/survey/types";
 
 interface Props extends SelectProps {
   options: Option[];

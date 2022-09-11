@@ -1,7 +1,3 @@
-export interface SurveyIdQuery {
-  surveyId: string;
-}
-
 export interface EmptyResponseDTO {}
 
 export type Method = "GET" | "POST" | "PUT";

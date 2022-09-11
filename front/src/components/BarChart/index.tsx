@@ -3,7 +3,7 @@ import { Bar } from "react-chartjs-2";
 import { ImFire } from "react-icons/im";
 import { Flex, Text } from "@chakra-ui/react";
 
-import { ChartData } from "../../store/surveyStore/types";
+import { ChartData } from "../../store/survey/types";
 
 import Icon from "../Icon";
 

@@ -1,12 +1,6 @@
-import { SurveyStatus } from "../../types";
+import { CommonSurveyFields, SurveyStatus } from "../types";
 
 type EmptyLoading = "";
-
-export interface CommonSurveyFields {
-  readonly id: string;
-  status: SurveyStatus;
-  title: string;
-}
 
 export interface SurveyResult {
   [key: string]: string | number;
