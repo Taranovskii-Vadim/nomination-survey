@@ -4,7 +4,7 @@ import FileModel from "../../models/FileModel";
 import { SurveyCommonData } from "./types";
 
 import { Request, UserRole } from "../../types";
-import { Question } from "../Question/types";
+import { Question } from "../question/types";
 
 const CATALOG = "results";
 

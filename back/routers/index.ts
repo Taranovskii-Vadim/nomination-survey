@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-import userRouter from "./userRouter";
-import surveyRouter from "./Survey";
-import questionRouter from "./Question";
+import userRouter from "./user";
+import surveyRouter from "./survey";
+import questionRouter from "./question";
 
 interface AppRouter {
   prefix: string;
@@ -11,7 +11,7 @@ interface AppRouter {
 }
 
 export const routers: AppRouter[] = [
-  { prefix: "/users", isAuth: false, router: userRouter },
   { prefix: "/surveys", router: surveyRouter },
   { prefix: "/questions", router: questionRouter },
+  { prefix: "/users", isAuth: false, router: userRouter },
 ];

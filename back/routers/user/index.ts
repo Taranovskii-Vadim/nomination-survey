@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import { Request, Response, Router } from "express";
 
-import FileModel from "../models/FileModel";
+import FileModel from "../../models/FileModel";
 
-import { User } from "../types";
+import { User } from "../../types";
 
 const router = Router();
 
