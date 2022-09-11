@@ -1,5 +1,7 @@
 [
   { "id": 1, "login": "admin", "role": "admin" },
   { "id": 2, "login": "vadim", "role": "chief" },
-  { "id": 3, "login": "anna", "role": "user" }
+  { "id": 3, "login": "anna", "role": "user" },
+  { "id": 4, "login": "oleg", "role": "user" },
+  { "id": 4, "login": "elena", "role": "user" }
 ]
