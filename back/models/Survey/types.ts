@@ -1,3 +1,5 @@
+import { User } from "../../types";
+
 export interface SurveyDataBase {
   id: string;
   title: string;
@@ -11,10 +13,7 @@ export interface FileAnswer {
   answer: string;
 }
 
-export interface FileUser {
-  id: string;
-  login: string;
-  role: string;
+export interface FileUser extends User {
   questions: FileAnswer[];
 }
 

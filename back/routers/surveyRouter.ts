@@ -3,11 +3,8 @@ import { Response, Router } from "express";
 import FileModel from "../models/FileModel";
 import { FileData, SurveyDataBase } from "../models/Survey/types";
 
-import { AppRequest } from "../types";
+import { Request, UserRole } from "../types";
 import { Question } from "../models/Question/types";
-import { UserRole } from "../models/User/types";
-
-import { mapUserRole } from "./helpers";
 
 const CATALOG = "results";
 
@@ -15,7 +12,7 @@ const getFileName = (id: string): string => `${id}.json`;
 
 const router = Router();
 
-router.get("/", async ({ user }: AppRequest, res: Response) => {
+router.get("/", async ({ user }: Request, res: Response) => {
   try {
     const result = await FileModel.getData<SurveyDataBase[]>(
       "database",
@@ -28,43 +25,43 @@ router.get("/", async ({ user }: AppRequest, res: Response) => {
   }
 });
 
-router.get(
-  "/results/:role/:surveyId",
-  async ({ params }: AppRequest, res: Response) => {
-    try {
-      const apiResult = {};
-      const { surveyId, role } = params;
+// router.get(
+//   "/results/:role/:surveyId",
+//   async ({ params }: Request, res: Response) => {
+//     try {
+//       const apiResult = {};
+//       const { surveyId, role } = params;
 
-      const isFileExists = await FileModel.checkData(
-        CATALOG,
-        getFileName(surveyId)
-      );
+//       const isFileExists = await FileModel.checkData(
+//         CATALOG,
+//         getFileName(surveyId)
+//       );
 
-      if (isFileExists) {
-        const { users } = await FileModel.getData<FileData>(
-          CATALOG,
-          getFileName(surveyId)
-        );
+//       if (isFileExists) {
+//         const { users } = await FileModel.getData<FileData>(
+//           CATALOG,
+//           getFileName(surveyId)
+//         );
 
-        for (let user of users) {
-          if (mapUserRole(role as UserRole) === user.role) {
-            for (let { id, answer } of user.questions) {
-              apiResult[id] = (apiResult[id] || 0) + answer;
-            }
-          }
-        }
-      }
+//         for (let user of users) {
+//           if (mapUserRole(role as UserRole) === user.role) {
+//             for (let { id, answer } of user.questions) {
+//               apiResult[id] = (apiResult[id] || 0) + answer;
+//             }
+//           }
+//         }
+//       }
 
-      res.json(apiResult);
-    } catch (e) {
-      console.log(e);
-    }
-  }
-);
+//       res.json(apiResult);
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+// );
 
 router
   .route("/:surveyId")
-  .get(async ({ params, user }: AppRequest, res: Response) => {
+  .get(async ({ params, user }: Request, res: Response) => {
     try {
       const { surveyId } = params;
       const { id } = user;
@@ -103,7 +100,7 @@ router
       res.status(500).send(e.message);
     }
   })
-  .post(async ({ params, body, user }: AppRequest, res: Response) => {
+  .post(async ({ params, body, user }: Request, res: Response) => {
     try {
       const { surveyId } = params;
       const { login, id, role } = user;
@@ -153,7 +150,7 @@ router
       res.status(500).send(e.message);
     }
   })
-  .put(async ({ params, body, user }: AppRequest, res: Response) => {
+  .put(async ({ params, body, user }: Request, res: Response) => {
     try {
       const { surveyId } = params;
       const { nextStatus } = body;

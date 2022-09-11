@@ -2,11 +2,11 @@ import { Router, Response } from "express";
 import FileModel from "../models/FileModel";
 
 import { Question, Question as QuestionType } from "../models/Question/types";
-import { AppRequest } from "../types";
+import { Request } from "../types";
 
 const router = Router();
 
-router.get("/:id", async ({ params, user }: AppRequest, res: Response) => {
+router.get("/:id", async ({ params, user }: Request, res: Response) => {
   try {
     const { id } = params;
     const questions = await FileModel.getData<Question[]>(

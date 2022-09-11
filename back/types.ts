@@ -1,11 +1,13 @@
-import { Request } from "express";
+import { Request as ExpressRequest } from "express";
 
-export interface AppRequest extends Request {
-  user: {
-    id: string;
-    login: string;
-    role: string;
-  };
+export type UserRole = "admin" | "chief" | "user";
+
+export interface User {
+  id: number;
+  login: string;
+  role: UserRole;
 }
 
-export type Catalog = "database" | "results";
+export interface Request extends ExpressRequest {
+  user: User;
+}
