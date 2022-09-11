@@ -1,3 +1,4 @@
+import { SurveyStatus } from "src/store/types";
 import { UserRole } from "src/store/user/types";
 
 export const isHaveAccess = (role: UserRole, status: SurveyStatus): boolean => {

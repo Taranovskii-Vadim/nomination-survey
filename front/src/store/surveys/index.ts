@@ -3,12 +3,12 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 import { api } from "../../api";
 import getSurveys from "../../api/getSurveys";
 
-import { SurveyRenderItem } from "./types";
+import { CommonSurveyFields } from "../types";
 
 class SurveysStore {
   loading = true;
 
-  data: SurveyRenderItem[] = [];
+  data: CommonSurveyFields[] = [];
 
   constructor() {
     makeObservable(this, {

@@ -12,7 +12,7 @@ export const getTitleFor = (page: TargetPage): string => {
   return title;
 };
 
-export const setUrlFor = (page: TargetPage, id?: string): string => {
+export const setUrlFor = (page: TargetPage, id?: number): string => {
   const { path } = NAVIGATION_ITEMS[page];
   const tail = id || "";
   return `${path}${tail}`;

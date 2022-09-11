@@ -1,13 +1,13 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { SimpleGrid, Container } from "@chakra-ui/layout";
 import { NavLink } from "react-router-dom";
+import { SimpleGrid, Container } from "@chakra-ui/layout";
 
-import { useFetchData } from "../../utils/hooks";
-import { setUrlFor } from "../../routes";
-import { getLoadingMessage } from "../../utils";
-import SurveysStore from "../../store/surveys";
-import UserStore from "../../store/user";
+import { setUrlFor } from "src/routes";
+import UserStore from "src/store/user";
+import SurveysStore from "src/store/surveys";
+import { getLoadingMessage } from "src/utils";
+import { useFetchData } from "src/utils/hooks";
 
 import { Loader } from "../../components/ui";
 import SurveyCard from "../../components/SurveyCard";

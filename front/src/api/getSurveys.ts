@@ -1,9 +1,9 @@
-import { SurveyStatus } from "src/store/types";
-import { SurveyRenderItem } from "../store/surveys/types";
+import { CommonSurveyFields, SurveyStatus } from "src/store/types";
+
 import { Route, Method } from "./types";
 
 interface ResponseDTO {
-  id: string;
+  id: number;
   title: string;
   status: SurveyStatus;
 }
@@ -15,7 +15,7 @@ class GetSurveys implements Route {
     return "/surveys";
   }
 
-  getData(data: Array<ResponseDTO>): SurveyRenderItem[] {
+  getData(data: ResponseDTO[]): CommonSurveyFields[] {
     return data;
   }
 }
