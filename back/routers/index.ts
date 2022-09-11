@@ -11,7 +11,7 @@ interface AppRouter {
 }
 
 export const routers: AppRouter[] = [
-  { prefix: "/user", isAuth: false, router: userRouter },
-  { prefix: "/survey", router: surveyRouter },
-  { prefix: "/question", router: questionRouter },
+  { prefix: "/users", isAuth: false, router: userRouter },
+  { prefix: "/surveys", router: surveyRouter },
+  { prefix: "/questions", router: questionRouter },
 ];

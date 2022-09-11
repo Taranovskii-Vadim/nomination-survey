@@ -15,7 +15,7 @@ class GetUserToken implements Route {
   method: Method = "GET";
 
   getUrl(login): string {
-    return `/user/${login}`;
+    return `/users/${login}`;
   }
 
   getData({ id, role, token }: ResponseDTO): User {

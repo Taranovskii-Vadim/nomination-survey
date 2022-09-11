@@ -10,7 +10,7 @@ class GetQuestionById implements Route {
   method: Method = "GET";
 
   getUrl(id: string): string {
-    return `/question/${id}`;
+    return `/questions/${id}`;
   }
 
   getData(data: ResponseDTO): Question {

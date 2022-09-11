@@ -12,7 +12,7 @@ class GetSurveys implements Route {
   method: Method = "GET";
 
   getUrl(): string {
-    return "/survey";
+    return "/surveys";
   }
 
   getData(data: Array<ResponseDTO>): SurveyRenderItem[] {
