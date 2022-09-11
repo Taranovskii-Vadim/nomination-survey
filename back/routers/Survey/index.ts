@@ -1,16 +1,15 @@
 import { Response, Router } from "express";
 
-import FileModel from "../../models/FileModel";
-import { FileData, SurveyCommonData } from "./types";
-
 import { Request } from "../../types";
 import { Question } from "../question/types";
+import FileModel from "../../models/FileModel";
 
-const getFileName = (id: number): string => `${id}.json`;
+import { getResultFileName } from "./helpers";
+import { FileData, SurveyCommonData } from "./types";
 
 const router = Router();
 
-router.get("/", async ({ user }: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
   try {
     const result = await FileModel.getData<SurveyCommonData[]>("surveys.json");
 
@@ -26,10 +25,12 @@ router.get("/results/:role/:id", async ({ params }: Request, res: Response) => {
     const id = parseInt(params.id);
     const { role } = params;
 
-    const isFile = await FileModel.checkData(getFileName(id));
+    const isFile = await FileModel.checkData(getResultFileName(id));
 
     if (isFile) {
-      const { users } = await FileModel.getData<FileData>(getFileName(id));
+      const { users } = await FileModel.getData<FileData>(
+        getResultFileName(id)
+      );
 
       for (let user of users) {
         if (role === user.role) {
@@ -59,7 +60,7 @@ router
         res.status(400).json({ message: "Inncorrect id type" });
       }
 
-      const isFile = await FileModel.checkData(getFileName(surveyId));
+      const isFile = await FileModel.checkData(getResultFileName(surveyId));
 
       const surveys = await FileModel.getData<SurveyCommonData[]>(
         "surveys.json"
@@ -69,7 +70,7 @@ router
 
       if (isFile) {
         const { users } = await FileModel.getData<FileData>(
-          getFileName(surveyId)
+          getResultFileName(surveyId)
         );
 
         isUserVoted = !!users.find((item) => item.id === id) || false;
@@ -106,16 +107,18 @@ router
         answer: body[id],
       }));
 
-      const isFileExists = await FileModel.checkData(getFileName(surveyId));
+      const isFileExists = await FileModel.checkData(
+        getResultFileName(surveyId)
+      );
 
       if (isFileExists) {
         const fileData = await FileModel.getData<FileData>(
-          getFileName(surveyId)
+          getResultFileName(surveyId)
         );
         users = [...fileData.users];
       }
 
-      await FileModel.writeData(getFileName(surveyId), {
+      await FileModel.writeData(getResultFileName(surveyId), {
         title: survey.title,
         users: [...users, { id, login, role, questions: questionFilePayload }],
       });

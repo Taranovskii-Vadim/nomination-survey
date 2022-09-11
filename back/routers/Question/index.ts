@@ -1,8 +1,8 @@
 import { Router, Response } from "express";
 
+import { Request } from "../../types";
 import FileModel from "../../models/FileModel";
 
-import { Request } from "../../types";
 import { Question } from "./types";
 
 const router = Router();
