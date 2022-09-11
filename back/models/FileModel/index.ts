@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-import { Catalog } from "./types";
+import { Catalog } from "../../types";
 
 class FileModel {
   static writeData = async <T extends object>(
@@ -23,6 +23,7 @@ class FileModel {
   ): Promise<T> =>
     new Promise((resolve, reject) =>
       fs.readFile(path.join(__dirname, "..", "..", catalog, file), (e, data) =>
+        // TODO check here if file exist
         e ? reject(e) : resolve(JSON.parse(data.toString()))
       )
     );

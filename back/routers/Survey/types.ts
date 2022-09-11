@@ -5,23 +5,23 @@ export type SurveyStatus = "ready" | "userVote" | "chiefVote" | "finished";
 export interface Survey {
   id: number;
   title: string;
-  status: SurveyStatus;
   questions: number[];
+  status: SurveyStatus;
 }
 
 export type SurveyCommonData = Omit<Survey, "questions">;
 
-// export interface FileAnswer {
-//   id: string;
-//   description: string;
-//   answer: string;
-// }
+export interface FileAnswer {
+  id: number;
+  text: string;
+  answer: number;
+}
 
-// export interface FileUser extends User {
-//   questions: FileAnswer[];
-// }
+export interface FileUser extends User {
+  questions: FileAnswer[];
+}
 
-// export interface FileData {
-//   title: string;
-//   users: FileUser[];
-// }
+export interface FileData {
+  title: string;
+  users: FileUser[];
+}

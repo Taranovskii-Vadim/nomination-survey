@@ -28,7 +28,7 @@ class GetSurveyById implements Route {
   method: Method = "GET";
 
   getUrl(id: string): string {
-    return `/survey/${id}`;
+    return `/surveys/${id}`;
   }
 
   getData({ isUserVoted, survey }: ResponseDTO): GetSurveyByIdDTO {
