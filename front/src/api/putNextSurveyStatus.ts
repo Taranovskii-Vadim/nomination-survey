@@ -4,7 +4,7 @@ class PutNextSurveyStatus implements Route {
   method: Method = "PUT";
 
   getUrl(id: string): string {
-    return `/survey/${id}`;
+    return `/surveys/${id}`;
   }
 
   getData(result: EmptyResponseDTO): EmptyResponseDTO {

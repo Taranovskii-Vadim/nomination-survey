@@ -4,7 +4,7 @@ class PostSurveyResults implements Route {
   method: Method = "POST";
 
   getUrl(id: number): string {
-    return `/survey/${id}`;
+    return `/surveys/${id}`;
   }
 
   getData(data: EmptyResponseDTO): null {

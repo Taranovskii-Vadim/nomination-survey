@@ -9,7 +9,7 @@ class GetSurveyChartResults implements Route {
   method: Method = "GET";
 
   getUrl(query: string): string {
-    return `/survey/results/${query}`;
+    return `/surveys/results/${query}`;
   }
 
   getData(data: ResponseDTO): ChartData {

@@ -2,8 +2,8 @@ import { Question } from "../store/survey/types";
 import { Route, Method } from "./types";
 
 interface ResponseDTO {
-  id: string;
-  description: string;
+  id: number;
+  text: string;
 }
 
 class GetQuestionById implements Route {

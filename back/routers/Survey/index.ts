@@ -145,7 +145,7 @@ router
   .put(async ({ params, body }: Request, res: Response) => {
     try {
       const surveyId = parseInt(params.id);
-      const { nextStatus } = body;
+      const { status } = body;
 
       const surveys = await FileModel.getData<SurveyCommonData[]>(
         "database",
@@ -154,7 +154,7 @@ router
 
       const updated = surveys.map((item) => {
         if (item.id === surveyId) {
-          item.status = nextStatus;
+          item.status = status;
         }
         return item;
       });

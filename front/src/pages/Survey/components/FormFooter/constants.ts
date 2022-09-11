@@ -1,11 +1,11 @@
+import { SurveyStatus } from "src/store/types";
 import { ButtonRender } from "../../../../store/survey/types";
-import { SurveyStatus } from "../../../../types";
 
 const BUTTONS: { [key: string]: ButtonRender } = {
-  notStarted: { label: "Начать голосование пользователей", to: "userVote" },
-  userVote: { label: "Начать голосование руководителей", to: "chiefVote" },
+  finished: { label: "Начать заново", to: "ready" },
   chiefVote: { label: "Завершить голосование", to: "finished" },
-  finished: { label: "Начать заново", to: "notStarted" },
+  ready: { label: "Начать голосование пользователей", to: "userVote" },
+  userVote: { label: "Начать голосование руководителей", to: "chiefVote" },
 };
 
 export const getButtons = (status: SurveyStatus): ButtonRender => {

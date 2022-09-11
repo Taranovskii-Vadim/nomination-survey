@@ -1,11 +1,11 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 
-import { SurveyStatus } from "../../../../types";
 import { FormLoading } from "../../../../store/survey/types";
 
 import { Button } from "../../../../components/ui";
 import { getButtons } from "./constants";
+import { SurveyStatus } from "src/store/types";
 
 interface Props {
   isSubmiting: FormLoading;
