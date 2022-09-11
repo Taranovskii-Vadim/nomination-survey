@@ -1,8 +1,8 @@
 import { Router } from "express";
 
 import userRouter from "./userRouter";
-import surveyRouter from "./surveyRouter";
-import questionRouter from "./questionRouter";
+import surveyRouter from "./Survey";
+import questionRouter from "./Question";
 
 interface AppRouter {
   prefix: string;

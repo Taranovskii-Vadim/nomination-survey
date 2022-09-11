@@ -1,10 +1,10 @@
 import { Response, Router } from "express";
 
-import FileModel from "../models/FileModel";
-import { FileData, SurveyDataBase } from "../models/Survey/types";
+import FileModel from "../../models/FileModel";
+import { FileData, SurveyDataBase } from "./types";
 
-import { Request, UserRole } from "../types";
-import { Question } from "../models/Question/types";
+import { Request, UserRole } from "../../types";
+import { Question } from "../Question/types";
 
 const CATALOG = "results";
 
