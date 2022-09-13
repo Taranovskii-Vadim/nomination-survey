@@ -1,6 +1,5 @@
-import express, { json } from "express";
 import { config } from "dotenv";
-// import { connect } from "mongoose";
+import express, { json } from "express";
 
 import { routers } from "./routers";
 import { authMiddleWare } from "./middlewares";
@@ -22,17 +21,8 @@ routers.forEach(({ prefix, router, isAuth = true }) => {
   }
 });
 
-const startApplication = (): void => {
-  server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-  // TODO not working because MongoDB
-  // try {
-  //   const password = process.env.PASSWORD;
-  //   connect(
-  //     `mongodb+srv://vadim:${password}@cluster0.6xvvs.mongodb.net/Surveys?retryWrites=true&w=majority`
-  //   );
-  // } catch (e) {
-  //   console.error("error");
-  // }
-};
+// TODO i have used mongoDB, change to PostgreSQL in future
 
-startApplication();
+(() => {
+  server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+})();

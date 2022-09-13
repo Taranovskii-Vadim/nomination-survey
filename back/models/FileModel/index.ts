@@ -18,18 +18,18 @@ class FileModel {
     new Promise((resolve, reject) =>
       fs.readFile(
         path.join(__dirname, "..", "..", "database", file),
-        (e, data) =>
-          // TODO check here if file exist
-          e ? reject(e) : resolve(JSON.parse(data.toString()))
-      )
-    );
+        (e, data) => {
+          // TODO this function get data and check if file exists, S principle error
+          // but code in survey router looks shorter
+          const isError = e && e.code !== "ENOENT";
+          const isNotFile = e && e.code === "ENOENT";
 
-  static checkData = async (file: string): Promise<boolean> =>
-    new Promise((resolve) =>
-      fs.access(
-        path.join(__dirname, "..", "..", "database", file),
-        fs.constants.F_OK,
-        (err) => resolve(!err)
+          if (isError) {
+            return reject(e);
+          }
+
+          return resolve(!isNotFile && JSON.parse(data.toString()));
+        }
       )
     );
 }

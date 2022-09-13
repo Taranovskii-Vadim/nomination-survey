@@ -1,1 +1,1 @@
-export const getResultFileName = (id: number): string => `${id}.json`;
+export const getResultFileName = (id: number): string => `survey${id}.json`;

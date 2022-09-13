@@ -15,7 +15,7 @@ router.get("/:login", async ({ params }: Request, res: Response) => {
     const result = users.find((item) => item.login === login);
 
     if (!result) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(401).send({ message: "User not found" });
     }
 
     const token = jwt.sign(result, process.env.JWT_KEY);

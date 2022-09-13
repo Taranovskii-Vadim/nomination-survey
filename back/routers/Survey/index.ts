@@ -13,7 +13,7 @@ router.get("/", async (req: Request, res: Response) => {
   try {
     const result = await FileModel.getData<SurveyCommonData[]>("surveys.json");
 
-    res.json(result.map(({ id, title, status }) => ({ id, title, status })));
+    res.json(result);
   } catch (e) {
     res.status(500).send(e.message);
   }
@@ -22,17 +22,13 @@ router.get("/", async (req: Request, res: Response) => {
 router.get("/results/:role/:id", async ({ params }: Request, res: Response) => {
   try {
     const apiResult = {};
-    const id = parseInt(params.id);
     const { role } = params;
+    const id = parseInt(params.id);
 
-    const isFile = await FileModel.checkData(getResultFileName(id));
+    const fileData = await FileModel.getData<FileData>(getResultFileName(id));
 
-    if (isFile) {
-      const { users } = await FileModel.getData<FileData>(
-        getResultFileName(id)
-      );
-
-      for (let user of users) {
+    if (fileData) {
+      for (let user of fileData.users) {
         if (role === user.role) {
           for (let { id, answer } of user.questions) {
             apiResult[id] = (apiResult[id] || 0) + answer;
@@ -43,7 +39,7 @@ router.get("/results/:role/:id", async ({ params }: Request, res: Response) => {
 
     res.json(apiResult);
   } catch (e) {
-    console.log(e);
+    res.status(500).send(e.message);
   }
 });
 
@@ -60,7 +56,9 @@ router
         res.status(400).json({ message: "Inncorrect id type" });
       }
 
-      const isFile = await FileModel.checkData(getResultFileName(surveyId));
+      const fileData = await FileModel.getData<FileData>(
+        getResultFileName(surveyId)
+      );
 
       const surveys = await FileModel.getData<SurveyCommonData[]>(
         "surveys.json"
@@ -68,12 +66,8 @@ router
 
       const survey = surveys.find((item) => item.id === surveyId);
 
-      if (isFile) {
-        const { users } = await FileModel.getData<FileData>(
-          getResultFileName(surveyId)
-        );
-
-        isUserVoted = !!users.find((item) => item.id === id) || false;
+      if (fileData) {
+        isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
       }
 
       res.json({ survey, isUserVoted });
@@ -83,10 +77,10 @@ router
   })
   .post(async ({ params, body, user }: Request, res: Response) => {
     try {
-      const surveyId = parseInt(params.id);
-
       const { login, id, role } = user;
       let users: FileData["users"] = [];
+      const surveyId = parseInt(params.id);
+
       const surveys = await FileModel.getData<SurveyCommonData[]>(
         "surveys.json"
       );
@@ -107,14 +101,11 @@ router
         answer: body[id],
       }));
 
-      const isFileExists = await FileModel.checkData(
+      const fileData = await FileModel.getData<FileData>(
         getResultFileName(surveyId)
       );
 
-      if (isFileExists) {
-        const fileData = await FileModel.getData<FileData>(
-          getResultFileName(surveyId)
-        );
+      if (fileData) {
         users = [...fileData.users];
       }
 
@@ -130,8 +121,8 @@ router
   })
   .put(async ({ params, body }: Request, res: Response) => {
     try {
-      const surveyId = parseInt(params.id);
       const { status } = body;
+      const surveyId = parseInt(params.id);
 
       const surveys = await FileModel.getData<SurveyCommonData[]>(
         "surveys.json"
