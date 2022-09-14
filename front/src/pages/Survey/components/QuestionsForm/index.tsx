@@ -2,17 +2,13 @@ import React from "react";
 import { Box } from "@chakra-ui/react";
 import { useFormik } from "formik";
 
-import {
-  FormLoading,
-  Question,
-  SurveyResult,
-} from "../../../../store/survey/types";
-
-import Range from "../../../../components/ui/Range";
-import FormItemTitle from "../FormItemTitle";
-import FormFooter from "../FormFooter";
-import { UserRole } from "src/store/user/types";
 import { SurveyStatus } from "src/store/types";
+import { UserRole } from "src/store/user/types";
+import { FormLoading, Question, SurveyResult } from "src/store/survey/types";
+
+import FormFooter from "../FormFooter";
+import Range from "src/components/ui/Range";
+import FormItemTitle from "../FormItemTitle";
 
 interface Props {
   data: Question[];

@@ -9,8 +9,8 @@ import SurveysStore from "src/store/surveys";
 import { getLoadingMessage } from "src/utils";
 import { useFetchData } from "src/utils/hooks";
 
-import { Loader } from "../../components/ui";
-import SurveyCard from "../../components/SurveyCard";
+import { Loader } from "src/components/ui";
+import SurveyCard from "src/components/SurveyCard";
 
 import { isHaveAccess } from "../helpers";
 

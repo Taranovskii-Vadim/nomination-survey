@@ -1,15 +1,16 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
 
-import { FormLoading } from "../../../../store/survey/types";
-
-import { Button } from "../../../../components/ui";
-import { getButtons } from "./constants";
 import { SurveyStatus } from "src/store/types";
+import { FormLoading } from "src/store/survey/types";
+
+import { Button } from "src/components/ui";
+
+import { getButtons } from "./constants";
 
 interface Props {
-  isSubmiting: FormLoading;
   isAdmin: boolean;
+  isSubmiting: FormLoading;
   surveyStatus: SurveyStatus;
   setNextStatus: (nextStatus: SurveyStatus) => void;
 }

@@ -9,8 +9,8 @@ import { getLoadingMessage } from "../utils";
 
 import { Loader } from "../components/ui";
 
-const General = lazy(() => import("./General"));
 const Survey = lazy(() => import("./Survey"));
+const General = lazy(() => import("./General"));
 
 interface Props {
   userStore: UserStore;

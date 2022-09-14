@@ -5,18 +5,19 @@ import { useParams } from "react-router-dom";
 import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
-import { useFetchData } from "../../utils/hooks";
-import { firstLetterToUpperCase, getLoadingMessage } from "../../utils";
-import SurveyStore from "../../store/survey";
-import UserStore from "../../store/user";
-import { COLORS } from "../../styles/theme";
+import UserStore from "src/store/user";
+import { COLORS } from "src/styles/theme";
+import SurveyStore from "src/store/survey";
+import { useFetchData } from "src/utils/hooks";
+import { firstLetterToUpperCase, getLoadingMessage } from "src/utils";
 
-import { Loader, Title } from "../../components/ui";
-import AccessDenied from "../../components/AccessDenied";
-import QuestionsForm from "./components/QuestionsForm";
-import SurveyCompleted from "../../components/SurveyCompleted";
-import BarChart from "../../components/BarChart";
 import Icon from "src/components/Icon";
+import BarChart from "src/components/BarChart";
+import { Loader, Title } from "src/components/ui";
+import QuestionsForm from "./components/QuestionsForm";
+import AccessDenied from "src/components/AccessDenied";
+import SurveyCompleted from "src/components/SurveyCompleted";
+
 import { isHaveAccess } from "../helpers";
 
 const surveyStore = new SurveyStore();
@@ -30,8 +31,8 @@ const Survey = ({ userStore }: Props): JSX.Element => {
 
   const { data } = surveyStore;
 
-  const isHaveAccessToTabs =
-    userStore.data.role === "admin" || userStore.data.role === "chief";
+  const isChartLoading = surveyStore.loading === "chart";
+  const isHaveAccessToTabs = userStore.data.role !== "user";
 
   useFetchData(() => surveyStore.fetchSurveyById(surveyId));
 
@@ -50,9 +51,9 @@ const Survey = ({ userStore }: Props): JSX.Element => {
   const Form = (
     <QuestionsForm
       data={data.questions}
+      userRole={userStore.data.role}
       isSubmiting={surveyStore.formLoading}
       surveyStatus={surveyStore.data.status}
-      userRole={userStore.data.role}
       sendSurveyResults={(data) => {
         surveyStore.sendUserAnswer(data);
       }}
@@ -64,13 +65,13 @@ const Survey = ({ userStore }: Props): JSX.Element => {
 
   return (
     <Container
+      pt="50"
+      pb="50"
       maxWidth={{
         xl: "container.xl",
         lg: "container.lg",
         sm: "container.sm",
       }}
-      pt="50"
-      pb="50"
     >
       <Flex alignItems="start" mb="35">
         <Icon size="large" as={GoBook} color={COLORS["primary"]} />
@@ -99,7 +100,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
           <TabPanels>
             <TabPanel>{Form}</TabPanel>
             <TabPanel>
-              {surveyStore.loading === "chart" ? (
+              {isChartLoading ? (
                 <Loader
                   containerHeight="50vh"
                   text={getLoadingMessage("данных")}
@@ -109,7 +110,7 @@ const Survey = ({ userStore }: Props): JSX.Element => {
               )}
             </TabPanel>
             <TabPanel>
-              {surveyStore.loading === "chart" ? (
+              {isChartLoading ? (
                 <Loader
                   containerHeight="50vh"
                   text={getLoadingMessage("данных")}

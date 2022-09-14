@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import { FormLabel } from "@chakra-ui/react";
 
-import { firstLetterToUpperCase } from "../../../../utils";
+import { firstLetterToUpperCase } from "src/utils";
 
 interface Props {
   id: number;
