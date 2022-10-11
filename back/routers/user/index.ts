@@ -1,12 +1,14 @@
 import jwt from "jsonwebtoken";
-import { Request, Response, Router } from "express";
+import { Response, Router } from "express";
 
 import { User } from "../../types";
 import FileModel from "../../models/FileModel";
 
+import { GetParams } from "./types";
+
 const router = Router();
 
-router.get("/:login", async ({ params }: Request, res: Response) => {
+router.get("/:login", async ({ params }: GetParams, res: Response) => {
   try {
     const { login } = params;
 

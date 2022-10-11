@@ -1,15 +1,15 @@
 import { Router, Response } from "express";
 
-import { Request } from "../../types";
+import { RequestWithId } from "../../types";
 import FileModel from "../../models/FileModel";
 
 import { Question } from "./types";
 
 const router = Router();
 
-router.get("/:id", async ({ params }: Request, res: Response) => {
+router.get("/:id", async ({ params: { id } }: RequestWithId, res: Response) => {
   try {
-    const questionId = parseInt(params.id);
+    const questionId = parseInt(id);
     const questions = await FileModel.getData<Question[]>("questions.json");
 
     if (!questionId) {
