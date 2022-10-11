@@ -8,10 +8,11 @@ export interface User {
   role: UserRole;
 }
 
-export interface Request<P = any> extends ExpressRequest<P> {
+export interface Request<P = any, B = any> extends ExpressRequest<P, any, B> {
   user: User;
 }
 
-export interface RequestWithId extends ExpressRequest<{ id: string }> {
+export interface RequestWithId<B = any>
+  extends ExpressRequest<{ id: string }, any, B> {
   user: User;
 }

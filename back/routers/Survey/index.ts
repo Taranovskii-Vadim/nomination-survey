@@ -78,6 +78,7 @@ router
       res.status(500).send(e.message);
     }
   })
+  // TODO add type for body
   .post(async ({ params, body, user }: RequestWithId, res: Response) => {
     try {
       const { login, id, role } = user;
@@ -122,6 +123,7 @@ router
       res.status(500).send(e.message);
     }
   })
+  // TODO add type for body
   .put(async ({ params, body }: RequestWithId, res: Response) => {
     try {
       const { status } = body;
