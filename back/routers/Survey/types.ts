@@ -2,7 +2,7 @@ import { Request, User } from "../../types";
 
 export type SurveyStatus = "ready" | "userVote" | "chiefVote" | "finished";
 
-export type GetResultsParams = Request<{ id: string; role: string }>;
+export type GetResultsRequest = Request<{ id: string; role: string }>;
 
 export interface FileData {
   title: string;

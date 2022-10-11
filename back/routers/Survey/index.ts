@@ -5,7 +5,7 @@ import { Question } from "../question/types";
 import FileModel from "../../models/FileModel";
 
 import { getResultFileName } from "./helpers";
-import { FileData, GetResultsParams, SurveyCommonData } from "./types";
+import { FileData, GetResultsRequest, SurveyCommonData } from "./types";
 
 const router = Router();
 
@@ -21,7 +21,7 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get(
   "/results/:role/:id",
-  async ({ params }: GetResultsParams, res: Response) => {
+  async ({ params }: GetResultsRequest, res: Response) => {
     try {
       const apiResult = {};
       const { role } = params;
