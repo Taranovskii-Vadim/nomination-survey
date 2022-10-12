@@ -1,12 +1,12 @@
 import { Request, RequestWithId, User } from "../../types";
 
-export type SurveyStatus = "ready" | "userVote" | "chiefVote" | "finished";
-
 export type GetResultsRequest = Request<{ id: string; role: string }>;
 
 export type ChangeStatusRequest = RequestWithId<{ status: SurveyStatus }>;
 
 export type SaveResultsRequest = RequestWithId<{ [key: number]: number }>;
+
+export type SurveyStatus = "ready" | "userVote" | "chiefVote" | "finished";
 
 export interface FileData {
   title: string;

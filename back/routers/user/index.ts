@@ -13,7 +13,6 @@ router.get(
       const { login } = params;
 
       const users = await FileModel.getData<User[]>("users");
-
       const result = users.find((item) => item.login === login);
 
       if (!result) {

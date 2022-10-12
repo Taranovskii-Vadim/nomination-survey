@@ -1,9 +1,11 @@
 import fs from "fs";
 import path from "path";
 
+type FileName = "users" | "surveys" | "questions" | string;
+
 class FileModel {
   static setData = async <T extends object>(
-    file: string,
+    file: FileName,
     data: T
   ): Promise<T> =>
     new Promise((resolve, reject) =>
@@ -14,7 +16,7 @@ class FileModel {
       )
     );
 
-  static getData = async <T extends object>(file: string): Promise<T> =>
+  static getData = async <T extends object>(file: FileName): Promise<T> =>
     new Promise((resolve, reject) =>
       fs.readFile(
         path.join(__dirname, "..", "..", "database", `${file}.json`),

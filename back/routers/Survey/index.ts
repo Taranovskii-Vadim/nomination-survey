@@ -1,8 +1,8 @@
 import { Response, Router } from "express";
 
-import { Request, RequestWithId } from "../../types";
 import { Question } from "../question/types";
 import FileModel from "../../models/FileModel";
+import { Request, RequestWithId } from "../../types";
 
 import {
   FileData,
@@ -16,7 +16,7 @@ const router = Router();
 
 const getResultFileName = (id: number): string => `survey${id}`;
 
-router.get("/", async (req: Request, res: Response) => {
+router.get("/", async (r: Request, res: Response) => {
   try {
     const result = await FileModel.getData<SurveyCommonData[]>("surveys");
 
@@ -58,9 +58,8 @@ router
   .get(async ({ params, user }: RequestWithId, res: Response) => {
     try {
       const { id } = user;
-      const surveyId = parseInt(params.id);
-
       let isUserVoted = false;
+      const surveyId = parseInt(params.id);
 
       if (!surveyId) {
         res.status(400).json({ message: "Inncorrect id type" });
@@ -69,7 +68,6 @@ router
       const fileData = await FileModel.getData<FileData>(
         getResultFileName(surveyId)
       );
-
       const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
 
       const survey = surveys.find((item) => item.id === surveyId);
@@ -89,9 +87,8 @@ router
       let users: FileData["users"] = [];
       const surveyId = parseInt(params.id);
 
-      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
-
       const questions = await FileModel.getData<Question[]>("questions");
+      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
 
       const survey = surveys.find((item) => item.id === surveyId);
 
