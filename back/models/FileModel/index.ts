@@ -2,13 +2,13 @@ import fs from "fs";
 import path from "path";
 
 class FileModel {
-  static writeData = async <T extends object>(
+  static setData = async <T extends object>(
     file: string,
     data: T
   ): Promise<T> =>
     new Promise((resolve, reject) =>
       fs.writeFile(
-        path.join(__dirname, "..", "..", "database", file),
+        path.join(__dirname, "..", "..", "database", `${file}.json`),
         JSON.stringify(data),
         (e) => (e ? reject(e) : resolve(data))
       )
@@ -17,7 +17,7 @@ class FileModel {
   static getData = async <T extends object>(file: string): Promise<T> =>
     new Promise((resolve, reject) =>
       fs.readFile(
-        path.join(__dirname, "..", "..", "database", file),
+        path.join(__dirname, "..", "..", "database", `${file}.json`),
         (e, data) => {
           // TODO this function get data and check if file exists, S principle error
           // but code in survey router looks shorter

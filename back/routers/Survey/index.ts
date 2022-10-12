@@ -4,14 +4,15 @@ import { Request, RequestWithId } from "../../types";
 import { Question } from "../question/types";
 import FileModel from "../../models/FileModel";
 
-import { getResultFileName } from "./helpers";
 import { FileData, GetResultsRequest, SurveyCommonData } from "./types";
 
 const router = Router();
 
+const getResultFileName = (id: number): string => `survey${id}`;
+
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const result = await FileModel.getData<SurveyCommonData[]>("surveys.json");
+    const result = await FileModel.getData<SurveyCommonData[]>("surveys");
 
     res.json(result);
   } catch (e) {
@@ -63,9 +64,7 @@ router
         getResultFileName(surveyId)
       );
 
-      const surveys = await FileModel.getData<SurveyCommonData[]>(
-        "surveys.json"
-      );
+      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
 
       const survey = surveys.find((item) => item.id === surveyId);
 
@@ -89,7 +88,7 @@ router
         "surveys.json"
       );
 
-      const questions = await FileModel.getData<Question[]>("questions.json");
+      const questions = await FileModel.getData<Question[]>("questions");
 
       const survey = surveys.find((item) => item.id === surveyId);
 
@@ -113,7 +112,7 @@ router
         users = [...fileData.users];
       }
 
-      await FileModel.writeData(getResultFileName(surveyId), {
+      await FileModel.setData(getResultFileName(surveyId), {
         title: survey.title,
         users: [...users, { id, login, role, questions: questionFilePayload }],
       });
@@ -129,9 +128,7 @@ router
       const { status } = body;
       const surveyId = parseInt(params.id);
 
-      const surveys = await FileModel.getData<SurveyCommonData[]>(
-        "surveys.json"
-      );
+      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
 
       const updated = surveys.map((item) => {
         if (item.id === surveyId) {
@@ -140,7 +137,7 @@ router
         return item;
       });
 
-      await FileModel.writeData("surveys.json", updated);
+      await FileModel.setData("surveys", updated);
 
       res.json({});
     } catch (e) {

@@ -13,7 +13,8 @@ const server = express();
 server.use(json());
 
 routers.forEach(({ prefix, router, isAuth = true }) => {
-  const completedPrefix = `/api${prefix}`;
+  const completedPrefix = `/api/${prefix}`;
+
   if (isAuth) {
     server.use(completedPrefix, authMiddleWare, router);
   } else {

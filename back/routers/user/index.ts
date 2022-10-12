@@ -12,7 +12,7 @@ router.get(
     try {
       const { login } = params;
 
-      const users = await FileModel.getData<User[]>("users.json");
+      const users = await FileModel.getData<User[]>("users");
 
       const result = users.find((item) => item.login === login);
 
