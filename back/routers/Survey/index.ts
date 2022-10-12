@@ -4,7 +4,13 @@ import { Request, RequestWithId } from "../../types";
 import { Question } from "../question/types";
 import FileModel from "../../models/FileModel";
 
-import { FileData, GetResultsRequest, SurveyCommonData } from "./types";
+import {
+  FileData,
+  SurveyCommonData,
+  GetResultsRequest,
+  SaveResultsRequest,
+  ChangeStatusRequest,
+} from "./types";
 
 const router = Router();
 
@@ -77,16 +83,13 @@ router
       res.status(500).send(e.message);
     }
   })
-  // TODO add type for body
-  .post(async ({ params, body, user }: RequestWithId, res: Response) => {
+  .post(async ({ params, body, user }: SaveResultsRequest, res: Response) => {
     try {
       const { login, id, role } = user;
       let users: FileData["users"] = [];
       const surveyId = parseInt(params.id);
 
-      const surveys = await FileModel.getData<SurveyCommonData[]>(
-        "surveys.json"
-      );
+      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
 
       const questions = await FileModel.getData<Question[]>("questions");
 
@@ -122,8 +125,7 @@ router
       res.status(500).send(e.message);
     }
   })
-  // TODO add type for body
-  .put(async ({ params, body }: RequestWithId, res: Response) => {
+  .put(async ({ params, body }: ChangeStatusRequest, res: Response) => {
     try {
       const { status } = body;
       const surveyId = parseInt(params.id);
