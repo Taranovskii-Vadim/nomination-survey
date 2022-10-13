@@ -1,11 +1,13 @@
 import { Router } from "express";
 
-import userRouter from "./user";
+import authRouter from "./auth";
 import surveyRouter from "./survey";
+import profileRouter from "./profile";
 import questionRouter from "./question";
 
-type Prefix = "surveys" | "questions" | "users";
+type Prefix = "surveys" | "questions" | "auth" | "profile";
 
+// TODO add header and render fullname in front
 interface AppRouter {
   prefix: Prefix;
   router: Router;
@@ -14,6 +16,7 @@ interface AppRouter {
 
 export const routers: AppRouter[] = [
   { prefix: "surveys", router: surveyRouter },
+  { prefix: "profile", router: profileRouter },
   { prefix: "questions", router: questionRouter },
-  { prefix: "users", isAuth: false, router: userRouter },
+  { prefix: "auth", isAuth: false, router: authRouter },
 ];

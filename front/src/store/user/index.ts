@@ -1,7 +1,7 @@
 import { makeObservable, observable, runInAction } from "mobx";
 
 import { api } from "src/api";
-import getToken from "src/api/getToken";
+import getToken from "src/api/postLogin";
 
 import { User } from "./types";
 import { getUserFromStorage } from "../../utils";
@@ -12,18 +12,19 @@ class UserStore {
   isLoading = false;
 
   constructor() {
-    const userResult = getUserFromStorage();
-
-    if (userResult) {
-      const { id, role } = userResult;
-      this.data = { id, role };
-    }
-
     makeObservable(this, {
       isLoading: observable,
       data: observable,
     });
   }
+
+  getProfileData = async (): Promise<void> => {
+    const result: User = await api();
+
+    runInAction(() => {
+      this.data = result;
+    });
+  };
 
   getToken = async (payload: string): Promise<void> => {
     try {
@@ -31,11 +32,9 @@ class UserStore {
       if (!login) throw new Error("Необходимо указать логин");
 
       this.isLoading = true;
-      const result: User = await api(getToken, undefined, login);
+      await api(getToken, undefined, login);
 
-      runInAction(() => {
-        this.data = result;
-      });
+      await this.getProfileData();
     } catch (e) {
       console.error(e);
     } finally {

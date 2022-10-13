@@ -1,7 +1,32 @@
 [
-  { "id": 1, "login": "admin", "role": "admin" },
-  { "id": 2, "login": "vadim", "role": "chief" },
-  { "id": 3, "login": "anna", "role": "user" },
-  { "id": 4, "login": "oleg", "role": "user" },
-  { "id": 4, "login": "elena", "role": "user" }
+  {
+    "id": 1,
+    "login": "admin",
+    "fullname": "Тестовый Тест Тестов",
+    "role": "admin"
+  },
+  {
+    "id": 2,
+    "login": "vadim",
+    "fullname": "Тестовый Тест Тестов",
+    "role": "chief"
+  },
+  {
+    "id": 3,
+    "login": "anna",
+    "fullname": "Тестовый Тест Тестов",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "login": "oleg",
+    "fullname": "Тестовый Тест Тестов",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "login": "elena",
+    "fullname": "Тестовый Тест Тестов",
+    "role": "user"
+  }
 ]

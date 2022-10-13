@@ -1,7 +1,7 @@
 export type UserRole = "admin" | "chief" | "user";
 
 export interface User {
-  id: number;
+  fullname: string;
   role: UserRole;
 }
 

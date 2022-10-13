@@ -5,6 +5,7 @@ export type UserRole = "admin" | "chief" | "user";
 export interface User {
   id: number;
   login: string;
+  fullname: string;
   role: UserRole;
 }
 
