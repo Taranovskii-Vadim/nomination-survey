@@ -3,10 +3,11 @@ import { Flex, Input, Button } from "@chakra-ui/react";
 
 interface Props {
   isLoading: boolean;
-  getToken: (login: string) => Promise<void>;
+  onLogin: (login: string) => Promise<void>;
 }
 
-const Login = ({ isLoading, getToken }: Props): JSX.Element => {
+// TODO include react hook form here and submit form on enter
+const Login = ({ isLoading, onLogin }: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>();
 
   return (
@@ -23,7 +24,7 @@ const Login = ({ isLoading, getToken }: Props): JSX.Element => {
         isFullWidth
         type="submit"
         isLoading={isLoading}
-        onClick={() => getToken(inputRef.current.value)}
+        onClick={() => onLogin(inputRef.current.value)}
       >
         Отправить
       </Button>

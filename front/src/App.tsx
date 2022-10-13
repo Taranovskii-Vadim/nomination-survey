@@ -15,15 +15,19 @@ const store = new User();
 
 // TODO perfomance barChart and whole application (hard)
 
-const App = (): JSX.Element => (
-  <>
-    <ThemeSwitcher />
-    {store.data ? (
-      <ProtectedPages userStore={store} />
-    ) : (
-      <Login isLoading={store.isLoading} getToken={store.getToken} />
-    )}
-  </>
-);
+const App = (): JSX.Element => {
+  const authCookie = document.cookie.includes("token");
+
+  return (
+    <>
+      <ThemeSwitcher />
+      {authCookie ? (
+        <ProtectedPages userStore={store} />
+      ) : (
+        <Login isLoading={store.isLoading} onLogin={store.signIn} />
+      )}
+    </>
+  );
+};
 
 export default observer(App);
