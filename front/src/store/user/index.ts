@@ -20,6 +20,7 @@ class UserStore {
   }
 
   getProfileData = async (): Promise<void> => {
+    // TODO can add hash with localstorage
     try {
       this.isLoading = true;
 

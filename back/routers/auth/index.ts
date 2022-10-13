@@ -21,6 +21,8 @@ router.post(
 
       const token = jwt.sign(result, process.env.JWT_KEY);
 
+      // TODO add expire time to cookie
+
       res.cookie("token", token).json();
     } catch (e) {
       res.status(500).json(e.message);
