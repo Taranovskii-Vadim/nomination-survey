@@ -1,5 +1,6 @@
 import { config } from "dotenv";
 import express, { json } from "express";
+import cookieParser from "cookie-parser";
 
 import { routers } from "./routers";
 import { authMiddleWare } from "./middlewares";
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 3001;
 const server = express();
 
 server.use(json());
+server.use(cookieParser());
 
 routers.forEach(({ prefix, router, isAuth = true }) => {
   const completedPrefix = `/api/${prefix}`;

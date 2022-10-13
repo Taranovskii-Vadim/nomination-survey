@@ -11,5 +11,5 @@ export interface Route {
 
   getUrl(query?: Query): string;
 
-  getData(dto: any): any;
+  getData?(dto: any): any;
 }

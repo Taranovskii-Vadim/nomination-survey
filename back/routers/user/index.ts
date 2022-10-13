@@ -21,7 +21,8 @@ router.get(
 
       const token = jwt.sign(result, process.env.JWT_KEY);
 
-      res.json({ ...result, token });
+      res.cookie("token", token);
+      res.json();
     } catch (e) {
       res.status(500).send(e.message);
     }

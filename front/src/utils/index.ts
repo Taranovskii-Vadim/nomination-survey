@@ -15,13 +15,5 @@ export const getUserFromStorage = (): UserFromStorage | null => {
 export const getLoadingMessage = (subject: string): string =>
   `Загрузка ${subject}...`;
 
-export const setUserToStorage = ({
-  id,
-  role,
-  token,
-}: UserFromStorage): void => {
-  localStorage.setItem(TOKEN_KEY, JSON.stringify({ id, role, token }));
-};
-
 export const firstLetterToUpperCase = (value: string): string =>
   value[0].toUpperCase() + value.slice(1);

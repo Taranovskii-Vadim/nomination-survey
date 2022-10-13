@@ -1,14 +1,20 @@
 import jwt from "jsonwebtoken";
-import { NextFunction } from "express";
+import { NextFunction, Response } from "express";
 
 import { Request } from "../types";
 
-export const authMiddleWare = (req: Request, r, next: NextFunction) => {
-  const token = req.headers.token as string;
-  const decoded = jwt.verify(token, process.env.JWT_KEY) as Request["user"];
+export const authMiddleWare = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const token = req.cookies && req.cookies.token;
 
-  if (decoded) {
+  if (token) {
+    const decoded = jwt.verify(token, process.env.JWT_KEY) as Request["user"];
     req.user = decoded;
-    next();
+    return next();
   }
+
+  res.status(401).json();
 };

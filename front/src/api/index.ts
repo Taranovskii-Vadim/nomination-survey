@@ -1,6 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-import { getUserFromStorage } from "../utils";
 import { Route, ResultData, Query } from "./types";
 
 const API_ENDPOINT = "/api";
@@ -12,13 +11,14 @@ export const axiosInstance = axios.create({
   },
 });
 
-(function () {
-  const userResponse = getUserFromStorage();
+// TODO we do not need it anymore because now we parse cookie not header
+// (function () {
+//   const userResponse = getUserFromStorage();
 
-  if (userResponse) {
-    axiosInstance.defaults.headers["token"] = userResponse.token;
-  }
-})();
+//   if (userResponse) {
+//     axiosInstance.defaults.headers["token"] = userResponse.token;
+//   }
+// })();
 
 export const api = async <R extends Route>(
   route: R,
