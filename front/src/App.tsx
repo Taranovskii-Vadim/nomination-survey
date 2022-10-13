@@ -24,7 +24,7 @@ const App = (): JSX.Element => {
       {authCookie ? (
         <ProtectedPages userStore={store} />
       ) : (
-        <Login userStore={store} />
+        <Login isLoading={store.isLoading} onLogin={store.signIn} />
       )}
     </>
   );

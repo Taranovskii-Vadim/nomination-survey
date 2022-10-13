@@ -1,14 +1,13 @@
 import React, { useRef } from "react";
 import { Flex, Input, Button } from "@chakra-ui/react";
 
-import UserStore from "src/store/user";
-
 interface Props {
-  userStore: UserStore;
+  isLoading: boolean;
+  onLogin: (login: string) => Promise<void>;
 }
 
 // TODO include react hook form here and submit form on enter
-const Login = ({ userStore }: Props): JSX.Element => {
+const Login = ({ isLoading, onLogin }: Props): JSX.Element => {
   const inputRef = useRef<HTMLInputElement>();
 
   return (
@@ -24,8 +23,8 @@ const Login = ({ userStore }: Props): JSX.Element => {
       <Button
         isFullWidth
         type="submit"
-        isLoading={userStore.isLoading}
-        onClick={() => userStore.signIn(inputRef.current.value)}
+        isLoading={isLoading}
+        onClick={() => onLogin(inputRef.current.value)}
       >
         Отправить
       </Button>
