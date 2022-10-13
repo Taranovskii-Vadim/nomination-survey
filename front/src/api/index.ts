@@ -11,6 +11,8 @@ export const axiosInstance = axios.create({
   },
 });
 
+// TODO add interceptor
+
 export const api = async <R extends Route>(
   route: R,
   payload?: ResultData,
