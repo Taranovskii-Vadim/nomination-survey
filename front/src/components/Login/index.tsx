@@ -1,34 +1,64 @@
-import React, { useRef } from "react";
-import { Flex, Input, Button } from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import {
+  Input,
+  Button,
+  Box,
+  FormControl,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+
+import { SignInFormValues } from "src/store/user/types";
 
 interface Props {
   isLoading: boolean;
-  onLogin: (login: string) => Promise<void>;
+  onLogin: (login: SignInFormValues) => Promise<void>;
 }
 
-// TODO include react hook form here and submit form on enter
+// TODO migrate all forms from formik to react-hook-form
 const Login = ({ isLoading, onLogin }: Props): JSX.Element => {
-  const inputRef = useRef<HTMLInputElement>();
+  const { control, formState, register, handleSubmit } =
+    useForm<SignInFormValues>({
+      defaultValues: { login: "" },
+    });
+
+  useEffect(() => {
+    register("login", {
+      required: { value: true, message: "Обязательное поле" },
+    });
+  }, [register]);
+
+  const { errors } = formState;
+
+  const onSubmit: SubmitHandler<SignInFormValues> = (data) => onLogin(data);
 
   return (
-    <Flex
+    <Box
+      mt="35vh"
+      as="form"
       maxWidth="sm"
-      height="85vh"
       marginX="auto"
+      alignItems="center"
       flexDirection="column"
       justifyContent="center"
-      alignItems="center"
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <Input ref={inputRef} marginBottom={4} placeholder="Введите логин" />
-      <Button
-        isFullWidth
-        type="submit"
-        isLoading={isLoading}
-        onClick={() => onLogin(inputRef.current.value)}
-      >
+      <Controller
+        name="login"
+        control={control}
+        render={({ field }) => (
+          <FormControl isInvalid={!!errors.login}>
+            <Input placeholder="Введите логин" {...field} />
+            {errors.login ? (
+              <FormErrorMessage>{errors.login.message}</FormErrorMessage>
+            ) : null}
+          </FormControl>
+        )}
+      />
+      <Button mt={4} isFullWidth type="submit" isLoading={isLoading}>
         Отправить
       </Button>
-    </Flex>
+    </Box>
   );
 };
 

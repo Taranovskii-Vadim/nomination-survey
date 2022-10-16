@@ -6,7 +6,7 @@ import getProfile from "src/api/getProfile";
 
 import { getItem } from "src/utils";
 
-import { User } from "./types";
+import { SignInFormValues, User } from "./types";
 
 const PROFILE_KEY = "profile";
 
@@ -42,11 +42,8 @@ class UserStore {
     }
   };
 
-  signIn = async (payload: string): Promise<void> => {
+  signIn = async ({ login }: SignInFormValues): Promise<void> => {
     try {
-      const login = payload.trim();
-      if (!login) throw new Error("Необходимо указать логин");
-
       this.isLoading = true;
       await api(postLogin, undefined, login);
     } catch (e) {
