@@ -13,7 +13,6 @@ const PROFILE_KEY = "profile";
 class UserStore {
   data: User = getItem(PROFILE_KEY);
 
-  // TODO try declare isLoding with help of useState in App.tsx
   isLoading = false;
 
   constructor() {
