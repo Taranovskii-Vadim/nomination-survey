@@ -17,7 +17,7 @@ interface Props {
   title: CommonSurveyFields["title"];
 }
 
-// TODO think about how split childs efficiently
+// TODO check and think about how split childs efficiently
 
 const SurveyCard = ({
   // id,

@@ -7,7 +7,7 @@ import questionRouter from "./question";
 
 type Prefix = "surveys" | "questions" | "auth" | "profile";
 
-// TODO add header and render fullname in front
+// TODO add header and render fullname in front also create logout button
 interface AppRouter {
   prefix: Prefix;
   router: Router;

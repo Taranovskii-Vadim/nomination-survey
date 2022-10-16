@@ -21,8 +21,6 @@ class FileModel {
       fs.readFile(
         path.join(__dirname, "..", "..", "database", `${file}.json`),
         (e, data) => {
-          // TODO this function get data and check if file exists, S principle error
-          // but code in survey router looks shorter
           const isError = e && e.code !== "ENOENT";
           const isNotFile = e && e.code === "ENOENT";
 

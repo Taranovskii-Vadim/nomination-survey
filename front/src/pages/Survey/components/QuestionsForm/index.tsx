@@ -27,6 +27,8 @@ const QuestionsForm = ({
   sendSurveyResults,
   setNextStatus,
 }: Props): JSX.Element => {
+  // TODO migrate this form from formik to react-hook-form
+
   const { setFieldValue, handleSubmit } = useFormik<SurveyResult>({
     initialValues: {},
     onSubmit: (data) => {

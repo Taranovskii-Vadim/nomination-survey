@@ -15,7 +15,6 @@ interface Props {
   onLogin: (login: SignInFormValues) => Promise<void>;
 }
 
-// TODO migrate all forms from formik to react-hook-form
 const Login = ({ isLoading, onLogin }: Props): JSX.Element => {
   const { control, formState, register, handleSubmit } =
     useForm<SignInFormValues>({
