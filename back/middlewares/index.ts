@@ -16,5 +16,6 @@ export const authMiddleWare = (
     return next();
   }
 
+  // TODO add status for expire session
   res.status(401).json();
 };

@@ -2,14 +2,18 @@ import { makeObservable, observable, runInAction } from "mobx";
 
 import { api } from "src/api";
 import postLogin from "src/api/postLogin";
+import getProfile from "src/api/getProfile";
+
+import { getItem } from "src/utils";
 
 import { User } from "./types";
 
-import getProfile from "src/api/getProfile";
+const PROFILE_KEY = "profile";
 
 class UserStore {
-  data: User = undefined;
+  data: User = getItem(PROFILE_KEY);
 
+  // TODO try declare isLoding with help of useState in App.tsx
   isLoading = false;
 
   constructor() {
@@ -20,18 +24,22 @@ class UserStore {
   }
 
   getProfileData = async (): Promise<void> => {
-    // TODO can add hash with localstorage
-    try {
-      this.isLoading = true;
+    if (!this.data) {
+      try {
+        this.isLoading = true;
 
-      const result: User = await api(getProfile);
+        const result: User = await api(getProfile);
 
-      runInAction(() => {
-        this.data = result;
-      });
-    } catch (e) {
-    } finally {
-      this.isLoading = false;
+        localStorage.setItem(PROFILE_KEY, JSON.stringify(result));
+
+        runInAction(() => {
+          this.data = result;
+        });
+      } catch (e) {
+        console.error(e);
+      } finally {
+        this.isLoading = false;
+      }
     }
   };
 

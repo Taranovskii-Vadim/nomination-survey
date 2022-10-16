@@ -30,9 +30,7 @@ const ProtectedPages = ({ userStore }: Props): JSX.Element => {
     <Suspense fallback={<Loader text={getLoadingMessage("страницы")} />}>
       <Switch>
         <Route exact path={getUrlFor("surveys")}>
-          <DndProvider backend={HTML5Backend}>
-            <General userStore={userStore} />
-          </DndProvider>
+          <General userStore={userStore} />
         </Route>
         <Route path={getUrlFor("surveys", "surveyId")}>
           <Survey userStore={userStore} />
