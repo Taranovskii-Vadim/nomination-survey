@@ -4,6 +4,8 @@ import { Question } from "../question/types";
 import FileModel from "../../models/FileModel";
 import { Request, RequestWithId } from "../../types";
 
+import { formatData, formatError } from "../helpers";
+
 import {
   FileData,
   SurveyCommonData,
@@ -20,9 +22,9 @@ router.get("/", async (r: Request, res: Response) => {
   try {
     const result = await FileModel.getData<SurveyCommonData[]>("surveys");
 
-    res.json(result);
+    res.json(formatData(result));
   } catch (e) {
-    res.status(500).send(e.message);
+    res.status(500).json(formatError(e.message));
   }
 });
 
@@ -46,9 +48,9 @@ router.get(
         }
       }
 
-      res.json(apiResult);
+      res.json(formatData(apiResult));
     } catch (e) {
-      res.status(500).send(e.message);
+      res.status(500).json(formatError(e.message));
     }
   }
 );
@@ -62,7 +64,7 @@ router
       const surveyId = parseInt(params.id);
 
       if (!surveyId) {
-        res.status(400).json({ message: "Inncorrect id type" });
+        res.status(400).json(formatError("Inncorrect id type"));
       }
 
       const fileData = await FileModel.getData<FileData>(
@@ -76,9 +78,9 @@ router
         isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
       }
 
-      res.json({ survey, isUserVoted });
+      res.json(formatData({ survey, isUserVoted }));
     } catch (e) {
-      res.status(500).send(e.message);
+      res.status(500).json(formatError(e.message));
     }
   })
   .post(async ({ params, body, user }: SaveResultsRequest, res: Response) => {
@@ -117,9 +119,9 @@ router
         users: [...users, { id, login, role, questions: questionFilePayload }],
       });
 
-      res.json({});
+      res.json(formatData());
     } catch (e) {
-      res.status(500).send(e.message);
+      res.status(500).json(formatError(e.message));
     }
   })
   .put(async ({ params, body }: ChangeStatusRequest, res: Response) => {
@@ -138,9 +140,9 @@ router
 
       await FileModel.setData("surveys", updated);
 
-      res.json({});
+      res.json(formatData());
     } catch (e) {
-      res.status(500).send(e.message);
+      res.status(500).json(formatError(e.message));
     }
   });
 

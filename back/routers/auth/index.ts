@@ -4,6 +4,8 @@ import { Response, Router } from "express";
 import { Request, User } from "../../types";
 import FileModel from "../../models/FileModel";
 
+import { formatData, formatError } from "../helpers";
+
 const router = Router();
 
 router.post(
@@ -23,9 +25,9 @@ router.post(
 
       // TODO add expire time to cookie
 
-      res.cookie("token", token).json();
+      res.cookie("token", token).json(formatData());
     } catch (e) {
-      res.status(500).json(e.message);
+      res.status(500).json(formatError(e.message));
     }
   }
 );
