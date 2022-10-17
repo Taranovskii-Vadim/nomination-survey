@@ -3,7 +3,7 @@ import { CommonSurveyFields, SurveyStatus } from "../types";
 type EmptyLoading = "";
 
 export interface SurveyResult {
-  [key: string]: string | number;
+  [key: number]: number;
 }
 
 export interface ChartData {

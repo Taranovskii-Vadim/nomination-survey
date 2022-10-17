@@ -15,7 +15,6 @@
     "@fontsource/open-sans": "^4.5.2",
     "axios": "^0.24.0",
     "chart.js": "^2.9.4",
-    "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "mobx": "^6.2.0",
     "mobx-react-lite": "^3.2.0",

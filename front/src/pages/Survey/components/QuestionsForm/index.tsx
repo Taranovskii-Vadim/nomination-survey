@@ -1,6 +1,6 @@
 import React from "react";
 import { Box } from "@chakra-ui/react";
-import { useFormik } from "formik";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { SurveyStatus } from "src/store/types";
 import { UserRole } from "src/store/user/types";
@@ -27,29 +27,34 @@ const QuestionsForm = ({
   sendSurveyResults,
   setNextStatus,
 }: Props): JSX.Element => {
-  // TODO migrate this form from formik to react-hook-form
-
-  const { setFieldValue, handleSubmit } = useFormik<SurveyResult>({
-    initialValues: {},
-    onSubmit: (data) => {
-      sendSurveyResults(data);
-    },
-  });
+  const { control, handleSubmit } = useForm();
 
   const isAdmin = userRole === "admin";
 
-  const isFormFieldsDisabled = isAdmin || isSubmiting === "finish";
+  const isFieldDisabled = isAdmin || isSubmiting === "finish";
+
+  const onSubmit: SubmitHandler<SurveyResult> = (data) => {
+    sendSurveyResults(data);
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       {data.map(({ id, text }) => (
-        <Box key={id} mb={5} _last={{ mb: 0 }}>
-          <FormItemTitle id={id} label={text} />
-          <Range
-            isDisabled={isFormFieldsDisabled}
-            onChange={(val) => setFieldValue(id.toString(), val)}
-          />
-        </Box>
+        <Controller
+          key={id}
+          name={id.toString()}
+          control={control}
+          render={({ field: { value, onChange } }) => (
+            <Box mb={5} _last={{ mb: 0 }}>
+              <FormItemTitle id={id} label={text} />
+              <Range
+                value={value}
+                onChange={onChange}
+                isDisabled={isFieldDisabled}
+              />
+            </Box>
+          )}
+        />
       ))}
       <FormFooter
         isSubmiting={isSubmiting}
