@@ -1,7 +1,7 @@
 import { Question } from "../store/survey/types";
-import { Route, Method } from "./types";
+import { Route, Method, ResponseDTO } from "./types";
 
-interface ResponseDTO {
+interface ResultDTO {
   id: number;
   text: string;
 }
@@ -9,13 +9,9 @@ interface ResponseDTO {
 class GetQuestionById implements Route {
   method: Method = "GET";
 
-  getUrl(id: string): string {
-    return `/questions/${id}`;
-  }
+  getUrl = (id: string): string => `/questions/${id}`;
 
-  getData(data: ResponseDTO): Question {
-    return data;
-  }
+  getData = ({ result }: ResponseDTO<ResultDTO>): Question => result;
 }
 
 export default new GetQuestionById();

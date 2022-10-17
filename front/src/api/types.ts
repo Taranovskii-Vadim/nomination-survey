@@ -1,10 +1,12 @@
-export interface EmptyResponseDTO {}
-
 export type Method = "GET" | "POST" | "PUT";
 
 export type ResultData = object | string | number;
 
 export type Query = string | number;
+
+export interface ResponseDTO<T extends unknown> {
+  result: T;
+}
 
 export interface Route {
   method: Method;
