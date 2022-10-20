@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { NextFunction, Response } from "express";
 
 import { Request } from "../types";
+import { formatError } from "../routers/helpers";
 
 export const authMiddleWare = (
   req: Request,
@@ -16,6 +17,5 @@ export const authMiddleWare = (
     return next();
   }
 
-  // TODO add status for expire session
-  res.status(401).json();
+  res.status(401).json(formatError("Session expired"));
 };
