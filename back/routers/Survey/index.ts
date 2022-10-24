@@ -74,6 +74,10 @@ router
 
       const survey = surveys.find((item) => item.id === surveyId);
 
+      if (!survey) {
+        res.status(404).json(formatError("Survey not found"));
+      }
+
       if (fileData) {
         isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
       }

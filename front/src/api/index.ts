@@ -16,12 +16,13 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.response.use(
   (r) => r,
   (error) => {
-    const { status, data } = error.response;
+    const { status } = error.response;
 
     if (status === 401) {
-      // TODO show modal window
       store.resetLoginForm();
     }
+
+    // TODO handle all errors from api here
 
     return error;
   }
