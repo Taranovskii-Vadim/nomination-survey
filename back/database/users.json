@@ -2,31 +2,31 @@
   {
     "id": 1,
     "login": "admin",
-    "fullname": "Тестовый Тест Тестов",
+    "fullname": "Тарановский Вадим Геннадьевич",
     "role": "admin"
   },
   {
     "id": 2,
     "login": "vadim",
-    "fullname": "Тестовый Тест Тестов",
+    "fullname": "Петров Вадим Александрович",
     "role": "chief"
   },
   {
     "id": 3,
     "login": "anna",
-    "fullname": "Тестовый Тест Тестов",
+    "fullname": "Павлова Анна Сергеевна",
     "role": "user"
   },
   {
     "id": 4,
     "login": "oleg",
-    "fullname": "Тестовый Тест Тестов",
+    "fullname": "Устюжин Олег Алексеевич",
     "role": "user"
   },
   {
     "id": 4,
     "login": "elena",
-    "fullname": "Тестовый Тест Тестов",
+    "fullname": "Аникина Елена Владимировна",
     "role": "user"
   }
 ]
