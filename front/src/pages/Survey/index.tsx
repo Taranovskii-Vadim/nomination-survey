@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Box, Container, Flex, Text } from "@chakra-ui/layout";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 
-import UserStore from "src/store/user";
+import userStore from "src/store/user";
 import { COLORS } from "src/styles/theme";
 import SurveyStore from "src/store/survey";
 import { useFetchData } from "src/utils/hooks";
@@ -22,11 +22,7 @@ import { isHaveAccess } from "../helpers";
 
 const surveyStore = new SurveyStore();
 
-interface Props {
-  userStore: UserStore;
-}
-
-const Survey = ({ userStore }: Props): JSX.Element => {
+const Survey = (): JSX.Element => {
   const { surveyId }: { surveyId: string } = useParams();
 
   const { data } = surveyStore;

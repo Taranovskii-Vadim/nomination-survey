@@ -5,7 +5,7 @@ import { Switch, Route } from "react-router-dom";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import { getUrlFor } from "../routes";
-import UserStore from "../store/user";
+import userStore from "../store/user";
 import { getLoadingMessage } from "../utils";
 
 import { Loader } from "../components/ui";
@@ -13,11 +13,7 @@ import { Loader } from "../components/ui";
 const Survey = lazy(() => import("./Survey"));
 const General = lazy(() => import("./General"));
 
-interface Props {
-  userStore: UserStore;
-}
-
-const ProtectedPages = ({ userStore }: Props): JSX.Element => {
+const ProtectedPages = (): JSX.Element => {
   useEffect(() => {
     userStore.getProfileData();
   }, []);
@@ -30,10 +26,10 @@ const ProtectedPages = ({ userStore }: Props): JSX.Element => {
     <Suspense fallback={<Loader text={getLoadingMessage("страницы")} />}>
       <Switch>
         <Route exact path={getUrlFor("surveys")}>
-          <General userStore={userStore} />
+          <General />
         </Route>
         <Route path={getUrlFor("surveys", "surveyId")}>
-          <Survey userStore={userStore} />
+          <Survey />
         </Route>
       </Switch>
     </Suspense>

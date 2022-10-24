@@ -15,12 +15,18 @@ class UserStore {
 
   isLoading = false;
 
+  isLoginForm = !document.cookie.includes("token");
+
   constructor() {
     makeObservable(this, {
       isLoading: observable,
-      data: observable,
+      isLoginForm: observable,
     });
   }
+
+  resetLoginForm = (): void => {
+    this.isLoginForm = true;
+  };
 
   getProfileData = async (): Promise<void> => {
     if (!this.data) {
@@ -46,6 +52,7 @@ class UserStore {
     try {
       this.isLoading = true;
       await api(postLogin, undefined, login);
+      this.isLoginForm = !document.cookie.includes("token");
     } catch (e) {
       console.error(e);
     } finally {
@@ -54,4 +61,4 @@ class UserStore {
   };
 }
 
-export default UserStore;
+export default new UserStore();

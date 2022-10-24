@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { SimpleGrid, Container } from "@chakra-ui/layout";
 
 import { setUrlFor } from "src/routes";
-import UserStore from "src/store/user";
+import userStore from "src/store/user";
 import SurveysStore from "src/store/surveys";
 import { getLoadingMessage } from "src/utils";
 import { useFetchData } from "src/utils/hooks";
@@ -16,11 +16,7 @@ import { isHaveAccess } from "../helpers";
 
 const surveysStore = new SurveysStore();
 
-interface Props {
-  userStore: UserStore;
-}
-
-const General = ({ userStore }: Props): JSX.Element => {
+const General = (): JSX.Element => {
   useFetchData(surveysStore.fetchSurveys);
 
   if (surveysStore.loading) {

@@ -82,7 +82,7 @@ class SurveyStore {
         this.surveyCompleted = isUserVoted;
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       this.setLoading("");
     }
@@ -97,7 +97,7 @@ class SurveyStore {
         this.surveyCompleted = true;
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       this.setFormLoading("");
     }
@@ -112,7 +112,7 @@ class SurveyStore {
         this.data.status = status;
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       this.setFormLoading("");
     }
@@ -132,7 +132,7 @@ class SurveyStore {
         this.chartData = chartResult;
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       this.setLoading("");
     }

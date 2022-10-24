@@ -30,7 +30,7 @@ class SurveysStore {
         this.data = result;
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     } finally {
       this.setLoading(false);
     }

@@ -1,5 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
+import store from "src/store/user";
+
 import { Route, ResultData, Query } from "./types";
 
 const API_ENDPOINT = "/api";
@@ -11,7 +13,19 @@ export const axiosInstance = axios.create({
   },
 });
 
-// TODO add interceptor
+axiosInstance.interceptors.response.use(
+  (r) => r,
+  (error) => {
+    const { status, data } = error.response;
+
+    if (status === 401) {
+      // TODO show modal window
+      store.resetLoginForm();
+    }
+
+    return error;
+  }
+);
 
 export const api = async <R extends Route>(
   route: R,
