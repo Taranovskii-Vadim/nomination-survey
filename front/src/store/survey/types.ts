@@ -1,7 +1,6 @@
-import { CommonSurveyFields, SurveyStatus } from "../types";
+import { CommonSurveyFields, SurveyStatus } from '../types';
 
-// TODO write correct types
-type EmptyLoading = "";
+type EmptyLoading = '';
 
 export interface SurveyResult {
   [key: number]: number;
@@ -11,9 +10,9 @@ export interface ChartData {
   [key: string]: number;
 }
 
-export type FormLoading = EmptyLoading | "finish" | "nextStatus";
+export type FormLoading = EmptyLoading | 'finish' | 'nextStatus';
 
-export type Loading = EmptyLoading | "chart" | "survey";
+export type Loading = EmptyLoading | 'chart' | 'survey';
 
 export interface ButtonRender {
   label: string;
@@ -23,10 +22,6 @@ export interface ButtonRender {
 export interface Question {
   id: number;
   text: string;
-}
-
-export interface HashedQuestion {
-  [key: string]: Question;
 }
 
 export interface Survey extends CommonSurveyFields {

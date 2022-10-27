@@ -2,13 +2,16 @@ import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { api } from '../../api';
 import getSurveyById from '../../api/getSurveyById';
-import getSurveyChartResults from '../../api/getSurveyChartResults';
 import postSurveyResults from '../../api/postSurveyResults';
 import putNextSurveyStatus from '../../api/putNextSurveyStatus';
+import getSurveyChartResults from '../../api/getSurveyChartResults';
 
-import { ChartData, FormLoading, HashedQuestion, Loading, Question, Survey, SurveyResult } from './types';
 import { SurveyStatus } from '../types';
 import { UserRole } from '../user/types';
+
+import { ChartData, FormLoading, Loading, Survey, SurveyResult } from './types';
+
+// TODO hash surveys
 
 class SurveyStore {
   loading: Loading = 'survey';
@@ -20,8 +23,6 @@ class SurveyStore {
   data: Survey | undefined = undefined;
 
   chartData: ChartData = {};
-
-  hashedQuestions: HashedQuestion = {};
 
   constructor() {
     makeObservable(this, {
@@ -79,6 +80,7 @@ class SurveyStore {
       this.setFormLoading('nextStatus');
 
       await api(putNextSurveyStatus, { status }, this.data.id);
+
       runInAction(() => {
         this.data.status = status;
       });
