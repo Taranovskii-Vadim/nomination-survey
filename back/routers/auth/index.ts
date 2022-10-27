@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { Response, Router } from "express";
+import { Response, Request, Router } from "express";
 
-import { Request, User } from "../../types";
+import { User } from "../../types";
 import FileModel from "../../models/FileModel";
 
 import { formatData, formatError } from "../helpers";
@@ -9,9 +9,9 @@ import { formatData, formatError } from "../helpers";
 const router = Router();
 
 // 5 min
-// const maxAge = 300000;
+const maxAge = 300000;
 // 1 min
-const maxAge = 60000;
+// const maxAge = 60000;
 
 router.post(
   "/:login",

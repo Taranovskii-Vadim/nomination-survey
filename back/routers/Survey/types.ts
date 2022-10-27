@@ -13,26 +13,22 @@ export interface FileData {
   users: FileUser[];
 }
 
-export interface FileAnswer {
-  id: number;
-  text: string;
-  answer: number;
-}
-
-export interface SurveyDB {
-  id: number;
-  title: string;
-  questions: number[];
-  status: SurveyStatus;
-}
-
 export interface Question {
   id: number;
   text: string;
 }
 
+export interface FileAnswer extends Question {
+  answer: number;
+}
+
+export interface Survey<T = number> {
+  id: number;
+  title: string;
+  questions: T[];
+  status: SurveyStatus;
+}
+
 export interface FileUser extends User {
   questions: FileAnswer[];
 }
-
-export type SurveyCommonData = Omit<SurveyDB, "questions">;
