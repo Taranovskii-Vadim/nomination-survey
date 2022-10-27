@@ -18,8 +18,7 @@ class GetSurveyById implements Route {
 
   getUrl = (id: string): string => `/surveys/${id}`;
 
-  // TODO fix any
-  getData = ({ result }: ResponseDTO<ResultDTO>): any => {
+  getData = ({ result }: ResponseDTO<ResultDTO>) => {
     const { isUserVoted, survey: data } = result;
 
     return { isUserVoted, data };

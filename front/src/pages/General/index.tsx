@@ -14,29 +14,24 @@ import SurveyCard from "src/components/SurveyCard";
 
 import { isHaveAccess } from "../helpers";
 
-const surveysStore = new SurveysStore();
+const store = new SurveysStore();
 
 const General = (): JSX.Element => {
-  useFetchData(surveysStore.fetchSurveys);
+  useFetchData(store.fetchSurveys);
 
-  if (surveysStore.loading) {
+  if (store.loading) {
     return <Loader text={getLoadingMessage("опросов")} />;
   }
 
   return (
     <Container as="main" maxWidth="container.md">
       <SimpleGrid columns={2} spacing={10} mt="10">
-        {surveysStore.data.map(({ id, title, status }) => {
+        {store.data.map(({ id, title, status }) => {
           const isActive = isHaveAccess(userStore.data.role, status);
           // TODO think how to exclude link from dom
           return (
             <NavLink key={id} to={setUrlFor("surveys", id)}>
-              <SurveyCard
-                id={id}
-                title={title}
-                isActive={isActive}
-                unActiveMessage="Голосование временно недоступно"
-              />
+              <SurveyCard title={title} isActive={isActive} />
             </NavLink>
           );
         })}

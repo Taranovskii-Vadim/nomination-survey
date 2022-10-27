@@ -1,9 +1,9 @@
-import { action, makeObservable, observable, runInAction } from "mobx";
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
-import { api } from "../../api";
-import getSurveys from "../../api/getSurveys";
+import { api } from '../../api';
+import getSurveys from '../../api/getSurveys';
 
-import { CommonSurveyFields } from "../types";
+import { CommonSurveyFields } from '../types';
 
 class SurveysStore {
   loading = true;

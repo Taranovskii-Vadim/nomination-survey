@@ -1,5 +1,6 @@
 import { CommonSurveyFields, SurveyStatus } from "../types";
 
+// TODO write correct types
 type EmptyLoading = "";
 
 export interface SurveyResult {

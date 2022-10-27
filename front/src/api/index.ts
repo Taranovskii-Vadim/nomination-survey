@@ -1,15 +1,15 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig } from 'axios';
 
-import store from "src/store/user";
+import store from 'src/store/user';
 
-import { Route, ResultData, Query } from "./types";
+import { Route, ResultData, Query } from './types';
 
-const API_ENDPOINT = "/api";
+const API_ENDPOINT = '/api';
 
 export const axiosInstance = axios.create({
   baseURL: API_ENDPOINT,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
@@ -25,24 +25,18 @@ axiosInstance.interceptors.response.use(
     // TODO handle all errors from api here
 
     return error;
-  }
+  },
 );
 
-export const api = async <R extends Route>(
-  route: R,
-  payload?: ResultData,
-  query?: Query
-): Promise<any> => {
-  let config: AxiosRequestConfig = {
-    method: route.method,
-    url: route.getUrl(query),
-  };
+// TODO add prettier config
+export const api = async <D>(route: Route<D>, payload?: ResultData, query?: Query): Promise<D | null> => {
+  let config: AxiosRequestConfig = { method: route.method, url: route.getUrl(query) };
 
   if (payload) {
     config = { ...config, data: payload };
   }
 
-  const { data } = await axiosInstance.request(config);
+  const { data } = await axiosInstance.request<unknown>(config);
 
   return route.getData ? route.getData(data) : null;
 };

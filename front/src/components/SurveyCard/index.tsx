@@ -1,42 +1,31 @@
 import React from "react";
-// import { useDrag } from "react-dnd";
 import { Flex, Text } from "@chakra-ui/layout";
 import { AiOutlineLock } from "react-icons/ai";
 import { GiSightDisabled } from "react-icons/gi";
 
+import { COLORS } from "../../styles/theme";
 import { firstLetterToUpperCase } from "../../utils";
 import { CommonSurveyFields } from "src/store/types";
 
-import { COLORS } from "../../styles/theme";
 import Icon from "../Icon";
 
 interface Props {
-  id: number;
   isActive: boolean;
-  unActiveMessage?: string;
   title: CommonSurveyFields["title"];
 }
 
 // TODO check and think about how split childs efficiently
 
-const SurveyCard = ({
-  // id,
-  title,
-  isActive,
-  unActiveMessage = "Не активно",
-}: Props): JSX.Element => {
-  // const [{ isDragging }, drag] = useDrag(() => ({
-  //   type: id,
-  //   collect: (monitor) => ({
-  //     isDragging: !!monitor.isDragging(),
-  //   }),
-  // }));
-  const ComponentIcon = isActive ? AiOutlineLock : GiSightDisabled;
+const SurveyCard = ({ title, isActive }: Props): JSX.Element => {
   const iconColor = COLORS[isActive ? "primary" : "gray"];
+  const ComponentIcon = isActive ? AiOutlineLock : GiSightDisabled;
+
+  const text = isActive
+    ? firstLetterToUpperCase(title)
+    : "Голосование временно недоступно";
 
   return (
     <Flex
-      // ref={drag}
       p="10px"
       border="1px"
       height="100%"
@@ -50,7 +39,7 @@ const SurveyCard = ({
     >
       <Icon as={ComponentIcon} size="large" color={iconColor} />
       <Text fontSize="xl" flexGrow={1}>
-        {isActive ? firstLetterToUpperCase(title) : unActiveMessage}
+        {text}
       </Text>
     </Flex>
   );
