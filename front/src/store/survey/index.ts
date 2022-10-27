@@ -1,32 +1,21 @@
-import { action, makeObservable, observable, runInAction } from "mobx";
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
-import { getErrorMessageWithId } from "../../constants";
+import { api } from '../../api';
+import getSurveyById from '../../api/getSurveyById';
+import getSurveyChartResults from '../../api/getSurveyChartResults';
+import postSurveyResults from '../../api/postSurveyResults';
+import putNextSurveyStatus from '../../api/putNextSurveyStatus';
 
-import { api } from "../../api";
-import getQuestionById from "../../api/getQuestionById";
-import getSurveyById from "../../api/getSurveyById";
-import getSurveyChartResults from "../../api/getSurveyChartResults";
-import postSurveyResults from "../../api/postSurveyResults";
-import putNextSurveyStatus from "../../api/putNextSurveyStatus";
-
-import {
-  ChartData,
-  FormLoading,
-  HashedQuestion,
-  Loading,
-  Question,
-  Survey,
-  SurveyResult,
-} from "./types";
-import { SurveyStatus } from "../types";
-import { UserRole } from "../user/types";
+import { ChartData, FormLoading, HashedQuestion, Loading, Question, Survey, SurveyResult } from './types';
+import { SurveyStatus } from '../types';
+import { UserRole } from '../user/types';
 
 class SurveyStore {
-  loading: Loading = "survey";
+  loading: Loading = 'survey';
 
   surveyCompleted = false;
 
-  formLoading: FormLoading = "";
+  formLoading: FormLoading = '';
 
   data: Survey | undefined = undefined;
 
@@ -54,43 +43,25 @@ class SurveyStore {
     }
   };
 
-  fetchSurveyQuestionById = async (id: string): Promise<Question> => {
-    try {
-      let result: Question = this.hashedQuestions[id];
-      if (!result) {
-        result = await api(getQuestionById, undefined, id);
-        this.hashedQuestions[id] = result;
-      }
-
-      return result;
-    } catch (e) {
-      console.error(getErrorMessageWithId("question", id));
-    }
-  };
-
   fetchSurveyById = async (id: string): Promise<void | null> => {
     try {
-      this.setLoading("survey");
+      this.setLoading('survey');
       const { isUserVoted, data } = await api(getSurveyById, undefined, id);
 
-      const questions = await Promise.all(
-        data.questions.map((item) => this.fetchSurveyQuestionById(item))
-      );
-
       runInAction(() => {
-        this.data = { ...data, questions };
+        this.data = data;
         this.surveyCompleted = isUserVoted;
       });
     } catch (e) {
       console.error(e);
     } finally {
-      this.setLoading("");
+      this.setLoading('');
     }
   };
 
   sendUserAnswer = async (data: SurveyResult) => {
     try {
-      this.setFormLoading("finish");
+      this.setFormLoading('finish');
       await api(postSurveyResults, data, this.data.id);
 
       runInAction(() => {
@@ -99,13 +70,13 @@ class SurveyStore {
     } catch (e) {
       console.error(e);
     } finally {
-      this.setFormLoading("");
+      this.setFormLoading('');
     }
   };
 
   setNextSurveyStatus = async (status: SurveyStatus) => {
     try {
-      this.setFormLoading("nextStatus");
+      this.setFormLoading('nextStatus');
 
       await api(putNextSurveyStatus, { status }, this.data.id);
       runInAction(() => {
@@ -114,19 +85,15 @@ class SurveyStore {
     } catch (e) {
       console.error(e);
     } finally {
-      this.setFormLoading("");
+      this.setFormLoading('');
     }
   };
 
   fetchChartResults = async (role: UserRole): Promise<void> => {
     try {
-      this.setLoading("chart");
+      this.setLoading('chart');
 
-      const chartResult = await api(
-        getSurveyChartResults,
-        undefined,
-        `${role}/${this.data.id}`
-      );
+      const chartResult = await api(getSurveyChartResults, undefined, `${role}/${this.data.id}`);
 
       runInAction(() => {
         this.chartData = chartResult;
@@ -134,7 +101,7 @@ class SurveyStore {
     } catch (e) {
       console.error(e);
     } finally {
-      this.setLoading("");
+      this.setLoading('');
     }
   };
 }

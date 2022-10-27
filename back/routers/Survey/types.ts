@@ -19,15 +19,20 @@ export interface FileAnswer {
   answer: number;
 }
 
-export interface Survey {
+export interface SurveyDB {
   id: number;
   title: string;
   questions: number[];
   status: SurveyStatus;
 }
 
+export interface Question {
+  id: number;
+  text: string;
+}
+
 export interface FileUser extends User {
   questions: FileAnswer[];
 }
 
-export type SurveyCommonData = Omit<Survey, "questions">;
+export type SurveyCommonData = Omit<SurveyDB, "questions">;

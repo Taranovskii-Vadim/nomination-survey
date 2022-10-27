@@ -1,6 +1,5 @@
 import { Response, Router } from "express";
 
-import { Question } from "../question/types";
 import FileModel from "../../models/FileModel";
 import { Request, RequestWithId } from "../../types";
 
@@ -12,6 +11,8 @@ import {
   GetResultsRequest,
   SaveResultsRequest,
   ChangeStatusRequest,
+  SurveyDB,
+  Question,
 } from "./types";
 
 const router = Router();
@@ -20,9 +21,13 @@ const getResultFileName = (id: number): string => `survey${id}`;
 
 router.get("/", async (r: Request, res: Response) => {
   try {
-    const result = await FileModel.getData<SurveyCommonData[]>("surveys");
+    const surveys = await FileModel.getData<SurveyDB[]>("surveys");
 
-    res.json(formatData(result));
+    const result = formatData(
+      surveys.map(({ id, title, status }) => ({ id, title, status }))
+    );
+
+    res.json(result);
   } catch (e) {
     res.status(500).json(formatError(e.message));
   }
@@ -70,7 +75,8 @@ router
       const fileData = await FileModel.getData<FileData>(
         getResultFileName(surveyId)
       );
-      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
+      // TODO incorrect types
+      const surveys = await FileModel.getData<SurveyDB[]>("surveys");
 
       const survey = surveys.find((item) => item.id === surveyId);
 
@@ -78,11 +84,17 @@ router
         res.status(404).json(formatError("Survey not found"));
       }
 
+      const questionsDB = await FileModel.getData<Question[]>("questions");
+
+      const questions = survey.questions
+        .map((id) => questionsDB.find((item) => item.id === id))
+        .filter(Boolean);
+
       if (fileData) {
         isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
       }
 
-      res.json(formatData({ survey, isUserVoted }));
+      res.json(formatData({ survey: { ...survey, questions }, isUserVoted }));
     } catch (e) {
       res.status(500).json(formatError(e.message));
     }
@@ -94,7 +106,7 @@ router
       const surveyId = parseInt(params.id);
 
       const questions = await FileModel.getData<Question[]>("questions");
-      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
+      const surveys = await FileModel.getData<SurveyDB[]>("surveys");
 
       const survey = surveys.find((item) => item.id === surveyId);
 
@@ -133,7 +145,7 @@ router
       const { status } = body;
       const surveyId = parseInt(params.id);
 
-      const surveys = await FileModel.getData<SurveyCommonData[]>("surveys");
+      const surveys = await FileModel.getData<SurveyDB[]>("surveys");
 
       const updated = surveys.map((item) => {
         if (item.id === surveyId) {

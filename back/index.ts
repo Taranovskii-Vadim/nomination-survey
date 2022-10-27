@@ -25,7 +25,7 @@ routers.forEach(({ prefix, router, isAuth = true }) => {
 });
 
 // TODO i have used mongoDB, change to PostgreSQL in future
-// TODO remove question model
+
 (() => {
   server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 })();

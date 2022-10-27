@@ -1,20 +1,20 @@
-import { SurveyStatus } from "src/store/types";
+import { SurveyStatus } from 'src/store/types';
 
-import { Route, Method, ResponseDTO } from "./types";
+import { Route, Method, ResponseDTO } from './types';
 
 interface ResultDTO {
   isUserVoted: boolean;
   survey: {
     id: number;
     title: string;
-    questions: number[];
+    questions: { id: number; text: string }[];
     description: string;
     status: SurveyStatus;
   };
 }
 
 class GetSurveyById implements Route {
-  method: Method = "GET";
+  method: Method = 'GET';
 
   getUrl = (id: string): string => `/surveys/${id}`;
 
