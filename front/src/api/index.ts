@@ -28,7 +28,6 @@ axiosInstance.interceptors.response.use(
   },
 );
 
-// TODO add prettier config
 export const api = async <D>(route: Route<D>, payload?: ResultData, query?: Query): Promise<D | null> => {
   let config: AxiosRequestConfig = { method: route.method, url: route.getUrl(query) };
 
