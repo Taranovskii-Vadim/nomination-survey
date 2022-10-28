@@ -6,7 +6,7 @@ import { routers } from "./routers";
 import { authMiddleWare } from "./middlewares";
 
 config();
-
+// TODO write unit tests for back part
 const PORT = process.env.PORT || 3001;
 
 const server = express();

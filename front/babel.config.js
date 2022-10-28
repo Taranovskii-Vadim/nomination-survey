@@ -4,7 +4,7 @@ module.exports = (api) => {
   const isTest = api.env('test');
 
   const ifTest = (option) => (isTest ? option : null);
-
+  // TODO check can we live without ifTest
   return {
     presets: [
       // In test env we got a regenerator runtime error, because we use Promise in pur code

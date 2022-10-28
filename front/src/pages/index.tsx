@@ -23,12 +23,8 @@ const ProtectedPages = (): JSX.Element => {
   return (
     <Suspense fallback={<Loader text={getLoadingMessage('страницы')} />}>
       <Routes>
-        <Route path={getUrlFor('surveys')}>
-          <General />
-        </Route>
-        <Route path={getUrlFor('surveys', 'surveyId')}>
-          <Survey />
-        </Route>
+        <Route path={getUrlFor('surveys')} element={<General />} />
+        <Route path={getUrlFor('surveys', 'surveyId')} element={<Survey />} />
       </Routes>
     </Suspense>
   );
