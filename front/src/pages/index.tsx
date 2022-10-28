@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import { getUrlFor } from '../routes';
 import userStore from '../store/user';
@@ -22,14 +22,14 @@ const ProtectedPages = (): JSX.Element => {
 
   return (
     <Suspense fallback={<Loader text={getLoadingMessage('страницы')} />}>
-      <Switch>
-        <Route exact path={getUrlFor('surveys')}>
+      <Routes>
+        <Route path={getUrlFor('surveys')}>
           <General />
         </Route>
         <Route path={getUrlFor('surveys', 'surveyId')}>
           <Survey />
         </Route>
-      </Switch>
+      </Routes>
     </Suspense>
   );
 };
