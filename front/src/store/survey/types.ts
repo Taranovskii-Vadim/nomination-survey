@@ -1,22 +1,17 @@
-import { CommonSurveyFields, SurveyStatus } from '../types';
+import { CommonSurveyFields } from '../types';
 
 type EmptyLoading = '';
 
-export interface SurveyResult {
-  [key: number]: number;
-}
+export type Loading = EmptyLoading | 'chart' | 'survey';
+
+export type FormLoading = EmptyLoading | 'finish' | 'nextStatus';
 
 export interface ChartData {
   [key: string]: number;
 }
 
-export type FormLoading = EmptyLoading | 'finish' | 'nextStatus';
-
-export type Loading = EmptyLoading | 'chart' | 'survey';
-
-export interface ButtonRender {
-  label: string;
-  to: SurveyStatus;
+export interface UserAnswer {
+  [key: number]: number;
 }
 
 export interface Question {
@@ -27,4 +22,9 @@ export interface Question {
 export interface Survey extends CommonSurveyFields {
   description: string;
   questions: Question[];
+}
+
+export interface SurveyResponse {
+  data: Survey;
+  isUserVoted: boolean;
 }

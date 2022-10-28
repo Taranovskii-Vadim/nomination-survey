@@ -1,21 +1,21 @@
-import React from "react";
-import { Box } from "@chakra-ui/react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import React from 'react';
+import { Box } from '@chakra-ui/react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
-import { SurveyStatus } from "src/store/types";
-import { UserRole } from "src/store/user/types";
-import { FormLoading, Question, SurveyResult } from "src/store/survey/types";
+import { SurveyStatus } from 'src/store/types';
+import { UserRole } from 'src/store/user/types';
+import { FormLoading, Question, UserAnswer } from 'src/store/survey/types';
 
-import FormFooter from "../FormFooter";
-import Range from "src/components/ui/Range";
-import FormItemTitle from "../FormItemTitle";
+import FormFooter from '../FormFooter';
+import Range from 'src/components/ui/Range';
+import FormItemTitle from '../FormItemTitle';
 
 interface Props {
   data: Question[];
   userRole: UserRole;
   isSubmiting: FormLoading;
   surveyStatus: SurveyStatus;
-  sendSurveyResults: (data: SurveyResult) => void;
+  sendSurveyResults: (data: UserAnswer) => void;
   setNextStatus: (nextStatus: SurveyStatus) => void;
 }
 
@@ -29,11 +29,11 @@ const QuestionsForm = ({
 }: Props): JSX.Element => {
   const { control, handleSubmit } = useForm();
 
-  const isAdmin = userRole === "admin";
+  const isAdmin = userRole === 'admin';
 
-  const isFieldDisabled = isAdmin || isSubmiting === "finish";
+  const isFieldDisabled = isAdmin || isSubmiting === 'finish';
 
-  const onSubmit: SubmitHandler<SurveyResult> = (data) => {
+  const onSubmit: SubmitHandler<UserAnswer> = (data) => {
     sendSurveyResults(data);
   };
 
@@ -47,11 +47,7 @@ const QuestionsForm = ({
           render={({ field: { value, onChange } }) => (
             <Box mb={5} _last={{ mb: 0 }}>
               <FormItemTitle id={id} label={text} />
-              <Range
-                value={value}
-                onChange={onChange}
-                isDisabled={isFieldDisabled}
-              />
+              <Range value={value} onChange={onChange} isDisabled={isFieldDisabled} />
             </Box>
           )}
         />

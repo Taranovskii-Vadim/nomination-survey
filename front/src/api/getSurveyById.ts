@@ -1,4 +1,5 @@
 import { SurveyStatus } from 'src/store/types';
+import { SurveyResponse } from 'src/store/survey/types';
 
 import { Route, Method, ResponseDTO } from './types';
 
@@ -18,7 +19,7 @@ class GetSurveyById implements Route {
 
   getUrl = (id: string): string => `/surveys/${id}`;
 
-  getData = ({ result }: ResponseDTO<ResultDTO>) => {
+  getData = ({ result }: ResponseDTO<ResultDTO>): SurveyResponse => {
     const { isUserVoted, survey: data } = result;
 
     return { isUserVoted, data };

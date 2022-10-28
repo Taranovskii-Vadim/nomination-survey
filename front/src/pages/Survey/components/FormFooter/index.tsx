@@ -1,12 +1,12 @@
-import React from "react";
-import { Flex } from "@chakra-ui/react";
+import React from 'react';
+import { Flex } from '@chakra-ui/react';
 
-import { SurveyStatus } from "src/store/types";
-import { FormLoading } from "src/store/survey/types";
+import { SurveyStatus } from 'src/store/types';
+import { FormLoading } from 'src/store/survey/types';
 
-import { Button } from "src/components/ui";
+import { Button } from 'src/components/ui';
 
-import { getButtons } from "./constants";
+import { BUTTONS } from './constants';
 
 interface Props {
   isAdmin: boolean;
@@ -15,28 +15,19 @@ interface Props {
   setNextStatus: (nextStatus: SurveyStatus) => void;
 }
 
-const FormFooter = ({
-  isAdmin,
-  isSubmiting,
-  surveyStatus,
-  setNextStatus,
-}: Props): JSX.Element => {
-  const button = getButtons(surveyStatus);
+const FormFooter = ({ isAdmin, isSubmiting, surveyStatus, setNextStatus }: Props): JSX.Element => {
+  const button = BUTTONS[surveyStatus];
 
   return (
     <Flex mt={10} alignItems="center" justifyContent="end">
       {isAdmin ? (
         <Button
           label={button.label}
-          isLoading={isSubmiting === "nextStatus"}
+          isLoading={isSubmiting === 'nextStatus'}
           onClick={() => setNextStatus(button.to)}
         />
       ) : (
-        <Button
-          label="Завершить"
-          type="submit"
-          isLoading={isSubmiting === "finish"}
-        />
+        <Button label="Завершить" type="submit" isLoading={isSubmiting === 'finish'} />
       )}
     </Flex>
   );
