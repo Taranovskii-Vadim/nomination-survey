@@ -9,7 +9,7 @@ import userStore from 'src/store/user';
 import { COLORS } from 'src/styles/theme';
 import SurveyStore from 'src/store/survey';
 import { useFetchData } from 'src/utils/hooks';
-import { firstLetterToUpperCase, getLoadingMessage } from 'src/utils';
+import { firstLetterToUpperCase } from 'src/utils';
 
 import Icon from 'src/components/Icon';
 import BarChart from 'src/components/BarChart';
@@ -32,7 +32,7 @@ const Survey = (): JSX.Element => {
   useFetchData(() => surveyStore.fetchSurveyById(surveyId));
 
   if (surveyStore.loading === 'survey') {
-    return <Loader text={getLoadingMessage('опроса')} />;
+    return <Loader text="опроса" />;
   }
 
   if (!isHaveAccess(userStore.data.role, data.status)) {
@@ -96,14 +96,14 @@ const Survey = (): JSX.Element => {
             <TabPanel>{Form}</TabPanel>
             <TabPanel>
               {isChartLoading ? (
-                <Loader containerHeight="50vh" text={getLoadingMessage('данных')} />
+                <Loader containerHeight="50vh" text="данных" />
               ) : (
                 <BarChart chart={surveyStore.chartData} />
               )}
             </TabPanel>
             <TabPanel>
               {isChartLoading ? (
-                <Loader containerHeight="50vh" text={getLoadingMessage('данных')} />
+                <Loader containerHeight="50vh" text="данных" />
               ) : (
                 <BarChart chart={surveyStore.chartData} />
               )}

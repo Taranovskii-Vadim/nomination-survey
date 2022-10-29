@@ -1,18 +1,17 @@
-import React from "react";
-import { observer } from "mobx-react-lite";
-import { NavLink } from "react-router-dom";
-import { SimpleGrid, Container } from "@chakra-ui/layout";
+import React from 'react';
+import { observer } from 'mobx-react-lite';
+import { NavLink } from 'react-router-dom';
+import { SimpleGrid, Container } from '@chakra-ui/layout';
 
-import { setUrlFor } from "src/routes";
-import userStore from "src/store/user";
-import SurveysStore from "src/store/surveys";
-import { getLoadingMessage } from "src/utils";
-import { useFetchData } from "src/utils/hooks";
+import { setUrlFor } from 'src/routes';
+import userStore from 'src/store/user';
+import SurveysStore from 'src/store/surveys';
+import { useFetchData } from 'src/utils/hooks';
 
-import { Loader } from "src/components/ui";
-import SurveyCard from "src/components/SurveyCard";
+import { Loader } from 'src/components/ui';
+import SurveyCard from './components/SurveyCard';
 
-import { isHaveAccess } from "../helpers";
+import { isHaveAccess } from '../helpers';
 
 const store = new SurveysStore();
 
@@ -20,7 +19,7 @@ const General = (): JSX.Element => {
   useFetchData(store.fetchSurveys);
 
   if (store.loading) {
-    return <Loader text={getLoadingMessage("опросов")} />;
+    return <Loader text="опросов" />;
   }
 
   return (
@@ -30,7 +29,7 @@ const General = (): JSX.Element => {
           const isActive = isHaveAccess(userStore.data.role, status);
           // TODO think how to exclude link from dom
           return (
-            <NavLink key={id} to={setUrlFor("surveys", id)}>
+            <NavLink key={id} to={setUrlFor('surveys', id)}>
               <SurveyCard title={title} isActive={isActive} />
             </NavLink>
           );
