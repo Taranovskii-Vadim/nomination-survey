@@ -1,35 +1,26 @@
-import React, { useEffect } from "react";
-import {
-  Input,
-  Button,
-  Box,
-  FormControl,
-  FormErrorMessage,
-} from "@chakra-ui/react";
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import React, { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
+import { Input, Button, Box, FormControl, FormErrorMessage } from '@chakra-ui/react';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
-import { SignInFormValues } from "src/store/user/types";
+import store from 'src/store/user';
 
-interface Props {
-  isLoading: boolean;
-  onLogin: (login: SignInFormValues) => Promise<void>;
-}
+import { SignInFormValues } from 'src/store/user/types';
 
-const Login = ({ isLoading, onLogin }: Props): JSX.Element => {
-  const { control, formState, register, handleSubmit } =
-    useForm<SignInFormValues>({
-      defaultValues: { login: "" },
-    });
+const Login = (): JSX.Element => {
+  const { control, formState, register, handleSubmit } = useForm<SignInFormValues>({
+    defaultValues: { login: '' },
+  });
 
   useEffect(() => {
-    register("login", {
-      required: { value: true, message: "Обязательное поле" },
+    register('login', {
+      required: { value: true, message: 'Обязательное поле' },
     });
   }, [register]);
 
   const { errors } = formState;
 
-  const onSubmit: SubmitHandler<SignInFormValues> = (data) => onLogin(data);
+  const onSubmit: SubmitHandler<SignInFormValues> = (data) => store.signIn(data);
 
   return (
     <Box
@@ -48,17 +39,15 @@ const Login = ({ isLoading, onLogin }: Props): JSX.Element => {
         render={({ field }) => (
           <FormControl isInvalid={!!errors.login}>
             <Input placeholder="Введите логин" {...field} />
-            {errors.login ? (
-              <FormErrorMessage>{errors.login.message}</FormErrorMessage>
-            ) : null}
+            {errors.login ? <FormErrorMessage>{errors.login.message}</FormErrorMessage> : null}
           </FormControl>
         )}
       />
-      <Button mt={4} isFullWidth type="submit" isLoading={isLoading}>
+      <Button mt={4} isFullWidth type="submit" isLoading={store.isLoading}>
         Отправить
       </Button>
     </Box>
   );
 };
 
-export default Login;
+export default observer(Login);
