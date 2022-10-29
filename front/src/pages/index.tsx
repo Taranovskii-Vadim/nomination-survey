@@ -6,7 +6,7 @@ import { getUrlFor } from '../routes';
 import userStore from '../store/user';
 import { useFetchData } from 'src/utils/hooks';
 
-import { Loader } from '../components/ui';
+import Loader from '../components/ui/Loader';
 
 const Survey = lazy(() => import('./Survey'));
 const General = lazy(() => import('./General'));

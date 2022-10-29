@@ -4,7 +4,7 @@ import { Flex } from '@chakra-ui/react';
 import { SurveyStatus } from 'src/store/types';
 import { FormLoading } from 'src/store/survey/types';
 
-import { Button } from 'src/components/ui';
+import Button from 'src/components/ui/Button';
 
 import { BUTTONS } from './constants';
 

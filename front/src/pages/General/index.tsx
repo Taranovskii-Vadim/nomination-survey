@@ -8,7 +8,7 @@ import userStore from 'src/store/user';
 import SurveysStore from 'src/store/surveys';
 import { useFetchData } from 'src/utils/hooks';
 
-import { Loader } from 'src/components/ui';
+import Loader from 'src/components/ui/Loader';
 import SurveyCard from './components/SurveyCard';
 
 import { isHaveAccess } from '../helpers';

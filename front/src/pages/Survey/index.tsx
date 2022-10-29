@@ -13,7 +13,8 @@ import { firstLetterToUpperCase } from 'src/utils';
 
 import Icon from 'src/components/Icon';
 import BarChart from 'src/components/BarChart';
-import { Loader, Title } from 'src/components/ui';
+import Loader from 'src/components/ui/Loader';
+import Title from 'src/components/ui/Title';
 import QuestionsForm from './components/QuestionsForm';
 import AccessDenied from 'src/components/AccessDenied';
 import SurveyCompleted from 'src/components/SurveyCompleted';
