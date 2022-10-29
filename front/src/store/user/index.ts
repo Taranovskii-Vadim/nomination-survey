@@ -13,13 +13,14 @@ const PROFILE_KEY = 'profile';
 class UserStore {
   data: User = getItem(PROFILE_KEY);
 
-  isLoading = false;
+  isSubmit = false;
 
   isLoginForm = !document.cookie.includes('token');
 
   constructor() {
     makeObservable(this, {
-      isLoading: observable,
+      data: observable,
+      isSubmit: observable,
       isLoginForm: observable,
     });
   }
@@ -31,8 +32,6 @@ class UserStore {
   getProfileData = async (): Promise<void> => {
     if (!this.data) {
       try {
-        this.isLoading = true;
-
         const result: User = await api(getProfile);
 
         localStorage.setItem(PROFILE_KEY, JSON.stringify(result));
@@ -42,21 +41,19 @@ class UserStore {
         });
       } catch (e) {
         console.error(e);
-      } finally {
-        this.isLoading = false;
       }
     }
   };
 
   signIn = async ({ login }: SignInFormValues): Promise<void> => {
     try {
-      this.isLoading = true;
+      this.isSubmit = true;
       await api(postLogin, undefined, login);
       this.isLoginForm = !document.cookie.includes('token');
     } catch (e) {
       console.error(e);
     } finally {
-      this.isLoading = false;
+      this.isSubmit = false;
     }
   };
 }

@@ -43,7 +43,7 @@ const Login = (): JSX.Element => {
           </FormControl>
         )}
       />
-      <Button mt={4} isFullWidth type="submit" isLoading={store.isLoading}>
+      <Button mt={4} isFullWidth type="submit" isLoading={store.isSubmit}>
         Отправить
       </Button>
     </Box>

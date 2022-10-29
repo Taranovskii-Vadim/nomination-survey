@@ -16,7 +16,7 @@ const ProtectedPages = (): JSX.Element => {
     userStore.getProfileData();
   }, []);
 
-  if (userStore.isLoading || !userStore.data) {
+  if (!userStore.data) {
     return <Loader text={getLoadingMessage('профиля')} />;
   }
 
