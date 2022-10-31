@@ -2,8 +2,7 @@ import React from 'react';
 import { GoBook } from 'react-icons/go';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
-import { Box, Container, Flex, Text } from '@chakra-ui/layout';
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Container, Flex, Text } from '@chakra-ui/react';
 
 import userStore from 'src/store/user';
 import { COLORS } from 'src/styles/theme';
@@ -50,11 +49,11 @@ const Survey = (): JSX.Element => {
       userRole={userStore.data.role}
       isSubmiting={surveyStore.formLoading}
       surveyStatus={surveyStore.data.status}
-      sendSurveyResults={(data) => {
-        surveyStore.sendUserAnswer(data);
+      sendSurveyResults={(answers) => {
+        surveyStore.sendUserAnswer(answers);
       }}
-      setNextStatus={(data) => {
-        surveyStore.setNextSurveyStatus(data);
+      setNextStatus={(status) => {
+        surveyStore.setNextSurveyStatus(status);
       }}
     />
   );
@@ -70,7 +69,7 @@ const Survey = (): JSX.Element => {
       }}
     >
       <Flex alignItems="start" mb="35">
-        <Icon size="large" as={GoBook} color={COLORS['primary']} />
+        <Icon size="large" as={GoBook} color={COLORS.primary} />
         <Box ml="15" lineHeight="1" maxW="95%">
           <Title>{firstLetterToUpperCase(data.title)}</Title>
           <Text mt="2" lineHeight="21px">

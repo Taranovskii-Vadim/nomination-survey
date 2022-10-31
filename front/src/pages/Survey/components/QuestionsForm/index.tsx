@@ -33,8 +33,8 @@ const QuestionsForm = ({
 
   const isFieldDisabled = isAdmin || isSubmiting === 'finish';
 
-  const onSubmit: SubmitHandler<UserAnswer> = (data) => {
-    sendSurveyResults(data);
+  const onSubmit: SubmitHandler<UserAnswer> = (answers) => {
+    sendSurveyResults(answers);
   };
 
   return (

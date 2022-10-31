@@ -1,10 +1,7 @@
-import React from "react";
+import React from 'react';
+import { Text, TextProps } from '@chakra-ui/react';
 
-import { Text, TextProps } from "@chakra-ui/layout";
-
-interface Props extends TextProps {}
-
-const Title = ({ children, ...props }: Props): JSX.Element => (
+const Title = ({ children, ...props }: TextProps): JSX.Element => (
   <Text size="3xl" {...props}>
     {children}
   </Text>

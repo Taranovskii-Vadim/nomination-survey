@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { Button as ChakraButton, ButtonProps } from "@chakra-ui/react";
+import React, { memo } from 'react';
+import { Button as ChakraButton, ButtonProps } from '@chakra-ui/react';
 
 interface Props extends ButtonProps {
   label: string;

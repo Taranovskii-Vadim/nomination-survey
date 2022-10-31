@@ -1,7 +1,6 @@
 'use strict';
 
-// TODO add eslint --fix after prettier
-const actions = ['prettier --write', 'git add'];
+const actions = ['prettier --write', 'eslint --fix', 'git add'];
 
 module.exports = {
   '.*.js': actions,

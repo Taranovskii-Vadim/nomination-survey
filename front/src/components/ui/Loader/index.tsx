@@ -11,7 +11,7 @@ interface Props extends SpinnerProps {
 
 const Loader = ({ containerHeight, text, ...props }: Props): JSX.Element => (
   <FullPageContainer height={containerHeight}>
-    <Spinner color={COLORS['primary']} speed="1s" emptyColor="gray.200" size="xl" {...props} />
+    <Spinner color={COLORS.primary} speed="1s" emptyColor="gray.200" size="xl" {...props} />
     <Text>{`Загрузка ${text}`}</Text>
   </FullPageContainer>
 );

@@ -5,7 +5,7 @@ import { Route, Method } from './types';
 class PostLogin implements Route {
   method: Method = 'POST';
 
-  getUrl = (login: string) => `/auth/${login}`;
+  getUrl = (login: string): string => `/auth/${login}`;
 }
 
 export default new PostLogin();

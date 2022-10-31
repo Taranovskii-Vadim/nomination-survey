@@ -1,10 +1,8 @@
-import React from "react";
-import { SelectProps, Select as ChakraSelect } from "@chakra-ui/react";
-
-import { Option } from "../../../store/survey/types";
+import React from 'react';
+import { SelectProps, Select as ChakraSelect } from '@chakra-ui/react';
 
 interface Props extends SelectProps {
-  options: Option[];
+  options: { value: string; label: string }[];
 }
 
 const Dropdown = ({ options, ...props }: Props): JSX.Element => {

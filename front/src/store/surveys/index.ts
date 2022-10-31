@@ -29,8 +29,6 @@ class SurveysStore {
       runInAction(() => {
         this.data = result;
       });
-    } catch (e) {
-      console.error(e);
     } finally {
       this.setLoading(false);
     }

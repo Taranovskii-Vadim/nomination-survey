@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Routes, Route } from 'react-router-dom';
 

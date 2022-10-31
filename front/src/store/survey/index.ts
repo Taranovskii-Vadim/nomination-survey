@@ -40,14 +40,12 @@ class SurveyStore {
         this.data = data;
         this.surveyCompleted = isUserVoted;
       });
-    } catch (e) {
-      console.error(e);
     } finally {
       this.loading = '';
     }
   };
 
-  sendUserAnswer = async (data: UserAnswer) => {
+  sendUserAnswer = async (data: UserAnswer): Promise<void> => {
     try {
       this.formLoading = 'finish';
       await api(postSurveyResults, data, this.data.id);
@@ -55,8 +53,6 @@ class SurveyStore {
       runInAction(() => {
         this.surveyCompleted = true;
       });
-    } catch (e) {
-      console.error(e);
     } finally {
       this.formLoading = '';
     }
@@ -71,8 +67,6 @@ class SurveyStore {
       runInAction(() => {
         this.data.status = status;
       });
-    } catch (e) {
-      console.error(e);
     } finally {
       this.formLoading = '';
     }
@@ -87,8 +81,6 @@ class SurveyStore {
       runInAction(() => {
         this.chartData = chartResult;
       });
-    } catch (e) {
-      console.error(e);
     } finally {
       this.loading = '';
     }

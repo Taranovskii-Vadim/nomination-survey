@@ -1,9 +1,9 @@
-import React from "react";
-import { IconType } from "react-icons/lib";
-import { Icon as ChakraIcon, IconProps } from "@chakra-ui/react";
+import React from 'react';
+import { IconType } from 'react-icons/lib';
+import { Icon as ChakraIcon, IconProps } from '@chakra-ui/react';
 
-import { Size } from "./types";
-import { getBoxSize } from "./helpers";
+import { Size } from './types';
+import { getBoxSize } from './helpers';
 
 interface Props extends IconProps {
   as: IconType;
@@ -11,7 +11,7 @@ interface Props extends IconProps {
 }
 
 const Icon = ({ size, ...props }: Props): JSX.Element => {
-  const boxSize = typeof size === "number" ? size : getBoxSize(size);
+  const boxSize = typeof size === 'number' ? size : getBoxSize(size);
 
   return <ChakraIcon boxSize={boxSize} {...props} />;
 };

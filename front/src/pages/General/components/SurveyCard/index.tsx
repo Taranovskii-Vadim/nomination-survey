@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Text } from '@chakra-ui/layout';
+import { Flex, Text } from '@chakra-ui/react';
 import { AiOutlineLock } from 'react-icons/ai';
 import { GiSightDisabled } from 'react-icons/gi';
 

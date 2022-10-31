@@ -31,17 +31,13 @@ class UserStore {
 
   getProfileData = async (): Promise<void> => {
     if (!this.data) {
-      try {
-        const result: User = await api(getProfile);
+      const result: User = await api(getProfile);
 
-        localStorage.setItem(PROFILE_KEY, JSON.stringify(result));
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(result));
 
-        runInAction(() => {
-          this.data = result;
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      runInAction(() => {
+        this.data = result;
+      });
     }
   };
 
@@ -50,8 +46,6 @@ class UserStore {
       this.isSubmit = true;
       await api(postLogin, undefined, login);
       this.isLoginForm = !document.cookie.includes('token');
-    } catch (e) {
-      console.error(e);
     } finally {
       this.isSubmit = false;
     }

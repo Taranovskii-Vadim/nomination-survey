@@ -1,12 +1,6 @@
-import React, { memo, useEffect, useState } from "react";
-import {
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  SliderProps,
-} from "@chakra-ui/react";
-import { COLORS } from "../../../styles/theme";
+import React, { memo, useEffect, useState } from 'react';
+import { Slider, SliderTrack, SliderFilledTrack, SliderThumb, SliderProps } from '@chakra-ui/react';
+import { COLORS } from '../../../styles/theme';
 
 export const areEqual = (prev: SliderProps, next: SliderProps): boolean => {
   if (prev.isDisabled !== next.isDisabled) {
@@ -16,12 +10,7 @@ export const areEqual = (prev: SliderProps, next: SliderProps): boolean => {
   return true;
 };
 
-const Range = ({
-  max = 10,
-  isDisabled = false,
-  defaultValue = 0,
-  onChange,
-}: SliderProps): JSX.Element => {
+const Range = ({ max = 10, isDisabled = false, defaultValue = 0, onChange }: SliderProps): JSX.Element => {
   const [value, setValue] = useState(() => defaultValue);
 
   useEffect(() => {
@@ -29,14 +18,9 @@ const Range = ({
   }, [value]);
 
   return (
-    <Slider
-      max={max}
-      isDisabled={isDisabled}
-      value={value}
-      onChange={(val) => setValue(val)}
-    >
+    <Slider max={max} isDisabled={isDisabled} value={value} onChange={(val) => setValue(val)}>
       <SliderTrack>
-        <SliderFilledTrack bg={COLORS["primary"]} />
+        <SliderFilledTrack bg={COLORS.primary} />
       </SliderTrack>
       <SliderThumb />
     </Slider>

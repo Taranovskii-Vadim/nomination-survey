@@ -4,7 +4,7 @@ export type ResultData = object | string | number;
 
 export type Query = string | number;
 
-export interface ResponseDTO<T extends unknown> {
+export interface ResponseDTO<T> {
   result: T;
 }
 

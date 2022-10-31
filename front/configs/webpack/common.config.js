@@ -1,43 +1,45 @@
-const path = require("path");
-const { config } = require("dotenv");
-const { merge } = require("webpack-merge");
-const { DefinePlugin } = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+'use strict';
+
+const path = require('path');
+const { config } = require('dotenv');
+const { merge } = require('webpack-merge');
+const { DefinePlugin } = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 config();
 
-const MAIN_CHUNK = "main";
-const PREFIX = process.env.PREFIX || "/";
-const ROOT = path.resolve(__dirname, "..", "..");
+const MAIN_CHUNK = 'main';
+const PREFIX = process.env.PREFIX || '/';
+const ROOT = path.resolve(__dirname, '..', '..');
 
-const devServerConfig = require("./dev.config");
+const devServerConfig = require('./dev.config');
 
 const getCommonConfig = (mode) => {
-  const isDevelopment = mode === "development";
+  const isDevelopment = mode === 'development';
   const isAnalyzerOpen = !!process.env.OPEN_BUNDLE;
 
   const ifProduction = (plugin) => (!isDevelopment ? plugin : null);
 
   return {
     entry: {
-      [MAIN_CHUNK]: ["@babel/polyfill", "./src/index.tsx"],
+      [MAIN_CHUNK]: ['@babel/polyfill', './src/index.tsx'],
     },
     output: {
-      filename: isDevelopment ? "[name].js" : "[name].[hash].js",
-      path: path.resolve(ROOT, "build"),
+      filename: isDevelopment ? '[name].js' : '[name].[hash].js',
+      path: path.resolve(ROOT, 'build'),
       // TODO can include chunk names here
       publicPath: PREFIX,
     },
     resolve: {
-      extensions: [".tsx", ".ts", ".js", ".json"],
+      extensions: ['.tsx', '.ts', '.js', '.json'],
       alias: {
-        src: path.resolve(ROOT, "src"),
+        src: path.resolve(ROOT, 'src'),
       },
     },
     optimization: {
       splitChunks: {
-        chunks: "all",
+        chunks: 'all',
       },
     },
     module: {
@@ -47,7 +49,7 @@ const getCommonConfig = (mode) => {
           exclude: /node_modules/,
           use: [
             {
-              loader: "babel-loader",
+              loader: 'babel-loader',
             },
           ],
         },
@@ -55,10 +57,10 @@ const getCommonConfig = (mode) => {
           test: /\.css$/,
           use: [
             {
-              loader: "style-loader",
+              loader: 'style-loader',
             },
             {
-              loader: "css-loader",
+              loader: 'css-loader',
             },
           ],
         },
@@ -66,29 +68,29 @@ const getCommonConfig = (mode) => {
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: path.resolve(ROOT, "public", "index.html"),
+        template: path.resolve(ROOT, 'public', 'index.html'),
         chunks: [MAIN_CHUNK],
       }),
       new DefinePlugin({
-        "process.env.PREFIX": JSON.stringify(PREFIX),
+        'process.env.PREFIX': JSON.stringify(PREFIX),
       }),
       ifProduction(
         new BundleAnalyzerPlugin({
-          analyzerMode: "static",
-          reportFilename: "buildMap.html",
+          analyzerMode: 'static',
+          reportFilename: 'buildMap.html',
           openAnalyzer: isAnalyzerOpen,
-        })
+        }),
       ),
     ].filter(Boolean),
   };
 };
 
 module.exports = (env, { mode }) => {
-  const config = getCommonConfig(mode);
+  const result = getCommonConfig(mode);
 
-  if (mode === "development") {
-    return merge(devServerConfig, config);
+  if (mode === 'development') {
+    return merge(devServerConfig, result);
   }
 
-  return config;
+  return result;
 };
