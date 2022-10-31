@@ -3,11 +3,11 @@ import { Text } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineDone } from 'react-icons/md';
 
-import { setUrlFor } from '../../routes';
+import { setUrlFor } from 'src/routes';
 
-import Button from '../ui/Button';
-import FullPageContainer from '../FullPageContainer';
-import Icon from '../Icon';
+import Icon from 'src/components/Icon';
+import Button from 'src/components/ui/Button';
+import FullPageContainer from 'src/components/FullPageContainer';
 
 const SurveyCompleted = (): JSX.Element => (
   <FullPageContainer>

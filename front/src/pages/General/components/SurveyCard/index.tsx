@@ -14,8 +14,6 @@ interface Props {
   title: CommonSurveyFields['title'];
 }
 
-// TODO check and think about how split childs efficiently
-
 const SurveyCard = ({ title, isActive }: Props): JSX.Element => {
   const iconColor = COLORS[isActive ? 'primary' : 'gray'];
   const ComponentIcon = isActive ? AiOutlineLock : GiSightDisabled;

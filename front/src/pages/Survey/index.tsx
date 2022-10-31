@@ -13,13 +13,13 @@ import { firstLetterToUpperCase } from 'src/utils';
 import Icon from 'src/components/Icon';
 import Loader from 'src/components/ui/Loader';
 import Title from 'src/components/ui/Title';
-import AccessDenied from 'src/components/AccessDenied';
-import SurveyCompleted from 'src/components/SurveyCompleted';
 
 import { isHaveAccess } from '../helpers';
 
-import QuestionsForm from './components/QuestionsForm';
 import BarChart from './components/BarChart';
+import AccessDenied from './components/AccessDenied';
+import QuestionsForm from './components/QuestionsForm';
+import SurveyCompleted from './components/SurveyCompleted';
 
 const store = new SurveyStore();
 
