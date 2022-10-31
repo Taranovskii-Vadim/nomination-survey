@@ -5,9 +5,9 @@ import { AiOutlineLock } from 'react-icons/ai';
 
 import { setUrlFor } from '../../routes';
 
+import Icon from '../Icon';
 import Button from '../ui/Button';
 import FullPageContainer from '../FullPageContainer';
-import Icon from '../Icon';
 
 const AccessDenied = (): JSX.Element => (
   <FullPageContainer>

@@ -11,8 +11,6 @@ import ThemeSwitcher from './components/ThemeSwitcher';
 
 // TODO mobile version (medium)
 
-// TODO perfomance barChart (hard)
-
 const App = (): JSX.Element => (
   <>
     <ThemeSwitcher />
