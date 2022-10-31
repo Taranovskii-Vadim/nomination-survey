@@ -1,10 +1,6 @@
 import { CommonSurveyFields } from '../types';
 
-type EmptyLoading = '';
-
-export type Loading = EmptyLoading | 'chart' | 'survey';
-
-export type FormLoading = EmptyLoading | 'finish' | 'nextStatus';
+export type FormLoading = '' | 'finish' | 'nextStatus';
 
 export interface ChartData {
   [key: string]: number;

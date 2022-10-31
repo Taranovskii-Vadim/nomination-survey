@@ -1,18 +1,24 @@
 import React from 'react';
+import { observer } from 'mobx-react-lite';
 import { Bar } from 'react-chartjs-2';
 import { ImFire } from 'react-icons/im';
 import { Flex, Text } from '@chakra-ui/react';
 
-import { ChartData } from '../../store/survey/types';
+import SurveyStore from 'src/store/survey';
 
-import Icon from '../Icon';
+import Loader from 'src/components/ui/Loader';
+import Icon from 'src/components/Icon';
 
 interface Props {
-  chart: ChartData;
+  store: SurveyStore;
 }
 
-const BarChart = ({ chart }: Props): JSX.Element => {
-  const keys = Object.keys(chart);
+const BarChart = ({ store }: Props): JSX.Element => {
+  if (store.isChartLoading) {
+    return <Loader containerHeight="50vh" text="данных" />;
+  }
+
+  const keys = Object.keys(store.chartData);
 
   if (!keys.length) {
     return (
@@ -32,7 +38,7 @@ const BarChart = ({ chart }: Props): JSX.Element => {
         datasets: [
           {
             label: 'Результаты',
-            data: Object.values(chart),
+            data: Object.values(store.chartData),
             backgroundColor: [
               'rgba(255, 99, 132, 0.2)',
               'rgba(54, 162, 235, 0.2)',
@@ -70,4 +76,4 @@ const BarChart = ({ chart }: Props): JSX.Element => {
   );
 };
 
-export default BarChart;
+export default observer(BarChart);

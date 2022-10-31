@@ -9,7 +9,7 @@ import getSurveyChartResults from '../../api/getSurveyChartResults';
 import { SurveyStatus } from '../types';
 import { UserRole } from '../user/types';
 
-import { ChartData, FormLoading, Loading, Survey, UserAnswer } from './types';
+import { ChartData, FormLoading, Survey, UserAnswer } from './types';
 
 // TODO hash surveys
 
@@ -20,20 +20,22 @@ class SurveyStore {
 
   chartData: ChartData = {};
 
-  loading: Loading = 'survey';
+  isSurveyLoading = true;
+
+  isChartLoading = false;
 
   formLoading: FormLoading = '';
 
   constructor() {
     makeObservable(this, {
-      loading: observable,
       formLoading: observable,
+      isChartLoading: observable,
+      isSurveyLoading: observable,
     });
   }
 
   fetchSurveyById = async (id: string): Promise<void> => {
     try {
-      this.loading = 'survey';
       const { isUserVoted, data } = await api(getSurveyById, undefined, id);
 
       runInAction(() => {
@@ -41,7 +43,7 @@ class SurveyStore {
         this.surveyCompleted = isUserVoted;
       });
     } finally {
-      this.loading = '';
+      this.isSurveyLoading = false;
     }
   };
 
@@ -74,15 +76,14 @@ class SurveyStore {
 
   fetchChartResults = async (role: UserRole): Promise<void> => {
     try {
-      this.loading = 'chart';
-
+      this.isChartLoading = true;
       const chartResult = await api(getSurveyChartResults, undefined, `${role}/${this.data.id}`);
 
       runInAction(() => {
         this.chartData = chartResult;
       });
     } finally {
-      this.loading = '';
+      this.isChartLoading = false;
     }
   };
 }

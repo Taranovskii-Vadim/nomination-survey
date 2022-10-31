@@ -2,7 +2,7 @@ import React from 'react';
 import { GoBook } from 'react-icons/go';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Box, Container, Flex, Text } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 
 import userStore from 'src/store/user';
 import { COLORS } from 'src/styles/theme';
@@ -11,27 +11,26 @@ import { useFetchData } from 'src/utils/hooks';
 import { firstLetterToUpperCase } from 'src/utils';
 
 import Icon from 'src/components/Icon';
-import BarChart from 'src/components/BarChart';
 import Loader from 'src/components/ui/Loader';
 import Title from 'src/components/ui/Title';
-import QuestionsForm from './components/QuestionsForm';
 import AccessDenied from 'src/components/AccessDenied';
 import SurveyCompleted from 'src/components/SurveyCompleted';
 
 import { isHaveAccess } from '../helpers';
 
-const surveyStore = new SurveyStore();
+import QuestionsForm from './components/QuestionsForm';
+import BarChart from './components/BarChart';
+
+const store = new SurveyStore();
 
 const Survey = (): JSX.Element => {
   const { surveyId } = useParams() as { surveyId: string };
 
-  const { data } = surveyStore;
-  const isChartLoading = surveyStore.loading === 'chart';
-  const isHaveAccessToTabs = userStore.data.role !== 'user';
+  const { data } = store;
 
-  useFetchData(() => surveyStore.fetchSurveyById(surveyId));
+  useFetchData(() => store.fetchSurveyById(surveyId));
 
-  if (surveyStore.loading === 'survey') {
+  if (store.isSurveyLoading) {
     return <Loader text="опроса" />;
   }
 
@@ -39,21 +38,23 @@ const Survey = (): JSX.Element => {
     return <AccessDenied />;
   }
 
-  if (surveyStore.surveyCompleted) {
+  if (store.surveyCompleted) {
     return <SurveyCompleted />;
   }
 
+  const isHaveAccessToTabs = userStore.data.role !== 'user';
+
   const Form = (
     <QuestionsForm
-      data={data.questions}
+      data={store.data.questions}
       userRole={userStore.data.role}
-      isSubmiting={surveyStore.formLoading}
-      surveyStatus={surveyStore.data.status}
+      isSubmiting={store.formLoading}
+      surveyStatus={store.data.status}
       sendSurveyResults={(answers) => {
-        surveyStore.sendUserAnswer(answers);
+        store.sendUserAnswer(answers);
       }}
       setNextStatus={(status) => {
-        surveyStore.setNextSurveyStatus(status);
+        store.setNextSurveyStatus(status);
       }}
     />
   );
@@ -81,9 +82,9 @@ const Survey = (): JSX.Element => {
         <Tabs
           onChange={(index) => {
             if (index === 1) {
-              surveyStore.fetchChartResults('user');
+              store.fetchChartResults('user');
             } else if (index === 2) {
-              surveyStore.fetchChartResults('chief');
+              store.fetchChartResults('chief');
             }
           }}
         >
@@ -95,18 +96,10 @@ const Survey = (): JSX.Element => {
           <TabPanels>
             <TabPanel>{Form}</TabPanel>
             <TabPanel>
-              {isChartLoading ? (
-                <Loader containerHeight="50vh" text="данных" />
-              ) : (
-                <BarChart chart={surveyStore.chartData} />
-              )}
+              <BarChart store={store} />
             </TabPanel>
             <TabPanel>
-              {isChartLoading ? (
-                <Loader containerHeight="50vh" text="данных" />
-              ) : (
-                <BarChart chart={surveyStore.chartData} />
-              )}
+              <BarChart store={store} />
             </TabPanel>
           </TabPanels>
         </Tabs>
