@@ -14,6 +14,10 @@ const server = express();
 server.use(json());
 server.use(cookieParser());
 
+// TODO highlight survey header in front
+// TODO add readmi for project how to test and how to work
+// TODO bug in api we send isUserVoted true for admin
+
 routers.forEach(({ prefix, router, isAuth = true }) => {
   const completedPrefix = `/api/${prefix}`;
 

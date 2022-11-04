@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Text } from '@chakra-ui/react';
-import { AiOutlineLock } from 'react-icons/ai';
+import { GoBook } from 'react-icons/go';
 import { GiSightDisabled } from 'react-icons/gi';
 
 import { COLORS } from 'src/styles/theme';
@@ -16,7 +16,7 @@ interface Props {
 
 const SurveyCard = ({ title, isActive }: Props): JSX.Element => {
   const iconColor = COLORS[isActive ? 'primary' : 'gray'];
-  const ComponentIcon = isActive ? AiOutlineLock : GiSightDisabled;
+  const ComponentIcon = isActive ? GoBook : GiSightDisabled;
 
   const text = isActive ? firstLetterToUpperCase(title) : 'Голосование временно недоступно';
 

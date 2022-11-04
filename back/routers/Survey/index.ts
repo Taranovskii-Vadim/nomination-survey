@@ -92,6 +92,7 @@ router
       const survey: Survey<Question> = { ...surveyDB, questions };
 
       if (fileData) {
+        // TODO maybe here is error
         isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
       }
 
