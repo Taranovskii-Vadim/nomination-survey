@@ -1,7 +1,9 @@
 import { User } from 'src/store/user/types';
+
+import { GET_PROFILE } from './constants';
 import { Method, ResponseDTO, Route } from './types';
 
-interface ResultDTO {
+export interface ResultDTO {
   fullname: string;
   role: User['role'];
 }
@@ -9,7 +11,7 @@ interface ResultDTO {
 class GetProfile implements Route {
   method: Method = 'GET';
 
-  getUrl = (): string => '/profile';
+  getUrl = (): string => GET_PROFILE;
 
   getData = ({ result }: ResponseDTO<ResultDTO>): User => result;
 }

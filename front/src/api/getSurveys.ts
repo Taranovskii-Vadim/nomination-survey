@@ -1,8 +1,9 @@
 import { CommonSurveyFields, SurveyStatus } from 'src/store/types';
 
 import { Route, ResponseDTO, Method } from './types';
+import { GET_SURVEYS } from './constants';
 
-interface ResultDTO {
+export interface ResultDTO {
   id: number;
   title: string;
   status: SurveyStatus;
@@ -11,7 +12,7 @@ interface ResultDTO {
 class GetSurveys implements Route {
   method: Method = 'GET';
 
-  getUrl = (): string => '/surveys';
+  getUrl = (): string => GET_SURVEYS;
 
   getData = ({ result }: ResponseDTO<ResultDTO[]>): CommonSurveyFields[] => result;
 }

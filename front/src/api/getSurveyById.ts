@@ -2,8 +2,9 @@ import { SurveyStatus } from 'src/store/types';
 import { SurveyResponse } from 'src/store/survey/types';
 
 import { Route, Method, ResponseDTO } from './types';
+import { GET_SURVEY_BY_ID } from './constants';
 
-interface ResultDTO {
+export interface ResultDTO {
   isUserVoted: boolean;
   survey: {
     id: number;
@@ -17,7 +18,7 @@ interface ResultDTO {
 class GetSurveyById implements Route {
   method: Method = 'GET';
 
-  getUrl = (id: string): string => `/surveys/${id}`;
+  getUrl = (id: number): string => `${GET_SURVEY_BY_ID}/${id}`;
 
   getData = ({ result }: ResponseDTO<ResultDTO>): SurveyResponse => {
     const { isUserVoted, survey: data } = result;
