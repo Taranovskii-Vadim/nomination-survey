@@ -20,7 +20,7 @@ class SurveyStore {
 
   chartData: ChartData = {};
 
-  isSurveyLoading = true;
+  isSurveyLoading = false;
 
   isChartLoading = false;
 
@@ -36,6 +36,7 @@ class SurveyStore {
 
   fetchSurveyById = async (id: string): Promise<void> => {
     try {
+      this.isSurveyLoading = true;
       const { isUserVoted, data } = await api(getSurveyById, undefined, id);
 
       runInAction(() => {

@@ -12,7 +12,6 @@ import { firstLetterToUpperCase } from 'src/utils';
 
 import Icon from 'src/components/Icon';
 import Loader from 'src/components/ui/Loader';
-import Title from 'src/components/ui/Title';
 
 import { isHaveAccess } from '../helpers';
 
@@ -30,7 +29,7 @@ const Survey = (): JSX.Element => {
 
   useFetchData(() => store.fetchSurveyById(surveyId));
 
-  if (store.isSurveyLoading) {
+  if (store.isSurveyLoading || !store.data) {
     return <Loader text="опроса" />;
   }
 
@@ -72,7 +71,7 @@ const Survey = (): JSX.Element => {
       <Flex alignItems="start" mb="35">
         <Icon size="large" as={GoBook} color={COLORS.primary} />
         <Box ml="15" lineHeight="1" maxW="95%">
-          <Title>{firstLetterToUpperCase(data.title)}</Title>
+          <Text fontSize="3xl">{firstLetterToUpperCase(data.title)}</Text>
           <Text mt="2" lineHeight="21px">
             {data.description}
           </Text>
