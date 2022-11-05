@@ -7,10 +7,6 @@ import ProtectedPages from './pages';
 import Login from './components/Login';
 import ThemeSwitcher from './components/ThemeSwitcher';
 
-// TODO drop for main window (hard)
-
-// TODO mobile version (medium)
-
 const App = (): JSX.Element => (
   <>
     <ThemeSwitcher />

@@ -22,8 +22,6 @@ axiosInstance.interceptors.response.use(
       store.resetLoginForm();
     }
 
-    // TODO handle all errors from api here
-
     return error;
   },
 );

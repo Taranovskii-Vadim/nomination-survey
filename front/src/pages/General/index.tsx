@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { NavLink } from 'react-router-dom';
 import { SimpleGrid, Container } from '@chakra-ui/react';
 
-import { setUrlFor } from 'src/routes';
+import { setUrlForSurvey } from 'src/routes';
 import userStore from 'src/store/user';
 import SurveysStore from 'src/store/surveys';
 import { useFetchData } from 'src/utils/hooks';
@@ -29,7 +29,7 @@ const General = (): JSX.Element => {
           const isActive = isHaveAccess(userStore.data.role, status);
           // TODO think how to exclude link from dom
           return (
-            <NavLink key={id} to={setUrlFor('surveys', id)}>
+            <NavLink key={id} to={setUrlForSurvey(id)}>
               <SurveyCard title={title} isActive={isActive} />
             </NavLink>
           );

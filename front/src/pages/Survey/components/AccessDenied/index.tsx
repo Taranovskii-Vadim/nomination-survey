@@ -3,7 +3,7 @@ import { Text } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import { AiOutlineLock } from 'react-icons/ai';
 
-import { setUrlFor } from 'src/routes';
+import { setUrlForSurveys } from 'src/routes';
 
 import Icon from 'src/components/Icon';
 import Button from 'src/components/ui/Button';
@@ -15,7 +15,7 @@ const AccessDenied = (): JSX.Element => (
     <Text mt="4" mb="4">
       К сожалению на данный момент вы не можете принять участие в опросе
     </Text>
-    <NavLink to={setUrlFor('surveys')}>
+    <NavLink to={setUrlForSurveys()}>
       <Button label="На главную" />
     </NavLink>
   </FullPageContainer>

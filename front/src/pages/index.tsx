@@ -1,15 +1,12 @@
-import React, { lazy, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Routes, Route } from 'react-router-dom';
 
-import { getUrlFor } from '../routes';
+import { getRouteData } from 'src/routes';
 import userStore from '../store/user';
 import { useFetchData } from 'src/utils/hooks';
 
 import Loader from '../components/ui/Loader';
-
-const Survey = lazy(() => import('./Survey'));
-const General = lazy(() => import('./General'));
 
 const ProtectedPages = (): JSX.Element => {
   useFetchData(userStore.getProfileData);
@@ -21,8 +18,9 @@ const ProtectedPages = (): JSX.Element => {
   return (
     <Suspense fallback={<Loader text="страницы" />}>
       <Routes>
-        <Route path={getUrlFor('surveys')} element={<General />} />
-        <Route path={getUrlFor('surveys', 'surveyId')} element={<Survey />} />
+        {getRouteData().map(({ id, ...props }) => (
+          <Route key={id} {...props} />
+        ))}
       </Routes>
     </Suspense>
   );

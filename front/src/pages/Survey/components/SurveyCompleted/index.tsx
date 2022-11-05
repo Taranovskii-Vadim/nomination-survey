@@ -3,7 +3,7 @@ import { Text } from '@chakra-ui/react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineDone } from 'react-icons/md';
 
-import { setUrlFor } from 'src/routes';
+import { setUrlForSurveys } from 'src/routes';
 
 import Icon from 'src/components/Icon';
 import Button from 'src/components/ui/Button';
@@ -15,7 +15,7 @@ const SurveyCompleted = (): JSX.Element => (
     <Text mt="4" mb="4">
       Спасибо за прохождение опроса
     </Text>
-    <NavLink to={setUrlFor('surveys')}>
+    <NavLink to={setUrlForSurveys()}>
       <Button label="На главную" />
     </NavLink>
   </FullPageContainer>

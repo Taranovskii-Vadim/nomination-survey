@@ -28,7 +28,6 @@ const getCommonConfig = (mode) => {
     output: {
       filename: isDevelopment ? '[name].js' : '[name].[hash].js',
       path: path.resolve(ROOT, 'build'),
-      // TODO can include chunk names here
       publicPath: PREFIX,
     },
     resolve: {

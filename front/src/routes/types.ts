@@ -1,3 +1,12 @@
-import { NAVIGATION_ITEMS } from './constants';
+enum RouteKeys {
+  surveys = 'surveys',
+  survey = 'survey',
+}
 
-export type TargetPage = keyof typeof NAVIGATION_ITEMS;
+export type RouteData = {
+  id: RouteKeys;
+  path: string;
+  element: JSX.Element;
+};
+
+export type RouteItems = Record<RouteKeys, Omit<RouteData, 'id'>>;
