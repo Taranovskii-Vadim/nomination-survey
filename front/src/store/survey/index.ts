@@ -11,8 +11,6 @@ import { UserRole } from '../user/types';
 
 import { ChartData, FormLoading, Survey, UserAnswer } from './types';
 
-// TODO hash surveys
-
 class SurveyStore {
   surveyCompleted = false;
 

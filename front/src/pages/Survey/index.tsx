@@ -23,11 +23,11 @@ import SurveyCompleted from './components/SurveyCompleted';
 const store = new SurveyStore();
 
 const Survey = (): JSX.Element => {
-  const { surveyId } = useParams() as { surveyId: string };
+  const { id } = useParams() as { id: string };
 
   const { data } = store;
 
-  useFetchData(() => store.fetchSurveyById(surveyId));
+  useFetchData(() => store.fetchSurveyById(id));
 
   if (store.isSurveyLoading || !store.data) {
     return <Loader text="опроса" />;

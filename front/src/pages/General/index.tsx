@@ -27,12 +27,16 @@ const General = (): JSX.Element => {
       <SimpleGrid columns={2} spacing={10} mt="10">
         {store.data.map(({ id, title, status }) => {
           const isActive = isHaveAccess(userStore.data.role, status);
-          // TODO think how to exclude link from dom
-          return (
-            <NavLink key={id} to={setUrlForSurvey(id)}>
-              <SurveyCard title={title} isActive={isActive} />
-            </NavLink>
-          );
+
+          if (isActive) {
+            return (
+              <NavLink key={id} to={setUrlForSurvey(id)}>
+                <SurveyCard title={title} isActive={isActive} />
+              </NavLink>
+            );
+          }
+
+          return <SurveyCard key={id} title={title} isActive={isActive} />;
         })}
       </SimpleGrid>
     </Container>
