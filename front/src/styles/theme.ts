@@ -8,7 +8,7 @@ export const COLORS = {
   gray: 'gray.400',
 };
 
-export const theme = extendTheme({
+export const template = {
   components: {
     Button: {
       variants: {
@@ -39,4 +39,6 @@ export const theme = extendTheme({
     heading: 'Open Sans',
     body: 'Open Sans',
   },
-});
+};
+
+export const theme = extendTheme(template);
