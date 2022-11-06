@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GoBook } from 'react-icons/go';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
@@ -7,7 +7,6 @@ import { Box, Container, Flex, Text, Tabs, TabList, TabPanels, Tab, TabPanel } f
 import userStore from 'src/store/user';
 import { COLORS } from 'src/styles/theme';
 import SurveyStore from 'src/store/survey';
-import { useFetchData } from 'src/utils/hooks';
 import { firstLetterToUpperCase } from 'src/utils';
 
 import Icon from 'src/components/Icon';
@@ -27,7 +26,9 @@ const Survey = (): JSX.Element => {
 
   const { data } = store;
 
-  useFetchData(() => store.fetchSurveyById(+id));
+  useEffect(() => {
+    store.fetchSurveyById(+id);
+  }, []);
 
   if (store.isSurveyLoading || !store.data) {
     return <Loader text="опроса" />;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import { NavLink } from 'react-router-dom';
 import { SimpleGrid, Container } from '@chakra-ui/react';
@@ -6,7 +6,6 @@ import { SimpleGrid, Container } from '@chakra-ui/react';
 import { setUrlForSurvey } from 'src/routes';
 import userStore from 'src/store/user';
 import SurveysStore from 'src/store/surveys';
-import { useFetchData } from 'src/utils/hooks';
 
 import Loader from 'src/components/ui/Loader';
 import SurveyCard from './components/SurveyCard';
@@ -16,7 +15,9 @@ import { isHaveAccess } from '../helpers';
 const store = new SurveysStore();
 
 const General = (): JSX.Element => {
-  useFetchData(store.fetchSurveys);
+  useEffect(() => {
+    store.fetchSurveys();
+  }, []);
 
   if (store.loading) {
     return <Loader text="опросов" />;
