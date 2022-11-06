@@ -21,10 +21,11 @@ const ThemeSwitcher = (): JSX.Element => {
       height="60px"
       display="flex"
       justifyContent="center"
+      data-testid="test"
       alignItems="center"
       borderRadius="50%"
       backgroundColor={COLORS.primary}
-      onClick={() => toggleColorMode()}
+      onClick={toggleColorMode}
     >
       <Icon size={8} as={SwitcherIcon} color={COLORS.white} />
     </Box>

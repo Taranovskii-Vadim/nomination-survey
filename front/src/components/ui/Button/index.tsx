@@ -21,8 +21,6 @@ export const areEqual = (prev: Props, next: Props): boolean => {
   return true;
 };
 
-const Button = ({ label, ...props }: Props): JSX.Element => {
-  return <ChakraButton {...props}>{label}</ChakraButton>;
-};
+const Button = ({ label, ...props }: Props): JSX.Element => <ChakraButton {...props}>{label}</ChakraButton>;
 
 export default memo(Button, areEqual);
