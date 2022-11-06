@@ -27,7 +27,7 @@ const Survey = (): JSX.Element => {
 
   const { data } = store;
 
-  useFetchData(() => store.fetchSurveyById(id));
+  useFetchData(() => store.fetchSurveyById(+id));
 
   if (store.isSurveyLoading || !store.data) {
     return <Loader text="опроса" />;

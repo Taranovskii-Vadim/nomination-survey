@@ -1,4 +1,4 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { makeObservable, observable, runInAction } from 'mobx';
 
 import { api } from '../../api';
 import getSurveys from '../../api/getSurveys';
@@ -13,14 +13,8 @@ class SurveysStore {
   constructor() {
     makeObservable(this, {
       loading: observable,
-
-      setLoading: action,
     });
   }
-
-  setLoading = (value: boolean): void => {
-    this.loading = value;
-  };
 
   fetchSurveys = async (): Promise<void> => {
     try {
@@ -30,7 +24,7 @@ class SurveysStore {
         this.data = result;
       });
     } finally {
-      this.setLoading(false);
+      this.loading = false;
     }
   };
 }
