@@ -9,7 +9,7 @@ import { SignInFormValues } from 'src/store/user/types';
 
 const Login = (): JSX.Element => {
   const { control, formState, register, handleSubmit } = useForm<SignInFormValues>({
-    defaultValues: { login: '' },
+    defaultValues: { login: 'asd' },
   });
 
   useEffect(() => {
