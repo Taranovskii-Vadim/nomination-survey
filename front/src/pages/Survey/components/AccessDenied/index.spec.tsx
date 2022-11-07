@@ -9,7 +9,7 @@ const Component = (
     <AccessDenied />
   </Router>
 );
-// TODO maybe this test useless if we can test accessDineid in survey component
+
 describe('AccessDenied', () => {
   test('render component', () => {
     const { getByText } = render(Component);
