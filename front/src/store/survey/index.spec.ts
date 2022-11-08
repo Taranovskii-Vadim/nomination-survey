@@ -4,12 +4,11 @@ import { SurveyStatus } from '../types';
 const store = new SurveyStore();
 
 describe('survey store', () => {
-  // test('fetchSurveyById method', async () => {
-  //   await store.fetchSurveyById(1);
+  test('fetchSurveyById method', async () => {
+    await store.fetchSurveyById(1);
 
-  //   expect(store.data).toBeDefined();
-  //   expect(store.isSurveyLoading).toBe(false);
-  // });
+    expect(store.data).toBe(undefined);
+  });
 
   test('sendUserAnswer method', async () => {
     store.data = { id: 1, ...store.data };
