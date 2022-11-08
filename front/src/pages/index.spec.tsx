@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 
 import Pages from '.';
 import { isHaveAccess } from './helpers';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 describe('helpers', () => {
   test('isHaveAccess function for admin', () => {
@@ -32,7 +33,11 @@ describe('helpers', () => {
 
 describe('Pages', () => {
   test('render', () => {
-    const { container } = render(<Pages />);
+    const { container } = render(
+      <Router>
+        <Pages />
+      </Router>,
+    );
 
     expect(container).toBeInTheDocument();
   });

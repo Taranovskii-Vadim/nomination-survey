@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
 
+// TODO think how to mock axios correctly
 jest.mock('axios', () => ({
   create: () => ({
     request: () => {

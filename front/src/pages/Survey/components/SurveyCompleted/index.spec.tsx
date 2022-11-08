@@ -1,18 +1,14 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import user from 'src/store/user';
+import SurveyCompleted from '.';
 
-import General from '.';
-
-describe('General page', () => {
+describe('SurveyCompleted', () => {
   test('render', () => {
-    user.data = { role: 'user', ...user.data };
-
     const { container } = render(
       <Router>
-        <General />
+        <SurveyCompleted />
       </Router>,
     );
 

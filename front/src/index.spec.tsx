@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { render } from '@testing-library/react';
 
 import App from './App';
@@ -14,7 +15,11 @@ describe('App', () => {
 
   test('render without login form', () => {
     user.isLoginForm = false;
-    const { container } = render(<App />);
+    const { container } = render(
+      <Router>
+        <App />
+      </Router>,
+    );
 
     expect(container).toBeInTheDocument();
   });
