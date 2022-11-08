@@ -14,7 +14,7 @@ interface Props {
   title: CommonSurveyFields['title'];
 }
 
-const SurveyCard = ({ title, isActive }: Props): JSX.Element => {
+const Card = ({ title, isActive }: Props): JSX.Element => {
   const iconColor = COLORS[isActive ? 'primary' : 'gray'];
   const ComponentIcon = isActive ? GoBook : GiSightDisabled;
 
@@ -41,4 +41,4 @@ const SurveyCard = ({ title, isActive }: Props): JSX.Element => {
   );
 };
 
-export default SurveyCard;
+export default Card;

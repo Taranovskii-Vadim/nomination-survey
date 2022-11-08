@@ -3,7 +3,7 @@ import React, { lazy } from 'react';
 import { RouteData, RouteItems } from './types';
 
 const Survey = lazy(() => import('../pages/Survey'));
-const Surveys = lazy(() => import('../pages/General'));
+const Surveys = lazy(() => import('../pages/Surveys'));
 
 const ROOT_PAGE = process.env.PREFIX || '/';
 
