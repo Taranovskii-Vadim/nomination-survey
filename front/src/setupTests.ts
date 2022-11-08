@@ -5,7 +5,7 @@ jest.mock('axios', () => ({
     request: () => Promise.resolve({ data: { result: [null] } }),
     interceptors: {
       response: {
-        use: jest.fn,
+        use: jest.fn(() => {}),
       },
     },
   }),

@@ -26,6 +26,7 @@ class UserStore {
   };
 
   getProfileData = async (): Promise<void> => {
+    // TODO try to use just axios for easy unit tests
     const result: User = await api(getProfile);
 
     runInAction(() => {

@@ -53,15 +53,13 @@ describe('Content', () => {
     store.surveyCompleted = false;
     user.data = { role: 'admin', fullname };
 
-    const { getByRole, debug, container } = render(
+    const { getByRole } = render(
       <BrowserRouter>
         <Content store={store} />
       </BrowserRouter>,
     );
 
     const button = getByRole('button');
-
-    debug(container);
 
     fireEvent.click(button);
 

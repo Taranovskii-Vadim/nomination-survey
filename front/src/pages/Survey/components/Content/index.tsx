@@ -25,6 +25,7 @@ interface Props {
 }
 
 const Content = ({ store }: Props): JSX.Element => {
+  // TODO is it correct observe isLoading and not data???
   if (store.isSurveyLoading || !store.data) {
     return <Loader text="опроса" />;
   }

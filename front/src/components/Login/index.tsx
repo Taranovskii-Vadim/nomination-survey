@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
-import { Input, Button, Box, FormControl, FormErrorMessage } from '@chakra-ui/react';
+import { Input, Button, Box } from '@chakra-ui/react';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 
 import store from 'src/store/user';
@@ -8,17 +8,9 @@ import store from 'src/store/user';
 import { SignInFormValues } from 'src/store/user/types';
 
 const Login = (): JSX.Element => {
-  const { control, formState, register, handleSubmit } = useForm<SignInFormValues>({
+  const { control, handleSubmit } = useForm<SignInFormValues>({
     defaultValues: { login: '' },
   });
-
-  useEffect(() => {
-    register('login', {
-      required: { value: true, message: 'Обязательное поле' },
-    });
-  }, [register]);
-
-  const { errors } = formState;
 
   const onSubmit: SubmitHandler<SignInFormValues> = (data) => store.signIn(data);
 
@@ -36,12 +28,7 @@ const Login = (): JSX.Element => {
       <Controller
         name="login"
         control={control}
-        render={({ field }) => (
-          <FormControl isInvalid={!!errors.login}>
-            <Input placeholder="Введите логин" {...field} />
-            {errors.login ? <FormErrorMessage>{errors.login.message}</FormErrorMessage> : null}
-          </FormControl>
-        )}
+        render={({ field }) => <Input placeholder="Введите логин" {...field} />}
       />
       <Button mt={4} isFullWidth type="submit" isLoading={store.isSubmit}>
         Отправить
