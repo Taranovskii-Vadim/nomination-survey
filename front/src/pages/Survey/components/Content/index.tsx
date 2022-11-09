@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import { GoBook } from 'react-icons/go';
 import { Box, Flex, Text, Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 
-// TODO check components split one more time
 import SurveyStore from 'src/store/survey';
 import user from 'src/store/user';
 import { COLORS } from 'src/styles/theme';
@@ -25,7 +24,6 @@ interface Props {
 }
 
 const Content = ({ store }: Props): JSX.Element => {
-  // TODO is it correct observe isLoading and not data???
   if (store.isSurveyLoading || !store.data) {
     return <Loader text="опроса" />;
   }
