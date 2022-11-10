@@ -7,7 +7,6 @@ import user from 'src/store/user';
 
 import Content from '.';
 
-// TODO refactor unit tests
 const store = new SurveyStore();
 
 describe('Content', () => {
