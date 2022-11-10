@@ -1,30 +1,21 @@
-import { Response, Router } from "express";
+import { Response, Router } from 'express';
 
-import FileModel from "../../models/FileModel";
-import { Request, RequestWithId } from "../../types";
+import FileModel from '../../models/FileModel';
+import { Request, RequestWithId } from '../../types';
 
-import { formatData, formatError } from "../helpers";
+import { formatData, formatError } from '../helpers';
 
-import {
-  Survey,
-  FileData,
-  Question,
-  GetResultsRequest,
-  SaveResultsRequest,
-  ChangeStatusRequest,
-} from "./types";
+import { Survey, FileData, Question, GetResultsRequest, SaveResultsRequest, ChangeStatusRequest } from './types';
 
 const router = Router();
 
 const getResultFileName = (id: number): string => `survey${id}`;
 
-router.get("/", async (r: Request, res: Response) => {
+router.get('/', async (r: Request, res: Response) => {
   try {
-    const surveys = await FileModel.getData<Survey[]>("surveys");
+    const surveys = await FileModel.getData<Survey[]>('surveys');
 
-    const result = formatData(
-      surveys.map(({ id, title, status }) => ({ id, title, status }))
-    );
+    const result = formatData(surveys.map(({ id, title, status }) => ({ id, title, status })));
 
     res.json(result);
   } catch (e) {
@@ -32,35 +23,32 @@ router.get("/", async (r: Request, res: Response) => {
   }
 });
 
-router.get(
-  "/results/:role/:id",
-  async ({ params }: GetResultsRequest, res: Response) => {
-    try {
-      const apiResult = {};
-      const { role } = params;
-      const id = parseInt(params.id);
+router.get('/results/:role/:id', async ({ params }: GetResultsRequest, res: Response) => {
+  try {
+    const apiResult = {};
+    const { role } = params;
+    const id = parseInt(params.id);
 
-      const fileData = await FileModel.getData<FileData>(getResultFileName(id));
+    const fileData = await FileModel.getData<FileData>(getResultFileName(id));
 
-      if (fileData) {
-        for (let user of fileData.users) {
-          if (role === user.role) {
-            for (let { id, answer } of user.questions) {
-              apiResult[id] = (apiResult[id] || 0) + answer;
-            }
+    if (fileData) {
+      for (let user of fileData.users) {
+        if (role === user.role) {
+          for (let { id, answer } of user.questions) {
+            apiResult[id] = (apiResult[id] || 0) + answer;
           }
         }
       }
-
-      res.json(formatData(apiResult));
-    } catch (e) {
-      res.status(500).json(formatError(e.message));
     }
+
+    res.json(formatData(apiResult));
+  } catch (e) {
+    res.status(500).json(formatError(e.message));
   }
-);
+});
 
 router
-  .route("/:id")
+  .route('/:id')
   .get(async ({ params, user }: RequestWithId, res: Response) => {
     try {
       const { id } = user;
@@ -68,26 +56,22 @@ router
       const surveyId = parseInt(params.id);
 
       if (!surveyId) {
-        res.status(400).json(formatError("Inncorrect id type"));
+        res.status(400).json(formatError('Inncorrect id type'));
       }
 
-      const fileData = await FileModel.getData<FileData>(
-        getResultFileName(surveyId)
-      );
+      const fileData = await FileModel.getData<FileData>(getResultFileName(surveyId));
 
-      const surveysDB = await FileModel.getData<Survey[]>("surveys");
+      const surveysDB = await FileModel.getData<Survey[]>('surveys');
 
       const surveyDB = surveysDB.find((item) => item.id === surveyId);
 
       if (!surveyDB) {
-        res.status(404).json(formatError("Survey not found"));
+        res.status(404).json(formatError('Survey not found'));
       }
 
-      const questionsDB = await FileModel.getData<Question[]>("questions");
+      const questionsDB = await FileModel.getData<Question[]>('questions');
 
-      const questions = surveyDB.questions
-        .map((id) => questionsDB.find((item) => item.id === id))
-        .filter(Boolean);
+      const questions = surveyDB.questions.map((id) => questionsDB.find((item) => item.id === id)).filter(Boolean);
 
       const survey: Survey<Question> = { ...surveyDB, questions };
 
@@ -103,18 +87,16 @@ router
   .post(async ({ params, body, user }: SaveResultsRequest, res: Response) => {
     try {
       const { login, id, role } = user;
-      let users: FileData["users"] = [];
+      let users: FileData['users'] = [];
       const surveyId = parseInt(params.id);
 
-      const questions = await FileModel.getData<Question[]>("questions");
-      const surveys = await FileModel.getData<Survey[]>("surveys");
+      const questions = await FileModel.getData<Question[]>('questions');
+      const surveys = await FileModel.getData<Survey[]>('surveys');
 
       const survey = surveys.find((item) => item.id === surveyId);
 
       const questionPromiseResult = await Promise.all<Question>(
-        Object.keys(body).map((item) =>
-          questions.find((question) => question.id === parseInt(item))
-        )
+        Object.keys(body).map((item) => questions.find((question) => question.id === parseInt(item))),
       );
 
       const questionFilePayload = questionPromiseResult.map(({ id, text }) => ({
@@ -123,9 +105,7 @@ router
         answer: body[id],
       }));
 
-      const fileData = await FileModel.getData<FileData>(
-        getResultFileName(surveyId)
-      );
+      const fileData = await FileModel.getData<FileData>(getResultFileName(surveyId));
 
       if (fileData) {
         users = [...fileData.users];
@@ -146,7 +126,7 @@ router
       const { status } = body;
       const surveyId = parseInt(params.id);
 
-      const surveys = await FileModel.getData<Survey[]>("surveys");
+      const surveys = await FileModel.getData<Survey[]>('surveys');
 
       const updated = surveys.map((item) => {
         if (item.id === surveyId) {
@@ -155,7 +135,7 @@ router
         return item;
       });
 
-      await FileModel.setData("surveys", updated);
+      await FileModel.setData('surveys', updated);
 
       res.json(formatData());
     } catch (e) {

@@ -1,15 +1,15 @@
-import { config } from "dotenv";
-import express, { json } from "express";
-import cookieParser from "cookie-parser";
+import { config } from 'dotenv';
+import express, { json } from 'express';
+import cookieParser from 'cookie-parser';
 
-import { routers } from "./routers";
-import { authMiddleWare } from "./middlewares";
+import { routers } from './routers';
+import { authMiddleWare } from './middlewares';
 
 config();
-// TODO write unit tests for back part
+
 const PORT = process.env.PORT || 3001;
 
-const server = express();
+export const server = express();
 
 server.use(json());
 server.use(cookieParser());

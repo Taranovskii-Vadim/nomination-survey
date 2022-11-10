@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import authRouter from "./auth";
-import surveyRouter from "./survey";
-import profileRouter from "./profile";
+import authRouter from './auth';
+import surveyRouter from './survey';
+import profileRouter from './profile';
 
-type Prefix = "surveys" | "questions" | "auth" | "profile";
+type Prefix = 'surveys' | 'questions' | 'auth' | 'profile';
 
 interface AppRouter {
   prefix: Prefix;
@@ -13,7 +13,7 @@ interface AppRouter {
 }
 
 export const routers: AppRouter[] = [
-  { prefix: "surveys", router: surveyRouter },
-  { prefix: "profile", router: profileRouter },
-  { prefix: "auth", isAuth: false, router: authRouter },
+  { prefix: 'surveys', router: surveyRouter },
+  { prefix: 'profile', router: profileRouter },
+  { prefix: 'auth', isAuth: false, router: authRouter },
 ];
