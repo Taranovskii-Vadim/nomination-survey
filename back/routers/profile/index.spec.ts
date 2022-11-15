@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { server } from '../..';
+import { server, connection } from '../..';
 import { get } from '../../utils';
 
 let token;
@@ -23,5 +23,9 @@ describe('profile router', () => {
     const response = await request(server).get(BASE);
 
     expect(response.statusCode).toBe(401);
+  });
+
+  afterAll(() => {
+    connection.close();
   });
 });

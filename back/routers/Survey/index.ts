@@ -17,9 +17,9 @@ router.get('/', async (r: Request, res: Response) => {
 
     const result = formatData(surveys.map(({ id, title, status }) => ({ id, title, status })));
 
-    res.json(result);
+    return res.json(result);
   } catch (e) {
-    res.status(500).json(formatError(e.message));
+    return res.status(500).json(formatError(e.message));
   }
 });
 
@@ -41,9 +41,9 @@ router.get('/results/:role/:id', async ({ params }: GetResultsRequest, res: Resp
       }
     }
 
-    res.json(formatData(apiResult));
+    return res.json(formatData(apiResult));
   } catch (e) {
-    res.status(500).json(formatError(e.message));
+    return res.status(500).json(formatError(e.message));
   }
 });
 
@@ -56,7 +56,7 @@ router
       const surveyId = parseInt(params.id);
 
       if (!surveyId) {
-        res.status(400).json(formatError('Inncorrect id type'));
+        return res.status(400).json(formatError('Inncorrect id type'));
       }
 
       const fileData = await FileModel.getData<FileData>(getResultFileName(surveyId));
@@ -66,7 +66,7 @@ router
       const surveyDB = surveysDB.find((item) => item.id === surveyId);
 
       if (!surveyDB) {
-        res.status(404).json(formatError('Survey not found'));
+        return res.status(404).json(formatError('Survey not found'));
       }
 
       const questionsDB = await FileModel.getData<Question[]>('questions');
@@ -79,9 +79,9 @@ router
         isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
       }
 
-      res.json(formatData({ survey, isUserVoted }));
+      return res.json(formatData({ survey, isUserVoted }));
     } catch (e) {
-      res.status(500).json(formatError(e.message));
+      return res.status(500).json(formatError(e.message));
     }
   })
   .post(async ({ params, body, user }: SaveResultsRequest, res: Response) => {
@@ -116,9 +116,9 @@ router
         users: [...users, { id, login, role, questions: questionFilePayload }],
       });
 
-      res.json(formatData());
+      return res.json(formatData());
     } catch (e) {
-      res.status(500).json(formatError(e.message));
+      return res.status(500).json(formatError(e.message));
     }
   })
   .put(async ({ params, body }: ChangeStatusRequest, res: Response) => {
@@ -137,9 +137,9 @@ router
 
       await FileModel.setData('surveys', updated);
 
-      res.json(formatData());
+      return res.json(formatData());
     } catch (e) {
-      res.status(500).json(formatError(e.message));
+      return res.status(500).json(formatError(e.message));
     }
   });
 

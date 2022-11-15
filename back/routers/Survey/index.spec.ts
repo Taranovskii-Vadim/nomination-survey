@@ -1,6 +1,6 @@
 import request from 'supertest';
 
-import { server } from '../..';
+import { server, connection } from '../..';
 import { get, post, put } from '../../utils';
 
 import { SurveyStatus } from './types';
@@ -58,5 +58,9 @@ describe('Survey router', () => {
     const response = await put<SurveyStatus>(token, `${BASE}/1`, 'chiefVote');
 
     expect(response.statusCode).toBe(200);
+  });
+
+  afterAll(() => {
+    connection.close();
   });
 });

@@ -28,6 +28,4 @@ routers.forEach(({ prefix, router, isAuth = true }) => {
 
 // TODO i have used mongoDB, change to PostgreSQL in future
 
-(() => {
-  server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
-})();
+export const connection = server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

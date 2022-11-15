@@ -26,9 +26,9 @@ router.post('/:login', async ({ params }: Request<{ login: string }>, res: Respo
 
     const token = jwt.sign(result, process.env.JWT_KEY);
 
-    res.cookie('token', token, { maxAge }).json(formatData());
+    return res.cookie('token', token, { maxAge }).json(formatData());
   } catch (e) {
-    res.status(500).json(formatError(e.message));
+    return res.status(500).json(formatError(e.message));
   }
 });
 
