@@ -1,6 +1,7 @@
 import request from 'supertest';
 
 import { server } from '../..';
+import { get, post, put } from '../../utils';
 
 import { SurveyStatus } from './types';
 
@@ -8,26 +9,6 @@ let token;
 const BASE = '/api/surveys';
 
 // TODO check each test and add normal expectations
-// TODO maybe can create common utils for unit tests
-const get = async (postfix?: string) => {
-  return await request(server)
-    .get(`${BASE}${postfix || ''}`)
-    .set('Cookie', [`token=${token}`]);
-};
-
-const post = async (postfix?: string, payload?: any) => {
-  return await request(server)
-    .post(`${BASE}${postfix || ''}`)
-    .send(payload)
-    .set('Cookie', [`token=${token}`]);
-};
-
-const put = async (postfix?: string, payload?: any) => {
-  return await request(server)
-    .put(`${BASE}${postfix || ''}`)
-    .send(payload)
-    .set('Cookie', [`token=${token}`]);
-};
 
 describe('Survey router', () => {
   beforeAll(async () => {
@@ -37,46 +18,44 @@ describe('Survey router', () => {
   });
 
   test('get all surveys', async () => {
-    const response = await get();
+    const response = await get(token, BASE);
 
     expect(response.statusCode).toBe(200);
   });
 
   test('get survey by correct id', async () => {
-    const response = await get('/1');
+    const response = await get(token, `${BASE}/1`);
 
     expect(response.statusCode).toBe(200);
   });
 
   test('get survey by wrong id', async () => {
-    const response = await get('/1000');
+    const response = await get(token, `${BASE}/1000`);
 
     expect(response.statusCode).toBe(404);
   });
 
   test('get survey by string id', async () => {
-    const response = await get('/value');
+    const response = await get(token, `${BASE}/value`);
 
     expect(response.statusCode).toBe(400);
   });
 
   test('get survey results', async () => {
-    const response = await get('/results/user/0');
+    const response = await get(token, `${BASE}/results/user/0`);
 
     expect(response.statusCode).toBe(200);
   });
 
   test('post survey results', async () => {
-    const payload = { 1: 3, 2: 8, 3: 5, 4: 4, 5: 2, 6: 1 };
-    const response = await post('/1', payload);
+    const payload: Record<number, number> = { 1: 3, 2: 8, 3: 5, 4: 4, 5: 2, 6: 1 };
+    const response = await post(token, `${BASE}/1`, payload);
 
     expect(response.statusCode).toBe(200);
   });
 
   test('put survey status', async () => {
-    const payload: SurveyStatus = 'chiefVote';
-
-    const response = await put('/1', payload);
+    const response = await put<SurveyStatus>(token, `${BASE}/1`, 'chiefVote');
 
     expect(response.statusCode).toBe(200);
   });

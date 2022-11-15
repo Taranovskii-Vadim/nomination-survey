@@ -1,14 +1,10 @@
 import request from 'supertest';
 
 import { server } from '../..';
+import { get } from '../../utils';
 
 let token;
-
-const get = async () => {
-  return await request(server)
-    .get('/api/profile')
-    .set('Cookie', [`token=${token}`]);
-};
+const BASE = '/api/profile';
 
 describe('profile router', () => {
   beforeAll(async () => {
@@ -18,13 +14,13 @@ describe('profile router', () => {
   });
 
   test('get profile with token', async () => {
-    const response = await get();
+    const response = await get(token, BASE);
 
     expect(response.statusCode).toBe(200);
   });
 
   test('get profile without token', async () => {
-    const response = await request(server).get('/api/profile');
+    const response = await request(server).get(BASE);
 
     expect(response.statusCode).toBe(401);
   });
