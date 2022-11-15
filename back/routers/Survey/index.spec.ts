@@ -7,6 +7,7 @@ import { SurveyStatus } from './types';
 let token;
 const BASE = '/api/surveys';
 
+// TODO check each test and add normal expectations
 // TODO maybe can create common utils for unit tests
 const get = async (postfix?: string) => {
   return await request(server)
