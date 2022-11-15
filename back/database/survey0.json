@@ -1,0 +1,18 @@
+{
+  "title": "Data only for jest",
+  "users": [
+    {
+      "id": 3,
+      "login": "test",
+      "role": "user",
+      "questions": [
+        { "id": 1, "text": "Test", "answer": 3 },
+        { "id": 2, "text": "Test", "answer": 2 },
+        { "id": 3, "text": "Test", "answer": 4 },
+        { "id": 4, "text": "Test", "answer": 4 },
+        { "id": 5, "text": "Test", "answer": 4 },
+        { "id": 6, "text": "Test", "answer": 5 }
+      ]
+    }
+  ]
+}
