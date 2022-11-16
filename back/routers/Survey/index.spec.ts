@@ -8,8 +8,6 @@ import { SurveyStatus } from './types';
 let token;
 const BASE = '/api/surveys';
 
-// TODO check each test and add normal expectations
-
 describe('Survey router', () => {
   beforeAll(async () => {
     const auth = await request(server).post('/api/auth/admin');
@@ -21,12 +19,15 @@ describe('Survey router', () => {
     const response = await get(token, BASE);
 
     expect(response.statusCode).toBe(200);
+    expect(response.body.result.length).toBe(6);
   });
 
   test('get survey by correct id', async () => {
-    const response = await get(token, `${BASE}/1`);
+    const id = 1;
+    const response = await get(token, `${BASE}/${id}`);
 
     expect(response.statusCode).toBe(200);
+    expect(response.body.result.survey.id).toBe(id);
   });
 
   test('get survey by wrong id', async () => {
@@ -56,6 +57,8 @@ describe('Survey router', () => {
 
   test('put survey status', async () => {
     const response = await put<SurveyStatus>(token, `${BASE}/1`, 'chiefVote');
+
+    // TODO got to send new status to front
 
     expect(response.statusCode).toBe(200);
   });

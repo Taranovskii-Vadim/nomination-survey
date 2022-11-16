@@ -12,7 +12,10 @@ describe('auth router', () => {
 
   test('post login request with correct login', async () => {
     const response = await request(server).post(`${BASE}/admin`);
+    const cookie = response.headers['set-cookie'][0] as string;
+
     expect(response.statusCode).toBe(200);
+    expect(cookie.includes('token')).toBe(true);
   });
 
   afterAll(() => {
