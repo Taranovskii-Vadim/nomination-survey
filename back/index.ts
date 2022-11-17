@@ -14,8 +14,6 @@ export const server = express();
 server.use(json());
 server.use(cookieParser());
 
-// TODO add readmi for project how to test and how to work
-
 routers.forEach(({ prefix, router, isAuth = true }) => {
   const completedPrefix = `/api/${prefix}`;
 
