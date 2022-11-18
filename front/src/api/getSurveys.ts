@@ -3,7 +3,7 @@ import { CommonSurveyFields, SurveyStatus } from 'src/store/types';
 import { Route, ResponseDTO, Method } from './types';
 import { GET_SURVEYS } from './constants';
 
-export interface ResultDTO {
+interface ResultDTO {
   id: number;
   title: string;
   status: SurveyStatus;

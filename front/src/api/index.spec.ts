@@ -2,13 +2,11 @@ import postLogin from './postLogin';
 import postSurveyResults from './postSurveyResults';
 import putNextSurveyStatus from './putNextSurveyStatus';
 import getProfile, { ResultDTO as GetProfileDTO } from './getProfile';
-import getSurveys, { ResultDTO as GetSurveysDTO } from './getSurveys';
 import getSurveyById, { ResultDTO as GetSurveyByIdDTO } from './getSurveyById';
 import getSurveyChartResults, { ResultDTO as GetSurveyChartResultsDTO } from './getSurveyChartResults';
 import {
   POST_LOGIN,
   GET_PROFILE,
-  GET_SURVEYS,
   GET_SURVEY_BY_ID,
   PUT_SURVEY_STATUS,
   POST_SURVEY_RESULTS,
@@ -26,21 +24,6 @@ describe('api routes', () => {
     test('getData method', () => {
       const payload: GetProfileDTO = { fullname: 'Test', role: 'admin' };
       const result = getProfile.getData({ result: payload });
-
-      expect(result).toEqual(payload);
-    });
-  });
-
-  describe('getSurveys endpoint', () => {
-    test('getUrl method', () => {
-      const result = getSurveys.getUrl();
-
-      expect(result).toBe(GET_SURVEYS);
-    });
-
-    test('getData method', () => {
-      const payload: GetSurveysDTO[] = [{ id: 1, title: 'test', status: 'ready' }];
-      const result = getSurveys.getData({ result: payload });
 
       expect(result).toEqual(payload);
     });
