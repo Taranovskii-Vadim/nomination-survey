@@ -22,10 +22,10 @@ describe('api routes', () => {
     });
 
     test('getData method', () => {
-      const payload: GetProfileDTO = { fullname: 'Test', role: 'admin' };
-      const result = getProfile.getData({ result: payload });
+      const profile: GetProfileDTO = { fullname: 'Test', role: 'admin' };
+      const result = getProfile.getData({ profile });
 
-      expect(result).toEqual(payload);
+      expect(result).toEqual(profile);
     });
   });
 
@@ -65,10 +65,10 @@ describe('api routes', () => {
     });
 
     test('getData method', () => {
-      const payload: GetSurveyChartResultsDTO = { test: 1 };
-      const result = getSurveyChartResults.getData({ result: payload });
+      const chart: GetSurveyChartResultsDTO = { test: 1 };
+      const result = getSurveyChartResults.getData({ chart });
 
-      expect(result).toEqual(payload);
+      expect(result).toEqual(chart);
     });
   });
 
@@ -83,7 +83,7 @@ describe('api routes', () => {
     test('getData method', () => {
       const isUserVoted = true;
 
-      const data: GetSurveyByIdDTO['survey'] = {
+      const survey: GetSurveyByIdDTO['survey'] = {
         id: 1,
         title: 'string',
         questions: [{ id: 1, text: 'string' }],
@@ -91,11 +91,11 @@ describe('api routes', () => {
         status: 'ready',
       };
 
-      const payload: GetSurveyByIdDTO = { isUserVoted, survey: data };
+      const payload: GetSurveyByIdDTO = { isUserVoted, survey };
 
-      const result = getSurveyById.getData({ result: payload });
+      const result = getSurveyById.getData(payload);
 
-      expect(result).toEqual({ isUserVoted, data });
+      expect(result).toEqual({ isUserVoted, survey });
     });
   });
 });
