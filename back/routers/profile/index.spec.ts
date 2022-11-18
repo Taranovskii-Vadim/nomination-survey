@@ -17,7 +17,7 @@ describe('profile router', () => {
     const response = await get(token, BASE);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.result.role).toBe('admin');
+    expect(response.body.profile.role).toBe('admin');
   });
 
   test('get profile without token', async () => {

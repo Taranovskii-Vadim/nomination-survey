@@ -19,7 +19,7 @@ describe('Survey router', () => {
     const response = await get(token, BASE);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.result.length).toBe(6);
+    expect(response.body.surveys.length).toBe(6);
   });
 
   test('get survey by correct id', async () => {
@@ -27,7 +27,7 @@ describe('Survey router', () => {
     const response = await get(token, `${BASE}/${id}`);
 
     expect(response.statusCode).toBe(200);
-    expect(response.body.result.survey.id).toBe(id);
+    expect(response.body.survey.id).toBe(id);
   });
 
   test('get survey by wrong id', async () => {
