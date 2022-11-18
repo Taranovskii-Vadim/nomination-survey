@@ -21,6 +21,6 @@ export interface Survey extends CommonSurveyFields {
 }
 
 export interface SurveyResponse {
-  data: Survey;
+  survey: Survey;
   isUserVoted: boolean;
 }

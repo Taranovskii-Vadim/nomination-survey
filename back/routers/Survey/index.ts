@@ -15,9 +15,9 @@ router.get('/', async (r: Request, res: Response) => {
   try {
     const surveys = await FileModel.getData<Survey[]>('surveys');
 
-    const result = formatData(surveys.map(({ id, title, status }) => ({ id, title, status })));
+    const result = surveys.map(({ id, title, status }) => ({ id, title, status }));
 
-    return res.json(result);
+    return res.json(formatData('surveys', result));
   } catch (e) {
     return res.status(500).json(formatError(e.message));
   }
@@ -41,7 +41,7 @@ router.get('/results/:role/:id', async ({ params }: GetResultsRequest, res: Resp
       }
     }
 
-    return res.json(formatData(apiResult));
+    return res.json(formatData('chart', apiResult));
   } catch (e) {
     return res.status(500).json(formatError(e.message));
   }
@@ -79,7 +79,7 @@ router
         isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
       }
 
-      return res.json(formatData({ survey, isUserVoted }));
+      return res.json({ survey, isUserVoted });
     } catch (e) {
       return res.status(500).json(formatError(e.message));
     }
@@ -116,7 +116,7 @@ router
         users: [...users, { id, login, role, questions: questionFilePayload }],
       });
 
-      return res.json(formatData());
+      return res.json();
     } catch (e) {
       return res.status(500).json(formatError(e.message));
     }
@@ -137,7 +137,7 @@ router
 
       await FileModel.setData('surveys', updated);
 
-      return res.json(formatData());
+      return res.json(formatData('newStatus', status));
     } catch (e) {
       return res.status(500).json(formatError(e.message));
     }

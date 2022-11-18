@@ -14,7 +14,7 @@ class GetSurveys implements Route {
 
   getUrl = (): string => GET_SURVEYS;
 
-  getData = ({ result }: ResponseDTO<ResultDTO[]>): CommonSurveyFields[] => result;
+  getData = ({ surveys }: ResponseDTO<'surveys', ResultDTO[]>): CommonSurveyFields[] => surveys;
 }
 
 export default new GetSurveys();

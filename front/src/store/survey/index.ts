@@ -35,10 +35,10 @@ class SurveyStore {
   fetchSurveyById = async (id: number): Promise<void> => {
     try {
       this.isSurveyLoading = true;
-      const { isUserVoted, data } = await api(getSurveyById, undefined, id);
+      const { survey, isUserVoted } = await api(getSurveyById, undefined, id);
 
       runInAction(() => {
-        this.data = data;
+        this.data = survey;
         this.surveyCompleted = isUserVoted;
       });
     } finally {

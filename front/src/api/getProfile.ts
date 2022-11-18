@@ -13,7 +13,7 @@ class GetProfile implements Route {
 
   getUrl = (): string => GET_PROFILE;
 
-  getData = ({ result }: ResponseDTO<ResultDTO>): User => result;
+  getData = ({ profile }: ResponseDTO<'profile', ResultDTO>): User => profile;
 }
 
 export default new GetProfile();

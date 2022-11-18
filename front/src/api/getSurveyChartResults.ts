@@ -12,7 +12,7 @@ class GetSurveyChartResults implements Route {
 
   getUrl = (query: string): string => `${GET_SURVEY_CHART_RESULTS}/${query}`;
 
-  getData = ({ result }: ResponseDTO<ResultDTO>): ChartData => result;
+  getData = ({ chart }: ResponseDTO<'chart', ResultDTO>): ChartData => chart;
 }
 
 export default new GetSurveyChartResults();

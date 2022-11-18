@@ -4,7 +4,7 @@ import { Response, Request, Router } from 'express';
 import { User } from '../../types';
 import FileModel from '../../models/FileModel';
 
-import { formatData, formatError } from '../helpers';
+import { formatError } from '../helpers';
 
 const router = Router();
 
@@ -26,7 +26,7 @@ router.post('/:login', async ({ params }: Request<{ login: string }>, res: Respo
 
     const token = jwt.sign(result, process.env.JWT_KEY);
 
-    return res.cookie('token', token, { maxAge }).json(formatData());
+    return res.cookie('token', token, { maxAge }).json();
   } catch (e) {
     return res.status(500).json(formatError(e.message));
   }
