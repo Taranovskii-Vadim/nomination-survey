@@ -3,7 +3,7 @@ import { ChartData } from '../store/survey/types';
 import { GET_SURVEY_CHART_RESULTS } from './constants';
 import { Method, ResponseDTO, Route } from './types';
 
-export interface ResultDTO {
+interface ResultDTO {
   [key: string]: number;
 }
 

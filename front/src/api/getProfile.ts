@@ -3,7 +3,7 @@ import { User } from 'src/store/user/types';
 import { GET_PROFILE } from './constants';
 import { Method, ResponseDTO, Route } from './types';
 
-export interface ResultDTO {
+interface ResultDTO {
   fullname: string;
   role: User['role'];
 }

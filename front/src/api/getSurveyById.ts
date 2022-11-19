@@ -4,7 +4,7 @@ import { SurveyResponse } from 'src/store/survey/types';
 import { Route, Method } from './types';
 import { GET_SURVEY_BY_ID } from './constants';
 
-export interface ResultDTO {
+interface ResultDTO {
   survey: {
     id: number;
     title: string;
