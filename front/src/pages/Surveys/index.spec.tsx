@@ -18,7 +18,6 @@ describe('Surveys page', () => {
 
     expect(await findByText('Loading...')).not.toBeInTheDocument();
 
-    // TODO add normal statement
     expect(container).toBeInTheDocument();
   });
 });

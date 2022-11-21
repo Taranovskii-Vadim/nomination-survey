@@ -6,14 +6,16 @@ import user from 'src/store/user';
 
 import Survey from '.';
 
+const Component = (
+  <BrowserRouter>
+    <Survey />
+  </BrowserRouter>
+);
+
 describe('Survey', () => {
   test('access denied', async () => {
     user.data = 'user';
-    const { findByText, container } = render(
-      <BrowserRouter>
-        <Survey />
-      </BrowserRouter>,
-    );
+    const { findByText, container } = render(Component);
 
     expect(await findByText('Loading...')).not.toBeInTheDocument();
 
@@ -22,11 +24,7 @@ describe('Survey', () => {
 
   test('form submit', async () => {
     user.data = 'chief';
-    const { findByText, getAllByRole, container } = render(
-      <BrowserRouter>
-        <Survey />
-      </BrowserRouter>,
-    );
+    const { findByText, getAllByRole, container } = render(Component);
 
     expect(await findByText('Loading...')).not.toBeInTheDocument();
 
@@ -41,5 +39,19 @@ describe('Survey', () => {
     fireEvent.submit(form);
 
     expect(form).toBeInTheDocument();
+  });
+
+  test('change survey status', async () => {
+    user.data = 'admin';
+
+    const { findByText, getByText } = render(Component);
+
+    expect(await findByText('Loading...')).not.toBeInTheDocument();
+
+    const button = getByText('Завершить голосование');
+
+    fireEvent.click(button);
+
+    expect(button).toBeInTheDocument();
   });
 });
