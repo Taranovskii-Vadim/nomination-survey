@@ -6,7 +6,7 @@ import user from 'src/store/user';
 
 import Surveys from '.';
 
-user.data = { ...user.data, role: 'user' };
+user.data = 'user';
 
 describe('Surveys page', () => {
   test('render surveys', async () => {
@@ -18,7 +18,7 @@ describe('Surveys page', () => {
 
     expect(await findByText('Loading...')).not.toBeInTheDocument();
 
-    // TODO add noraml statement
+    // TODO add normal statement
     expect(container).toBeInTheDocument();
   });
 });

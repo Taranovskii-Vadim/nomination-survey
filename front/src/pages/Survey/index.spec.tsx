@@ -8,7 +8,7 @@ import Survey from '.';
 
 describe('Survey', () => {
   test('access denied', async () => {
-    user.data = { ...user.data, role: 'user' };
+    user.data = 'user';
     const { findByText, container } = render(
       <BrowserRouter>
         <Survey />
@@ -21,7 +21,7 @@ describe('Survey', () => {
   });
 
   test('form submit', async () => {
-    user.data = { ...user.data, role: 'chief' };
+    user.data = 'chief';
     const { findByText, getAllByRole, container } = render(
       <BrowserRouter>
         <Survey />

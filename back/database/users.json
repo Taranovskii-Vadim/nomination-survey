@@ -2,31 +2,26 @@
   {
     "id": 1,
     "login": "admin",
-    "fullname": "Тарановский Вадим Геннадьевич",
     "role": "admin"
   },
   {
     "id": 2,
     "login": "vadim",
-    "fullname": "Петров Вадим Александрович",
     "role": "chief"
   },
   {
     "id": 3,
     "login": "anna",
-    "fullname": "Павлова Анна Сергеевна",
     "role": "user"
   },
   {
     "id": 4,
     "login": "oleg",
-    "fullname": "Устюжин Олег Алексеевич",
     "role": "user"
   },
   {
     "id": 5,
     "login": "elena",
-    "fullname": "Аникина Елена Владимировна",
     "role": "user"
   }
 ]

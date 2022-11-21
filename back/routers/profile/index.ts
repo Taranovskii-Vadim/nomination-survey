@@ -6,10 +6,6 @@ import { formatData } from '../helpers';
 
 const router = Router();
 
-router.get('/', (req: Request, res: Response) => {
-  const { fullname, role } = req.user;
-  // TODO we dont need fullname in front
-  return res.json(formatData('profile', { fullname, role }));
-});
+router.get('/', ({ user: { role } }: Request, res: Response) => res.json(formatData('userRole', role)));
 
 export default router;

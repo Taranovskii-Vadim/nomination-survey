@@ -28,7 +28,7 @@ const Surveys = (): JSX.Element => {
     <Container as="main" maxWidth="container.md">
       <SimpleGrid columns={2} spacing={10} mt="10">
         {store.data.map(({ id, title, status }) => {
-          const isActive = isHaveAccess(user.data.role, status);
+          const isActive = isHaveAccess(user.data, status);
 
           if (isActive) {
             return (

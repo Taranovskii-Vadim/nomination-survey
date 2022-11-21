@@ -2,12 +2,12 @@ import { makeObservable, observable, runInAction } from 'mobx';
 
 import { api } from 'src/api';
 import postLogin from 'src/api/postLogin';
-import getProfile from 'src/api/getProfile';
+import getUserRole from 'src/api/getUserRole';
 
-import { SignInFormValues, User } from './types';
+import { SignInFormValues, UserRole } from './types';
 
 class UserStore {
-  data: User = undefined;
+  data: UserRole = undefined;
 
   isSubmit = false;
 
@@ -26,7 +26,7 @@ class UserStore {
   };
 
   getProfileData = async (): Promise<void> => {
-    const result: User = await api(getProfile);
+    const result = await api(getUserRole);
 
     runInAction(() => {
       this.data = result;

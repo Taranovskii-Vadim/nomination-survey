@@ -18,11 +18,9 @@ const survey = {
 
 const chart = { 1: 2, 2: 3, 3: 2, 4: 1, 5: 10 };
 
-const profile = { fullname: 'test', role: 'admin' };
-
 jest.mock('axios', () => ({
   create: () => ({
-    request: () => Promise.resolve({ data: { surveys, survey, isUserVoted: false, chart, profile } }),
+    request: () => Promise.resolve({ data: { surveys, survey, isUserVoted: false, chart, userRole: 'admin' } }),
     interceptors: {
       response: {
         use: jest.fn(() => {}),

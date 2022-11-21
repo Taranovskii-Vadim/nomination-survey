@@ -31,7 +31,7 @@ const Survey = (): JSX.Element => {
     return <Loader text="опроса" />;
   }
 
-  if (!isHaveAccess(user.data.role, store.data.status)) {
+  if (!isHaveAccess(user.data, store.data.status)) {
     return <AccessDenied />;
   }
 
@@ -39,12 +39,12 @@ const Survey = (): JSX.Element => {
     return <SurveyCompleted />;
   }
 
-  const isHaveAccessToTabs = user.data.role !== 'user';
+  const isHaveAccessToTabs = user.data !== 'user';
 
   const Form = (
     <QuestionsForm
       data={store.data.questions}
-      userRole={user.data.role}
+      userRole={user.data}
       isSubmiting={store.formLoading}
       surveyStatus={store.data.status}
       sendSurveyResults={(answers) => {
