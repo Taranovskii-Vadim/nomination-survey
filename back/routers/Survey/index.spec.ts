@@ -58,8 +58,6 @@ describe('Survey router', () => {
   test('put survey status', async () => {
     const response = await put<SurveyStatus>(token, `${BASE}/1`, 'chiefVote');
 
-    // TODO got to send new status to front
-
     expect(response.statusCode).toBe(200);
   });
 

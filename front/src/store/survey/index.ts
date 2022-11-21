@@ -1,4 +1,4 @@
-import { makeObservable, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { api } from '../../api';
 import getSurveyById from '../../api/getSurveyById';
@@ -10,6 +10,8 @@ import { SurveyStatus } from '../types';
 import { UserRole } from '../user/types';
 
 import { ChartData, FormLoading, Survey, UserAnswer } from './types';
+
+// TODO fix all mobx warnings
 
 class SurveyStore {
   surveyCompleted = false;
@@ -29,12 +31,18 @@ class SurveyStore {
       formLoading: observable,
       isChartLoading: observable,
       isSurveyLoading: observable,
+
+      changeIsSurveyLoading: action,
     });
   }
 
+  changeIsSurveyLoading = (value: boolean): void => {
+    this.isSurveyLoading = value;
+  };
+
   fetchSurveyById = async (id: number): Promise<void> => {
     try {
-      this.isSurveyLoading = true;
+      this.changeIsSurveyLoading(true);
       const { survey, isUserVoted } = await api(getSurveyById, undefined, id);
 
       runInAction(() => {
@@ -42,7 +50,7 @@ class SurveyStore {
         this.surveyCompleted = isUserVoted;
       });
     } finally {
-      this.isSurveyLoading = false;
+      this.changeIsSurveyLoading(false);
     }
   };
 
@@ -63,11 +71,9 @@ class SurveyStore {
     try {
       this.formLoading = 'nextStatus';
 
-      await api(putNextSurveyStatus, { status }, this.data.id);
+      const newStatus = await api(putNextSurveyStatus, { status }, this.data.id);
 
-      runInAction(() => {
-        this.data.status = status;
-      });
+      this.data.status = newStatus;
     } finally {
       this.formLoading = '';
     }
