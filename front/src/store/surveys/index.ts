@@ -1,4 +1,4 @@
-import { makeObservable, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
 import { api } from '../../api';
 import getSurveys from '../../api/getSurveys';
@@ -13,18 +13,22 @@ class SurveysStore {
   constructor() {
     makeObservable(this, {
       loading: observable,
+
+      changeLoading: action,
     });
   }
+
+  changeLoading = (value: boolean): void => {
+    this.loading = value;
+  };
 
   fetchSurveys = async (): Promise<void> => {
     try {
       const result = await api(getSurveys);
 
-      runInAction(() => {
-        this.data = result;
-      });
+      this.data = result;
     } finally {
-      this.loading = false;
+      this.changeLoading(false);
     }
   };
 }

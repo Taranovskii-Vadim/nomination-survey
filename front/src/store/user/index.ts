@@ -1,4 +1,4 @@
-import { makeObservable, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable, runInAction } from 'mobx';
 
 import { api } from 'src/api';
 import postLogin from 'src/api/postLogin';
@@ -18,11 +18,18 @@ class UserStore {
       data: observable,
       isSubmit: observable,
       isLoginForm: observable,
+
+      changeLoginForm: action,
+      changeIsSubmit: action,
     });
   }
 
-  resetLoginForm = (): void => {
-    this.isLoginForm = true;
+  changeLoginForm = (value: boolean): void => {
+    this.isLoginForm = value;
+  };
+
+  changeIsSubmit = (value: boolean): void => {
+    this.isSubmit = value;
   };
 
   getProfileData = async (): Promise<void> => {
@@ -35,11 +42,11 @@ class UserStore {
 
   signIn = async ({ login }: SignInFormValues): Promise<void> => {
     try {
-      this.isSubmit = true;
+      this.changeIsSubmit(true);
       await api(postLogin, undefined, login);
-      this.isLoginForm = !document.cookie.includes('token');
+      this.changeLoginForm(!document.cookie.includes('token'));
     } finally {
-      this.isSubmit = false;
+      this.changeIsSubmit(false);
     }
   };
 }

@@ -1,17 +1,15 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { action, makeObservable, observable } from 'mobx';
 
-import { api } from '../../api';
-import getSurveyById from '../../api/getSurveyById';
-import postSurveyResults from '../../api/postSurveyResults';
-import putNextSurveyStatus from '../../api/putNextSurveyStatus';
-import getSurveyChartResults from '../../api/getSurveyChartResults';
+import { api } from 'src/api';
+import getSurveyById from 'src/api/getSurveyById';
+import postSurveyResults from 'src/api/postSurveyResults';
+import putNextSurveyStatus from 'src/api/putNextSurveyStatus';
+import getSurveyChartResults from 'src/api/getSurveyChartResults';
 
 import { SurveyStatus } from '../types';
 import { UserRole } from '../user/types';
 
 import { ChartData, FormLoading, Survey, UserAnswer } from './types';
-
-// TODO fix all mobx warnings
 
 class SurveyStore {
   surveyCompleted = false;
@@ -24,14 +22,16 @@ class SurveyStore {
 
   isChartLoading = false;
 
-  formLoading: FormLoading = '';
+  isFormLoading: FormLoading = '';
 
   constructor() {
     makeObservable(this, {
-      formLoading: observable,
+      isFormLoading: observable,
       isChartLoading: observable,
       isSurveyLoading: observable,
 
+      changeIsFormLoading: action,
+      changeIsChartLoading: action,
       changeIsSurveyLoading: action,
     });
   }
@@ -40,15 +40,21 @@ class SurveyStore {
     this.isSurveyLoading = value;
   };
 
+  changeIsChartLoading = (value: boolean): void => {
+    this.isChartLoading = value;
+  };
+
+  changeIsFormLoading = (value: FormLoading): void => {
+    this.isFormLoading = value;
+  };
+
   fetchSurveyById = async (id: number): Promise<void> => {
     try {
       this.changeIsSurveyLoading(true);
       const { survey, isUserVoted } = await api(getSurveyById, undefined, id);
 
-      runInAction(() => {
-        this.data = survey;
-        this.surveyCompleted = isUserVoted;
-      });
+      this.data = survey;
+      this.surveyCompleted = isUserVoted;
     } finally {
       this.changeIsSurveyLoading(false);
     }
@@ -56,39 +62,35 @@ class SurveyStore {
 
   sendUserAnswer = async (data: UserAnswer): Promise<void> => {
     try {
-      this.formLoading = 'finish';
+      this.changeIsFormLoading('finish');
       await api(postSurveyResults, data, this.data.id);
 
-      runInAction(() => {
-        this.surveyCompleted = true;
-      });
+      this.surveyCompleted = true;
     } finally {
-      this.formLoading = '';
+      this.changeIsFormLoading('');
     }
   };
 
   setNextSurveyStatus = async (status: SurveyStatus): Promise<void> => {
     try {
-      this.formLoading = 'nextStatus';
+      this.changeIsFormLoading('nextStatus');
 
       const newStatus = await api(putNextSurveyStatus, { status }, this.data.id);
 
       this.data.status = newStatus;
     } finally {
-      this.formLoading = '';
+      this.changeIsFormLoading('');
     }
   };
 
   fetchChartResults = async (role: UserRole): Promise<void> => {
     try {
-      this.isChartLoading = true;
+      this.changeIsChartLoading(true);
       const chartResult = await api(getSurveyChartResults, undefined, `${role}/${this.data.id}`);
 
-      runInAction(() => {
-        this.chartData = chartResult;
-      });
+      this.chartData = chartResult;
     } finally {
-      this.isChartLoading = false;
+      this.changeIsChartLoading(false);
     }
   };
 }

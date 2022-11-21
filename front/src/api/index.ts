@@ -19,7 +19,7 @@ axiosInstance.interceptors.response.use(
     const { status } = error.response;
 
     if (status === 401) {
-      store.resetLoginForm();
+      store.changeLoginForm(false);
     }
 
     return error;

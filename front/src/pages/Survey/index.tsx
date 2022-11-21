@@ -45,7 +45,7 @@ const Survey = (): JSX.Element => {
     <QuestionsForm
       data={store.data.questions}
       userRole={user.data}
-      isSubmiting={store.formLoading}
+      isSubmiting={store.isFormLoading}
       surveyStatus={store.data.status}
       sendSurveyResults={(answers) => {
         store.sendUserAnswer(answers);

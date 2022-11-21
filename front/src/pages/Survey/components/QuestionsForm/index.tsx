@@ -30,7 +30,6 @@ const QuestionsForm = ({
   const { control, handleSubmit } = useForm();
 
   const isAdmin = userRole === 'admin';
-
   const isFieldDisabled = isAdmin || isSubmiting === 'finish';
 
   const onSubmit: SubmitHandler<UserAnswer> = (answers) => {

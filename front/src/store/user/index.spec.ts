@@ -1,12 +1,6 @@
 import store from '.';
 
 describe('user store', () => {
-  test('resetLoginForm method', () => {
-    store.resetLoginForm();
-
-    expect(store.isLoginForm).toBe(true);
-  });
-
   test('getProfileData method', async () => {
     await store.getProfileData();
 
