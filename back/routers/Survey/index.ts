@@ -1,5 +1,7 @@
 import { Response, Router } from 'express';
 
+import { database } from '../../db';
+
 import FileModel from '../../models/FileModel';
 import { Request, RequestWithId } from '../../types';
 
@@ -13,9 +15,9 @@ const getResultFileName = (id: number): string => `survey${id}`;
 
 router.get('/', async (r: Request, res: Response) => {
   try {
-    const surveys = await FileModel.getData<Survey[]>('surveys');
+    const { rows } = await database.query<Survey>('SELECT * FROM surveys');
 
-    const result = surveys.map(({ id, title, status }) => ({ id, title, status }));
+    const result = rows.map(({ id, title, status }) => ({ id, title, status }));
 
     return res.json(formatData('surveys', result));
   } catch (e) {
@@ -59,21 +61,19 @@ router
         return res.status(400).json(formatError('Inncorrect id type'));
       }
 
+      const { rows: surveysDB } = await database.query<Survey>('SELECT * FROM surveys where id=$1', [surveyId]);
+
       const fileData = await FileModel.getData<FileData>(getResultFileName(surveyId));
 
-      const surveysDB = await FileModel.getData<Survey[]>('surveys');
-
-      const surveyDB = surveysDB.find((item) => item.id === surveyId);
-
-      if (!surveyDB) {
+      if (!surveysDB.length) {
         return res.status(404).json(formatError('Survey not found'));
       }
 
-      const questionsDB = await FileModel.getData<Question[]>('questions');
+      const { rows: questionsDB } = await database.query<Question>('SELECT * FROM questions');
 
-      const questions = surveyDB.questions.map((id) => questionsDB.find((item) => item.id === id)).filter(Boolean);
+      const questions = surveysDB[0].questions.map((id) => questionsDB.find((item) => item.id === id)).filter(Boolean);
 
-      const survey: Survey<Question> = { ...surveyDB, questions };
+      const survey: Survey<Question> = { ...surveysDB[0], questions };
 
       if (fileData) {
         isUserVoted = !!fileData.users.find((item) => item.id === id) || false;
