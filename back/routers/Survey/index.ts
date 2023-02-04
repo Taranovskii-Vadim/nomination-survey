@@ -126,16 +126,7 @@ router
       const { status } = body;
       const surveyId = parseInt(params.id);
 
-      const surveys = await FileModel.getData<Survey[]>('surveys');
-
-      const updated = surveys.map((item) => {
-        if (item.id === surveyId) {
-          item.status = status;
-        }
-        return item;
-      });
-
-      await FileModel.setData('surveys', updated);
+      await database.query('UPDATE surveys SET status=$1 WHERE id=$2', [status, surveyId]);
 
       return res.json(formatData('newStatus', status));
     } catch (e) {
