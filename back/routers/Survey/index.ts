@@ -15,6 +15,7 @@ const getResultFileName = (id: number): string => `survey${id}`;
 
 router.get('/', async (r: Request, res: Response) => {
   try {
+    // TODO move all data from surveys json to DB
     const { rows } = await database.query<Survey>('SELECT * FROM surveys');
 
     const result = rows.map(({ id, title, status }) => ({ id, title, status }));
@@ -90,20 +91,14 @@ router
       let users: FileData['users'] = [];
       const surveyId = parseInt(params.id);
 
-      const questions = await FileModel.getData<Question[]>('questions');
-      const surveys = await FileModel.getData<Survey[]>('surveys');
+      const { rows: questionsDB } = await database.query<Question>('SELECT * FROM questions');
+      const { rows: surveysDB } = await database.query<Survey>('SELECT * FROM surveys where id=$1', [surveyId]);
 
-      const survey = surveys.find((item) => item.id === surveyId);
+      const questions = Object.keys(body).map((key) => {
+        const question = questionsDB.find((item) => item.id === parseInt(key));
 
-      const questionPromiseResult = await Promise.all<Question>(
-        Object.keys(body).map((item) => questions.find((question) => question.id === parseInt(item))),
-      );
-
-      const questionFilePayload = questionPromiseResult.map(({ id, text }) => ({
-        id,
-        text,
-        answer: body[id],
-      }));
+        return { ...question, answer: body[key] };
+      });
 
       const fileData = await FileModel.getData<FileData>(getResultFileName(surveyId));
 
@@ -112,8 +107,8 @@ router
       }
 
       await FileModel.setData(getResultFileName(surveyId), {
-        title: survey.title,
-        users: [...users, { id, login, role, questions: questionFilePayload }],
+        title: surveysDB[0].title,
+        users: [...users, { id, login, role, questions }],
       });
 
       return res.json();
