@@ -2,7 +2,7 @@ import { Response, Router } from 'express';
 
 import { database } from '../../db';
 
-import FileModel from '../../models/FileModel';
+import ResultModel from '../../models/ResultModel';
 import { Request, RequestWithId } from '../../types';
 
 import { formatData, formatError } from '../helpers';
@@ -11,11 +11,10 @@ import { Survey, FileData, Question, GetResultsRequest, SaveResultsRequest, Chan
 
 const router = Router();
 
-const getResultFileName = (id: number): string => `survey${id}`;
-
 router.get('/', async (r: Request, res: Response) => {
   try {
     // TODO move all data from surveys json to DB
+    // TODO solve bug when we send default values in results empty
     const { rows } = await database.query<Survey>('SELECT * FROM surveys');
 
     const result = rows.map(({ id, title, status }) => ({ id, title, status }));
@@ -32,7 +31,7 @@ router.get('/results/:role/:id', async ({ params }: GetResultsRequest, res: Resp
     const { role } = params;
     const id = parseInt(params.id);
 
-    const fileData = await FileModel.getData<FileData>(getResultFileName(id));
+    const fileData = await ResultModel.getData<FileData>(id);
 
     if (fileData) {
       for (let user of fileData.users) {
@@ -64,7 +63,7 @@ router
 
       const { rows: surveysDB } = await database.query<Survey>('SELECT * FROM surveys where id=$1', [surveyId]);
 
-      const fileData = await FileModel.getData<FileData>(getResultFileName(surveyId));
+      const fileData = await ResultModel.getData<FileData>(surveyId);
 
       if (!surveysDB.length) {
         return res.status(404).json(formatError('Survey not found'));
@@ -100,13 +99,13 @@ router
         return { ...question, answer: body[key] };
       });
 
-      const fileData = await FileModel.getData<FileData>(getResultFileName(surveyId));
+      const fileData = await ResultModel.getData<FileData>(surveyId);
 
       if (fileData) {
         users = [...fileData.users];
       }
 
-      await FileModel.setData(getResultFileName(surveyId), {
+      await ResultModel.setData(surveyId, {
         title: surveysDB[0].title,
         users: [...users, { id, login, role, questions }],
       });
