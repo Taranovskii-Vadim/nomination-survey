@@ -27,7 +27,13 @@ const QuestionsForm = ({
   sendSurveyResults,
   setNextStatus,
 }: Props): JSX.Element => {
-  const { control, handleSubmit } = useForm();
+  const { control, handleSubmit } = useForm<Record<string, number>>({
+    defaultValues: data.reduce((acc, { id }) => {
+      acc[id.toString()] = 5;
+
+      return acc;
+    }, {}),
+  });
 
   const isAdmin = userRole === 'admin';
   const isFieldDisabled = isAdmin || isSubmiting === 'finish';

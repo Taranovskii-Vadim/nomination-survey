@@ -13,11 +13,9 @@ const router = Router();
 
 router.get('/', async (r: Request, res: Response) => {
   try {
-    // TODO move all data from surveys json to DB
-    // TODO solve bug when we send default values in results empty
     const { rows } = await database.query<Survey>('SELECT * FROM surveys');
 
-    const result = rows.map(({ id, title, status }) => ({ id, title, status }));
+    const result = rows.map(({ id, title, status }) => ({ id, title, status })).sort((a, b) => a.id - b.id);
 
     return res.json(formatData('surveys', result));
   } catch (e) {
